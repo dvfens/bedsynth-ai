@@ -1,0 +1,32 @@
+{
+  "step": 3,
+  "name": "demo UI",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/ui",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 3.7,
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "x-process-time-ms": "1.4"
+    },
+    "body": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>BedSynth AI \u00b7 Synthetic hospital operations data</title>\n<meta name=\"description\" content=\"Generate validated synthetic bed-occupancy and patient-stay data for hospital scheduling scenarios.\">\n<link rel=\"icon\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b6e99'/%3E%3Cpath d='M6 22V10M6 18h20v4M10 14h5a2 2 0 0 1 2 2v2' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\">\n<style>\n  :root {\n    --bg: #f3f5f8; --surface: #ffffff; --surface-2: #f7f9fb; --text: #18222d; --muted: #5b6878;\n    --border: #dbe2ea; --primary: #0b6e99; --primary-strong: #08577a; --primary-soft: #e2f0f7;\n    --ok: #17794a; --ok-soft: #e1f3e8; --warn: #8f5600; --warn-soft: #fcf0d9; --bad: #b42318; --bad-soft: #fde9e7;\n    --radius: 12px; --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 2px 6px rgba(16, 24, 40, .06);\n    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, \"Liberation Mono\", monospace;\n    color-scheme: light dark;\n  }\n  @media (prefers-color-scheme: dark) {\n    :root {\n      --bg: #0e151c; --surface: #151f29; --surface-2: #1a2632; --text: #e4ebf2; --muted: #98a6b5;\n      --border: #2a3846; --primary: #3aa5d4; --primary-strong: #63b9df; --primary-soft: #16364a;\n      --ok: #4cc38a; --ok-soft: #12352a; --warn: #f0b75b; --warn-soft: #3b2c12; --bad: #f2796f; --bad-soft: #3f1d1b;\n      --shadow: 0 1px 2px rgba(0, 0, 0, .3);\n    }\n  }\n  * { box-sizing: border-box; }\n  [hidden] { display: none !important; }  /* component display rules must not override the hidden attribute */\n  html, body { margin: 0; }\n  body {\n    background: var(--bg); color: var(--text); line-height: 1.45; font-size: 14.5px;\n    font-family: system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;\n  }\n  a { color: var(--primary); }\n  \n... (truncated)"
+  },
+  "checks": [
+    {
+      "check": "HTML page",
+      "passed": true
+    },
+    {
+      "check": "no external assets",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,433 @@
+{
+ "title": "A/B test: band-grouped exact marginals for the ward_daily gc_tuned spec",
+ "date": "2026-11-15",
+ "table": "ward_daily",
+ "outcome": "gc_tuned_x7 adopted as the ward_daily gc_tuned spec (see docs/DESIGN.md section 7.2)",
+ "change": "Three changes to the ward_daily gc_tuned spec: (1) ED boarders and the mean bed wait get exact marginals per ward x occupancy band; (2) closed beds get exact marginals per ward x staffing band (both bands are recomputed from the final counts through the band_groups option of ConditionalQuantileConstraint); (3) day-shift nurses get exact marginals per ward x month.",
+ "protocol": "Variants were trained in full mode on the same training split and evaluated with scripts/03_evaluate.py in one full run (7,016 rows per model, evaluation seed 42, 400 rows per scenario, sdmetrics on), so they shared the operational noise calibration. Screened variants were scored on the same sample without scenario coverage. Adoption bar: at least one of the three failing target checks newly passes and none of the 14 passing checks fails; composite >= 0.9440; raw hard-valid >= 0.935; scenario coverage, fidelity and privacy each >= control - 0.005; operational score above the control; a clean modelling spec (no holdout data, no hard-coded targets).",
+ "target_checks": [
+  "relationship_occupancy_boarders",
+  "boarding_prevalence_by_occupancy_band",
+  "short_staffing_share_by_season"
+ ],
+ "official_run": {
+  "evaluation_seed": 42,
+  "rows": 7016,
+  "variants": [
+   {
+    "variant": "gc_tuned",
+    "role": "control",
+    "description": "The ward_daily gc_tuned spec before the test (per-ward exact marginals for the mostly-zero counts).",
+    "evaluation": "full",
+    "composite": 0.941991,
+    "fidelity": 0.965325,
+    "raw_hard_valid": 0.944413,
+    "operational_passed": "14/17",
+    "failed_checks": [
+     "relationship_occupancy_boarders",
+     "short_staffing_share_by_season",
+     "boarding_prevalence_by_occupancy_band"
+    ],
+    "scenario_coverage": 0.948369,
+    "privacy": 1,
+    "utility": 0.933771,
+    "optimisation": 0.920753,
+    "decision": "baseline: the ward_daily gc_tuned spec before the test"
+   },
+   {
+    "variant": "gc_tuned_x1",
+    "role": "candidate",
+    "description": "Boarders per ward x recomputed occupancy band, listed before the escalation cover.",
+    "evaluation": "full",
+    "composite": 0.949656,
+    "fidelity": 0.964891,
+    "raw_hard_valid": 0.939424,
+    "operational_passed": "16/17",
+    "failed_checks": [
+     "short_staffing_share_by_season"
+    ],
+    "scenario_coverage": 0.94735,
+    "privacy": 0.9949,
+    "utility": 0.93159,
+    "optimisation": 0.93131,
+    "decision": "rejected: privacy 0.9949 below the bar (control - 0.005)"
+   },
+   {
+    "variant": "gc_tuned_x2",
+    "role": "candidate",
+    "description": "x1 + day nurses per ward x month.",
+    "evaluation": "screen (no scenario coverage; privacy not computed and set to 1.0)",
+    "composite": 0.954097,
+    "fidelity": 0.965625,
+    "raw_hard_valid": 0.942275,
+    "operational_passed": "15/17",
+    "failed_checks": [
+     "seasonal_pressure_contrast",
+     "relationship_bed_pressure_cancellations"
+    ],
+    "utility": 0.932006,
+    "optimisation": 0.920767,
+    "decision": "rejected: seasonal_pressure_contrast and relationship_bed_pressure_cancellations regress"
+   },
+   {
+    "variant": "gc_tuned_x3",
+    "role": "candidate",
+    "description": "x1 + day nurses per ward x sampled staffing label.",
+    "evaluation": "screen (no scenario coverage; privacy not computed and set to 1.0)",
+    "composite": 0.95029,
+    "fidelity": 0.9647,
+    "raw_hard_valid": 0.941135,
+    "operational_passed": "15/17",
+    "failed_checks": [
+     "seasonal_pressure_contrast",
+     "relationship_bed_pressure_cancellations"
+    ],
+    "utility": 0.933447,
+    "optimisation": 0.924732,
+    "decision": "rejected: seasonal_pressure_contrast and relationship_bed_pressure_cancellations regress"
+   },
+   {
+    "variant": "gc_tuned_x4",
+    "role": "candidate",
+    "description": "x2 + closed beds per ward x recomputed staffing band (escalation extra split out).",
+    "evaluation": "full",
+    "composite": 0.953949,
+    "fidelity": 0.964085,
+    "raw_hard_valid": 0.940564,
+    "operational_passed": "17/17",
+    "failed_checks": [],
+    "scenario_coverage": 0.948376,
+    "privacy": 0.99,
+    "utility": 0.925904,
+    "optimisation": 0.920925,
+    "decision": "rejected: privacy 0.990 below the bar; utility below the control"
+   },
+   {
+    "variant": "gc_tuned_x5",
+    "role": "candidate",
+    "description": "x2 with avg_bed_wait_hours added to the band-grouped boarder spec.",
+    "evaluation": "full",
+    "composite": 0.959035,
+    "fidelity": 0.970948,
+    "raw_hard_valid": 0.94199,
+    "operational_passed": "16/17",
+    "failed_checks": [
+     "relationship_bed_pressure_cancellations"
+    ],
+    "scenario_coverage": 0.94864,
+    "privacy": 0.9944,
+    "utility": 0.947372,
+    "optimisation": 0.931212,
+    "decision": "rejected: relationship_bed_pressure_cancellations regresses; privacy 0.9944 below the bar"
+   },
+   {
+    "variant": "gc_tuned_x6",
+    "role": "candidate",
+    "description": "Day nurses per ward x month only (attribution).",
+    "evaluation": "screen (no scenario coverage; privacy not computed and set to 1.0)",
+    "composite": 0.944379,
+    "fidelity": 0.96404,
+    "raw_hard_valid": 0.944413,
+    "operational_passed": "14/17",
+    "failed_checks": [
+     "weekend_weekday_discharge_ratio",
+     "relationship_occupancy_boarders",
+     "boarding_prevalence_by_occupancy_band"
+    ],
+    "utility": 0.929078,
+    "optimisation": 0.918281,
+    "decision": "rejected: weekend_weekday_discharge_ratio regresses"
+   },
+   {
+    "variant": "gc_tuned_x7",
+    "role": "adopted",
+    "description": "x4 with avg_bed_wait_hours in the band-grouped boarder spec: boarders + bed wait per ward x occupancy band, closed beds per ward x staffing band (bands recomputed), escalation extra per ward, day nurses per ward x month.",
+    "evaluation": "full",
+    "composite": 0.958271,
+    "fidelity": 0.968472,
+    "raw_hard_valid": 0.937856,
+    "operational_passed": "17/17",
+    "failed_checks": [],
+    "scenario_coverage": 0.949321,
+    "privacy": 0.997,
+    "utility": 0.960379,
+    "optimisation": 0.955052,
+    "decision": "adopted: meets every criterion of the adoption bar"
+   }
+  ]
+ },
+ "robustness_screens": {
+  "description": "The control and three variants re-scored with evaluation seeds 7, 11 and 2024 (same trained models, new evaluation samples, privacy computed, no scenario coverage - scenario coverage is not a composite component). Training-seed variation is not covered.",
+  "by_seed": {
+   "7": [
+    {
+     "variant": "gc_tuned",
+     "composite": 0.940674,
+     "fidelity": 0.962243,
+     "raw_hard_valid": 0.938141,
+     "operational": 0.894587,
+     "operational_passed": "14/17",
+     "failed_checks": [
+      "relationship_occupancy_boarders",
+      "short_staffing_share_by_season",
+      "boarding_prevalence_by_occupancy_band"
+     ],
+     "utility": 0.940773,
+     "ml_utility": 0.929687,
+     "optimisation": 0.951859,
+     "policy_evaluation": 0.882299,
+     "privacy": 0.9961
+    },
+    {
+     "variant": "gc_tuned_x1",
+     "composite": 0.952386,
+     "fidelity": 0.961317,
+     "raw_hard_valid": 0.939567,
+     "operational": 0.934824,
+     "operational_passed": "16/17",
+     "failed_checks": [
+      "short_staffing_share_by_season"
+     ],
+     "utility": 0.951812,
+     "ml_utility": 0.974691,
+     "optimisation": 0.928932,
+     "policy_evaluation": 0.828531,
+     "privacy": 0.996
+    },
+    {
+     "variant": "gc_tuned_x4",
+     "composite": 0.959289,
+     "fidelity": 0.967687,
+     "raw_hard_valid": 0.937856,
+     "operational": 0.955198,
+     "operational_passed": "17/17",
+     "failed_checks": [],
+     "utility": 0.950749,
+     "ml_utility": 0.972901,
+     "optimisation": 0.928597,
+     "policy_evaluation": 0.822972,
+     "privacy": 1.0
+    },
+    {
+     "variant": "gc_tuned_x7",
+     "composite": 0.958691,
+     "fidelity": 0.968566,
+     "raw_hard_valid": 0.934436,
+     "operational": 0.952378,
+     "operational_passed": "16/17",
+     "failed_checks": [
+      "relationship_bed_pressure_cancellations"
+     ],
+     "utility": 0.954994,
+     "ml_utility": 0.965121,
+     "optimisation": 0.944867,
+     "policy_evaluation": 0.874864,
+     "privacy": 0.9989
+    }
+   ],
+   "11": [
+    {
+     "variant": "gc_tuned",
+     "composite": 0.941814,
+     "fidelity": 0.963681,
+     "raw_hard_valid": 0.940849,
+     "operational": 0.895694,
+     "operational_passed": "14/17",
+     "failed_checks": [
+      "relationship_occupancy_boarders",
+      "short_staffing_share_by_season",
+      "boarding_prevalence_by_occupancy_band"
+     ],
+     "utility": 0.939175,
+     "ml_utility": 0.950698,
+     "optimisation": 0.927651,
+     "policy_evaluation": 0.814641,
+     "privacy": 0.9974
+    },
+    {
+     "variant": "gc_tuned_x1",
+     "composite": 0.953394,
+     "fidelity": 0.962705,
+     "raw_hard_valid": 0.934008,
+     "operational": 0.945246,
+     "operational_passed": "15/17",
+     "failed_checks": [
+      "relationship_bed_pressure_cancellations",
+      "short_staffing_share_by_season"
+     ],
+     "utility": 0.943126,
+     "ml_utility": 0.96156,
+     "optimisation": 0.924692,
+     "policy_evaluation": 0.804361,
+     "privacy": 1.0
+    },
+    {
+     "variant": "gc_tuned_x4",
+     "composite": 0.952984,
+     "fidelity": 0.967406,
+     "raw_hard_valid": 0.938854,
+     "operational": 0.948075,
+     "operational_passed": "17/17",
+     "failed_checks": [],
+     "utility": 0.924753,
+     "ml_utility": 0.94659,
+     "optimisation": 0.902916,
+     "policy_evaluation": 0.763058,
+     "privacy": 0.9926
+    },
+    {
+     "variant": "gc_tuned_x7",
+     "composite": 0.954794,
+     "fidelity": 0.967688,
+     "raw_hard_valid": 0.933295,
+     "operational": 0.940252,
+     "operational_passed": "16/17",
+     "failed_checks": [
+      "weekend_weekday_discharge_ratio"
+     ],
+     "utility": 0.959373,
+     "ml_utility": 0.960757,
+     "optimisation": 0.95799,
+     "policy_evaluation": 0.900778,
+     "privacy": 0.9886
+    }
+   ],
+   "2024": [
+    {
+     "variant": "gc_tuned",
+     "composite": 0.942196,
+     "fidelity": 0.963409,
+     "raw_hard_valid": 0.942132,
+     "operational": 0.888756,
+     "operational_passed": "13/17",
+     "failed_checks": [
+      "seasonal_pressure_contrast",
+      "relationship_occupancy_boarders",
+      "short_staffing_share_by_season",
+      "boarding_prevalence_by_occupancy_band"
+     ],
+     "utility": 0.954455,
+     "ml_utility": 0.964041,
+     "optimisation": 0.944869,
+     "policy_evaluation": 0.865774,
+     "privacy": 0.9939
+    },
+    {
+     "variant": "gc_tuned_x1",
+     "composite": 0.950546,
+     "fidelity": 0.96053,
+     "raw_hard_valid": 0.94541,
+     "operational": 0.933837,
+     "operational_passed": "15/17",
+     "failed_checks": [
+      "relationship_bed_pressure_cancellations",
+      "short_staffing_share_by_season"
+     ],
+     "utility": 0.934573,
+     "ml_utility": 0.943644,
+     "optimisation": 0.925501,
+     "policy_evaluation": 0.821796,
+     "privacy": 0.9966
+    },
+    {
+     "variant": "gc_tuned_x4",
+     "composite": 0.9535,
+     "fidelity": 0.965246,
+     "raw_hard_valid": 0.943415,
+     "operational": 0.9463,
+     "operational_passed": "17/17",
+     "failed_checks": [],
+     "utility": 0.929919,
+     "ml_utility": 0.935697,
+     "optimisation": 0.924141,
+     "policy_evaluation": 0.819448,
+     "privacy": 0.9918
+    },
+    {
+     "variant": "gc_tuned_x7",
+     "composite": 0.955185,
+     "fidelity": 0.969266,
+     "raw_hard_valid": 0.932155,
+     "operational": 0.946469,
+     "operational_passed": "17/17",
+     "failed_checks": [],
+     "utility": 0.945178,
+     "ml_utility": 0.945515,
+     "optimisation": 0.944841,
+     "policy_evaluation": 0.90965,
+     "privacy": 0.9958
+    }
+   ]
+  }
+ },
+ "summary": {
+  "previous_spec": {
+   "evaluation_seeds": [
+    42,
+    7,
+    11,
+    2024
+   ],
+   "composite": [
+    0.941991,
+    0.940674,
+    0.941814,
+    0.942196
+   ],
+   "composite_min": 0.940674,
+   "composite_max": 0.942196,
+   "composite_mean": 0.941669,
+   "raw_hard_valid": [
+    0.944413,
+    0.938141,
+    0.940849,
+    0.942132
+   ],
+   "raw_hard_valid_min": 0.938141,
+   "raw_hard_valid_max": 0.944413,
+   "operational_checks_passed": [
+    14,
+    14,
+    14,
+    13
+   ],
+   "operational_checks_scored": 17
+  },
+  "adopted_spec": {
+   "evaluation_seeds": [
+    42,
+    7,
+    11,
+    2024
+   ],
+   "composite": [
+    0.958271,
+    0.958691,
+    0.954794,
+    0.955185
+   ],
+   "composite_min": 0.954794,
+   "composite_max": 0.958691,
+   "composite_mean": 0.956735,
+   "raw_hard_valid": [
+    0.937856,
+    0.934436,
+    0.933295,
+    0.932155
+   ],
+   "raw_hard_valid_min": 0.932155,
+   "raw_hard_valid_max": 0.937856,
+   "operational_checks_passed": [
+    17,
+    16,
+    16,
+    17
+   ],
+   "operational_checks_scored": 17
+  }
+ },
+ "caveats": [
+  "The adopted spec's raw hard-valid rate is 0.4-1.0 points lower (mean 0.7) than the previous spec's on each evaluation seed; the generator's rejection sampling still returns only hard-valid rows.",
+  "On two of the three extra seeds the adopted spec fails one borderline check (relationship_bed_pressure_cancellations on seed 7, weekend_weekday_discharge_ratio on seed 11)."
+ ]
+}

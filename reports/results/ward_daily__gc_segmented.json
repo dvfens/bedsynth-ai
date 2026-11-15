@@ -1,0 +1,6358 @@
+{
+  "table": "ward_daily",
+  "model_id": "gc_segmented",
+  "seed": 42,
+  "evaluated_at": "2026-11-15T05:21:18+00:00",
+  "n_rows": {
+    "real_train": 7016,
+    "real_holdout": 1752,
+    "synthetic": 7016,
+    "raw_synthetic": 7016
+  },
+  "forced_columns": [
+    "ward_id",
+    "occupancy_level"
+  ],
+  "statistical": {
+    "name": "statistical_fidelity",
+    "description": "Distributional similarity of synthetic and real data: SDV QualityReport plus per-column and pairwise statistics.",
+    "table": "ward_daily",
+    "score": 0.953031,
+    "score_source": "sdv_quality_report",
+    "n_rows": {
+      "real": 7016,
+      "synthetic": 7016
+    },
+    "sdv": {
+      "rows_used": {
+        "real": 7016,
+        "synthetic": 7016
+      },
+      "excluded_columns": [
+        "ward_type",
+        "season",
+        "is_weekend",
+        "bed_capacity"
+      ],
+      "quality": {
+        "score": 0.953031,
+        "properties": {
+          "Column Shapes": 0.953378,
+          "Column Pair Trends": 0.952684
+        },
+        "column_shapes": [
+          {
+            "column": "ward_id",
+            "metric": "TVComplement",
+            "score": 1.0
+          },
+          {
+            "column": "month",
+            "metric": "TVComplement",
+            "score": 0.939282
+          },
+          {
+            "column": "day_of_week",
+            "metric": "TVComplement",
+            "score": 0.910063
+          },
+          {
+            "column": "escalation_beds_open",
+            "metric": "KSComplement",
+            "score": 0.925599
+          },
+          {
+            "column": "beds_closed",
+            "metric": "KSComplement",
+            "score": 0.90707
+          },
+          {
+            "column": "available_beds",
+            "metric": "KSComplement",
+            "score": 0.948404
+          },
+          {
+            "column": "staffing_level",
+            "metric": "TVComplement",
+            "score": 0.916049
+          },
+          {
+            "column": "nurses_day_shift",
+            "metric": "KSComplement",
+            "score": 0.969641
+          },
+          {
+            "column": "nurses_night_shift",
+            "metric": "KSComplement",
+            "score": 0.981899
+          },
+          {
+            "column": "census_start",
+            "metric": "KSComplement",
+            "score": 0.971351
+          },
+          {
+            "column": "elective_scheduled",
+            "metric": "KSComplement",
+            "score": 0.95553
+          },
+          {
+            "column": "elective_cancelled",
+            "metric": "KSComplement",
+            "score": 0.948546
+          },
+          {
+            "column": "admissions_elective",
+            "metric": "KSComplement",
+            "score": 0.957098
+          },
+          {
+            "column": "admissions_emergency",
+            "metric": "KSComplement",
+            "score": 0.952822
+          },
+          {
+            "column": "transfers_in",
+            "metric": "KSComplement",
+            "score": 0.976197
+          },
+          {
+            "column": "transfers_out",
+            "metric": "KSComplement",
+            "score": 0.96451
+          },
+          {
+            "column": "discharges",
+            "metric": "KSComplement",
+            "score": 0.969071
+          },
+          {
+            "column": "discharges_before_noon",
+            "metric": "KSComplement",
+            "score": 0.973347
+          },
+          {
+            "column": "census_end",
+            "metric": "KSComplement",
+            "score": 0.990165
+          },
+          {
+            "column": "delayed_discharges",
+            "metric": "KSComplement",
+            "score": 0.952395
+          },
+          {
+            "column": "emergency_boarders",
+            "metric": "KSComplement",
+            "score": 0.840792
+          },
+          {
+            "column": "avg_bed_wait_hours",
+            "metric": "KSComplement",
+            "score": 0.888826
+          },
+          {
+            "column": "avg_bed_turnaround_min",
+            "metric": "KSComplement",
+            "score": 0.982469
+          },
+          {
+            "column": "avg_los_days",
+            "metric": "KSComplement",
+            "score": 0.99045
+          },
+          {
+            "column": "occupancy_rate",
+            "metric": "KSComplement",
+            "score": 0.966363
+          },
+          {
+            "column": "occupancy_level",
+            "metric": "TVComplement",
+            "score": 1.0
+          },
+          {
+            "column": "bed_turnover_rate",
+            "metric": "KSComplement",
+            "score": 0.970639
+          },
+          {
+            "column": "patients_per_nurse",
+            "metric": "KSComplement",
+            "score": 0.969498
+          },
+          {
+            "column": "delayed_discharge_rate",
+            "metric": "KSComplement",
+            "score": 0.934721
+          },
+          {
+            "column": "elective_cancellation_rate",
+            "metric": "KSComplement",
+            "score": 0.948546
+          }
+        ],
+        "worst_column_pairs": [
+          {
+            "columns": [
+              "ward_id",
+              "census_start"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.732041
+          },
+          {
+            "columns": [
+              "ward_id",
+              "available_beds"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.776511
+          },
+          {
+            "columns": [
+              "emergency_boarders",
+              "occupancy_level"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.810718
+          },
+          {
+            "columns": [
+              "census_start",
+              "occupancy_level"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.830245
+          },
+          {
+            "columns": [
+              "beds_closed",
+              "staffing_level"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.851625
+          },
+          {
+            "columns": [
+              "staffing_level",
+              "patients_per_nurse"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.888968
+          },
+          {
+            "columns": [
+              "staffing_level",
+              "nurses_night_shift"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.903364
+          },
+          {
+            "columns": [
+              "ward_id",
+              "nurses_day_shift"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.911773
+          },
+          {
+            "columns": [
+              "staffing_level",
+              "nurses_day_shift"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.916049
+          },
+          {
+            "columns": [
+              "ward_id",
+              "bed_turnover_rate"
+            ],
+            "metric": "ContingencySimilarity",
+            "score": 0.917474
+          }
+        ],
+        "seconds": 1.154
+      },
+      "diagnostic": {
+        "score": 0.999993,
+        "properties": {
+          "Data Validity": 0.999986,
+          "Data Structure": 1.0,
+          "Constraint Validity": null
+        },
+        "seconds": 0.025
+      }
+    },
+    "summary": {
+      "column_shapes_score": 0.953378,
+      "pair_trends_score": 0.976879,
+      "fallback_score": 0.965129,
+      "mean_ks_statistic": 0.046562,
+      "mean_wasserstein_normalized": 0.010473,
+      "mean_range_coverage": 0.889076,
+      "mean_tv_distance": 0.046921,
+      "mean_category_coverage": 1.0,
+      "pearson_mean_abs_diff": 0.026668,
+      "spearman_mean_abs_diff": 0.032024,
+      "cramers_v_mean_abs_diff": 0.030229,
+      "worst_numeric_columns": [
+        "emergency_boarders",
+        "avg_bed_wait_hours",
+        "beds_closed",
+        "escalation_beds_open",
+        "delayed_discharge_rate"
+      ],
+      "worst_categorical_columns": [
+        "day_of_week",
+        "staffing_level",
+        "month",
+        "ward_id",
+        "occupancy_level"
+      ]
+    },
+    "numeric_columns": [
+      {
+        "column": "escalation_beds_open",
+        "ks_statistic": 0.074401,
+        "ks_complement": 0.925599,
+        "wasserstein_normalized": 0.023043,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 0.968786,
+          "std": 1.531153,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 6.0
+        },
+        "synthetic": {
+          "mean": 1.07825,
+          "std": 1.53904,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 6.0
+        }
+      },
+      {
+        "column": "beds_closed",
+        "ks_statistic": 0.09293,
+        "ks_complement": 0.90707,
+        "wasserstein_normalized": 0.012739,
+        "range_coverage": 0.75,
+        "real": {
+          "mean": 0.145667,
+          "std": 0.584076,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "min": 0.0,
+          "max": 8.0
+        },
+        "synthetic": {
+          "mean": 0.231899,
+          "std": 0.585365,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "min": 0.0,
+          "max": 6.0
+        }
+      },
+      {
+        "column": "available_beds",
+        "ks_statistic": 0.051596,
+        "ks_complement": 0.948404,
+        "wasserstein_normalized": 0.008382,
+        "range_coverage": 0.961538,
+        "real": {
+          "mean": 25.073119,
+          "std": 7.165426,
+          "p5": 12.0,
+          "p50": 26.0,
+          "p95": 34.0,
+          "min": 10.0,
+          "max": 36.0
+        },
+        "synthetic": {
+          "mean": 25.096351,
+          "std": 7.206464,
+          "p5": 12.0,
+          "p50": 26.0,
+          "p95": 34.0,
+          "min": 11.0,
+          "max": 36.0
+        }
+      },
+      {
+        "column": "nurses_day_shift",
+        "ks_statistic": 0.030359,
+        "ks_complement": 0.969641,
+        "wasserstein_normalized": 0.00936,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 5.656072,
+          "std": 1.510859,
+          "p5": 4.0,
+          "p50": 5.0,
+          "p95": 9.0,
+          "min": 2.0,
+          "max": 11.0
+        },
+        "synthetic": {
+          "mean": 5.695553,
+          "std": 1.408239,
+          "p5": 4.0,
+          "p50": 5.0,
+          "p95": 9.0,
+          "min": 2.0,
+          "max": 11.0
+        }
+      },
+      {
+        "column": "nurses_night_shift",
+        "ks_statistic": 0.018101,
+        "ks_complement": 0.981899,
+        "wasserstein_normalized": 0.005502,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 3.911345,
+          "std": 0.955373,
+          "p5": 3.0,
+          "p50": 4.0,
+          "p95": 6.0,
+          "min": 2.0,
+          "max": 7.0
+        },
+        "synthetic": {
+          "mean": 3.938284,
+          "std": 0.94784,
+          "p5": 3.0,
+          "p50": 4.0,
+          "p95": 6.0,
+          "min": 2.0,
+          "max": 7.0
+        }
+      },
+      {
+        "column": "census_start",
+        "ks_statistic": 0.028649,
+        "ks_complement": 0.971351,
+        "wasserstein_normalized": 0.011317,
+        "range_coverage": 0.914286,
+        "real": {
+          "mean": 21.553307,
+          "std": 7.871347,
+          "p5": 8.0,
+          "p50": 22.0,
+          "p95": 33.0,
+          "min": 1.0,
+          "max": 36.0
+        },
+        "synthetic": {
+          "mean": 21.186288,
+          "std": 7.830379,
+          "p5": 8.0,
+          "p50": 22.0,
+          "p95": 32.0,
+          "min": 4.0,
+          "max": 36.0
+        }
+      },
+      {
+        "column": "elective_scheduled",
+        "ks_statistic": 0.04447,
+        "ks_complement": 0.95553,
+        "wasserstein_normalized": 0.014296,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 0.985604,
+          "std": 1.50464,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 10.0
+        },
+        "synthetic": {
+          "mean": 0.981756,
+          "std": 1.523944,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 10.0
+        }
+      },
+      {
+        "column": "elective_cancelled",
+        "ks_statistic": 0.051454,
+        "ks_complement": 0.948546,
+        "wasserstein_normalized": 0.012115,
+        "range_coverage": 0.333333,
+        "real": {
+          "mean": 0.085376,
+          "std": 0.416663,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "min": 0.0,
+          "max": 6.0
+        },
+        "synthetic": {
+          "mean": 0.115593,
+          "std": 0.343819,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "min": 0.0,
+          "max": 2.0
+        }
+      },
+      {
+        "column": "admissions_elective",
+        "ks_statistic": 0.042902,
+        "ks_complement": 0.957098,
+        "wasserstein_normalized": 0.016201,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 0.900228,
+          "std": 1.371545,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 9.0
+        },
+        "synthetic": {
+          "mean": 0.866163,
+          "std": 1.38834,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 9.0
+        }
+      },
+      {
+        "column": "admissions_emergency",
+        "ks_statistic": 0.047178,
+        "ks_complement": 0.952822,
+        "wasserstein_normalized": 0.003534,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 4.116306,
+          "std": 5.618535,
+          "p5": 0.0,
+          "p50": 2.0,
+          "p95": 18.0,
+          "min": 0.0,
+          "max": 29.0
+        },
+        "synthetic": {
+          "mean": 4.170895,
+          "std": 5.608746,
+          "p5": 0.0,
+          "p50": 2.0,
+          "p95": 18.0,
+          "min": 0.0,
+          "max": 29.0
+        }
+      },
+      {
+        "column": "transfers_in",
+        "ks_statistic": 0.023803,
+        "ks_complement": 0.976197,
+        "wasserstein_normalized": 0.004859,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 1.392816,
+          "std": 1.787076,
+          "p5": 0.0,
+          "p50": 1.0,
+          "p95": 5.0,
+          "min": 0.0,
+          "max": 11.0
+        },
+        "synthetic": {
+          "mean": 1.412628,
+          "std": 1.746208,
+          "p5": 0.0,
+          "p50": 1.0,
+          "p95": 5.0,
+          "min": 0.0,
+          "max": 11.0
+        }
+      },
+      {
+        "column": "transfers_out",
+        "ks_statistic": 0.03549,
+        "ks_complement": 0.96451,
+        "wasserstein_normalized": 0.003622,
+        "range_coverage": 0.941176,
+        "real": {
+          "mean": 1.378421,
+          "std": 2.758782,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 8.0,
+          "min": 0.0,
+          "max": 17.0
+        },
+        "synthetic": {
+          "mean": 1.391249,
+          "std": 2.726262,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 8.0,
+          "min": 0.0,
+          "max": 16.0
+        }
+      },
+      {
+        "column": "discharges",
+        "ks_statistic": 0.030929,
+        "ks_complement": 0.969071,
+        "wasserstein_normalized": 0.010308,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 5.017816,
+          "std": 3.583616,
+          "p5": 0.0,
+          "p50": 4.0,
+          "p95": 12.0,
+          "min": 0.0,
+          "max": 22.0
+        },
+        "synthetic": {
+          "mean": 4.813569,
+          "std": 3.43277,
+          "p5": 0.0,
+          "p50": 4.0,
+          "p95": 11.0,
+          "min": 0.0,
+          "max": 22.0
+        }
+      },
+      {
+        "column": "discharges_before_noon",
+        "ks_statistic": 0.026653,
+        "ks_complement": 0.973347,
+        "wasserstein_normalized": 0.007863,
+        "range_coverage": 0.75,
+        "real": {
+          "mean": 1.409208,
+          "std": 1.545885,
+          "p5": 0.0,
+          "p50": 1.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 12.0
+        },
+        "synthetic": {
+          "mean": 1.417189,
+          "std": 1.42835,
+          "p5": 0.0,
+          "p50": 1.0,
+          "p95": 4.0,
+          "min": 0.0,
+          "max": 9.0
+        }
+      },
+      {
+        "column": "census_end",
+        "ks_statistic": 0.009835,
+        "ks_complement": 0.990165,
+        "wasserstein_normalized": 0.005094,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 21.56642,
+          "std": 7.872297,
+          "p5": 8.0,
+          "p50": 23.0,
+          "p95": 33.0,
+          "min": 1.0,
+          "max": 36.0
+        },
+        "synthetic": {
+          "mean": 21.431157,
+          "std": 7.988933,
+          "p5": 8.0,
+          "p50": 22.0,
+          "p95": 33.0,
+          "min": 1.0,
+          "max": 36.0
+        }
+      },
+      {
+        "column": "delayed_discharges",
+        "ks_statistic": 0.047605,
+        "ks_complement": 0.952395,
+        "wasserstein_normalized": 0.008039,
+        "range_coverage": 0.733333,
+        "real": {
+          "mean": 1.631984,
+          "std": 1.829503,
+          "p5": 0.0,
+          "p50": 1.0,
+          "p95": 5.0,
+          "min": 0.0,
+          "max": 15.0
+        },
+        "synthetic": {
+          "mean": 1.714652,
+          "std": 1.757287,
+          "p5": 0.0,
+          "p50": 1.0,
+          "p95": 5.0,
+          "min": 0.0,
+          "max": 11.0
+        }
+      },
+      {
+        "column": "emergency_boarders",
+        "ks_statistic": 0.159208,
+        "ks_complement": 0.840792,
+        "wasserstein_normalized": 0.020225,
+        "range_coverage": 0.6,
+        "real": {
+          "mean": 0.191705,
+          "std": 0.751066,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "min": 0.0,
+          "max": 10.0
+        },
+        "synthetic": {
+          "mean": 0.372007,
+          "std": 0.779921,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 2.0,
+          "min": 0.0,
+          "max": 6.0
+        }
+      },
+      {
+        "column": "avg_bed_wait_hours",
+        "ks_statistic": 0.111174,
+        "ks_complement": 0.888826,
+        "wasserstein_normalized": 0.010704,
+        "range_coverage": 0.512517,
+        "real": {
+          "mean": 2.451079,
+          "std": 3.904132,
+          "p5": 0.0,
+          "p50": 1.51,
+          "p95": 8.67,
+          "min": 0.0,
+          "max": 59.12
+        },
+        "synthetic": {
+          "mean": 2.396394,
+          "std": 2.924144,
+          "p5": 0.0,
+          "p50": 1.56,
+          "p95": 8.04,
+          "min": 0.0,
+          "max": 30.3
+        }
+      },
+      {
+        "column": "avg_bed_turnaround_min",
+        "ks_statistic": 0.017531,
+        "ks_complement": 0.982469,
+        "wasserstein_normalized": 0.004143,
+        "range_coverage": 0.950052,
+        "real": {
+          "mean": 96.7623,
+          "std": 12.722803,
+          "p5": 78.4,
+          "p50": 95.6,
+          "p95": 120.325,
+          "min": 61.9,
+          "max": 158.0
+        },
+        "synthetic": {
+          "mean": 96.800485,
+          "std": 12.67886,
+          "p5": 78.0,
+          "p50": 95.85,
+          "p95": 119.2,
+          "min": 62.0,
+          "max": 153.3
+        }
+      },
+      {
+        "column": "avg_los_days",
+        "ks_statistic": 0.00955,
+        "ks_complement": 0.99045,
+        "wasserstein_normalized": 0.002254,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 4.251257,
+          "std": 2.261165,
+          "p5": 1.43,
+          "p50": 4.01,
+          "p95": 9.01,
+          "min": 1.2,
+          "max": 13.86
+        },
+        "synthetic": {
+          "mean": 4.243221,
+          "std": 2.241804,
+          "p5": 1.4375,
+          "p50": 4.04,
+          "p95": 8.89,
+          "min": 1.2,
+          "max": 13.86
+        }
+      },
+      {
+        "column": "occupancy_rate",
+        "ks_statistic": 0.033637,
+        "ks_complement": 0.966363,
+        "wasserstein_normalized": 0.008313,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 0.844329,
+          "std": 0.145499,
+          "p5": 0.5556,
+          "p50": 0.8824,
+          "p95": 1.0,
+          "min": 0.0833,
+          "max": 1.0
+        },
+        "synthetic": {
+          "mean": 0.837113,
+          "std": 0.154296,
+          "p5": 0.5,
+          "p50": 0.8788,
+          "p95": 1.0,
+          "min": 0.0588,
+          "max": 1.0
+        }
+      },
+      {
+        "column": "bed_turnover_rate",
+        "ks_statistic": 0.029361,
+        "ks_complement": 0.970639,
+        "wasserstein_normalized": 0.009109,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 0.258373,
+          "std": 0.18659,
+          "p5": 0.0417,
+          "p50": 0.2059,
+          "p95": 0.6667,
+          "min": 0.0,
+          "max": 1.037
+        },
+        "synthetic": {
+          "mean": 0.250032,
+          "std": 0.179465,
+          "p5": 0.0556,
+          "p50": 0.2,
+          "p95": 0.6176,
+          "min": 0.0,
+          "max": 1.0667
+        }
+      },
+      {
+        "column": "patients_per_nurse",
+        "ks_statistic": 0.030502,
+        "ks_complement": 0.969498,
+        "wasserstein_normalized": 0.008718,
+        "range_coverage": 0.956555,
+        "real": {
+          "mean": 4.162755,
+          "std": 1.883041,
+          "p5": 1.0,
+          "p50": 4.33,
+          "p95": 7.0,
+          "min": 0.11,
+          "max": 13.0
+        },
+        "synthetic": {
+          "mean": 4.050448,
+          "std": 1.754221,
+          "p5": 1.0,
+          "p50": 4.33,
+          "p95": 6.5,
+          "min": 0.17,
+          "max": 12.5
+        }
+      },
+      {
+        "column": "delayed_discharge_rate",
+        "ks_statistic": 0.065279,
+        "ks_complement": 0.934721,
+        "wasserstein_normalized": 0.015847,
+        "range_coverage": 0.824116,
+        "real": {
+          "mean": 0.06615,
+          "std": 0.067148,
+          "p5": 0.0,
+          "p50": 0.0556,
+          "p95": 0.1923,
+          "min": 0.0,
+          "max": 0.4412
+        },
+        "synthetic": {
+          "mean": 0.071853,
+          "std": 0.064509,
+          "p5": 0.0,
+          "p50": 0.0667,
+          "p95": 0.1923,
+          "min": 0.0,
+          "max": 0.3636
+        }
+      },
+      {
+        "column": "elective_cancellation_rate",
+        "ks_statistic": 0.051454,
+        "ks_complement": 0.948546,
+        "wasserstein_normalized": 0.026246,
+        "range_coverage": 1.0,
+        "real": {
+          "mean": 0.027119,
+          "std": 0.127267,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 0.2,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "synthetic": {
+          "mean": 0.053365,
+          "std": 0.181611,
+          "p5": 0.0,
+          "p50": 0.0,
+          "p95": 0.5,
+          "min": 0.0,
+          "max": 1.0
+        }
+      }
+    ],
+    "categorical_columns": [
+      {
+        "column": "ward_id",
+        "tv_distance": 0.0,
+        "tv_complement": 1.0,
+        "category_coverage": 1.0,
+        "unseen_categories": [],
+        "real_distribution": {
+          "AMU": 0.125,
+          "CARD": 0.125,
+          "ELDC": 0.125,
+          "GMED": 0.125,
+          "GSUR": 0.125,
+          "ICU": 0.125,
+          "ORTH": 0.125,
+          "PAED": 0.125
+        },
+        "synthetic_distribution": {
+          "AMU": 0.125,
+          "CARD": 0.125,
+          "ELDC": 0.125,
+          "GMED": 0.125,
+          "GSUR": 0.125,
+          "ICU": 0.125,
+          "ORTH": 0.125,
+          "PAED": 0.125
+        }
+      },
+      {
+        "column": "month",
+        "tv_distance": 0.060718,
+        "tv_complement": 0.939282,
+        "category_coverage": 1.0,
+        "unseen_categories": [],
+        "real_distribution": {
+          "1": 0.087657,
+          "10": 0.083808,
+          "11": 0.082241,
+          "12": 0.085091,
+          "2": 0.076112,
+          "3": 0.083096,
+          "4": 0.082241,
+          "5": 0.083096,
+          "6": 0.080245,
+          "7": 0.085234,
+          "8": 0.086944,
+          "9": 0.084236
+        },
+        "synthetic_distribution": {
+          "1": 0.080815,
+          "10": 0.097634,
+          "11": 0.090507,
+          "12": 0.054732,
+          "2": 0.06756,
+          "3": 0.079818,
+          "4": 0.092645,
+          "5": 0.099487,
+          "6": 0.085376,
+          "7": 0.085804,
+          "8": 0.075257,
+          "9": 0.090365
+        }
+      },
+      {
+        "column": "day_of_week",
+        "tv_distance": 0.089937,
+        "tv_complement": 0.910063,
+        "category_coverage": 1.0,
+        "unseen_categories": [],
+        "real_distribution": {
+          "Fri": 0.139111,
+          "Mon": 0.144954,
+          "Sat": 0.142389,
+          "Sun": 0.143957,
+          "Thu": 0.14866,
+          "Tue": 0.141534,
+          "Wed": 0.139396
+        },
+        "synthetic_distribution": {
+          "Fri": 0.131414,
+          "Mon": 0.124145,
+          "Sat": 0.115308,
+          "Sun": 0.109607,
+          "Thu": 0.179447,
+          "Tue": 0.154647,
+          "Wed": 0.185433
+        }
+      },
+      {
+        "column": "staffing_level",
+        "tv_distance": 0.083951,
+        "tv_complement": 0.916049,
+        "category_coverage": 1.0,
+        "unseen_categories": [],
+        "real_distribution": {
+          "adequate": 0.809151,
+          "short": 0.123575,
+          "surplus": 0.067275
+        },
+        "synthetic_distribution": {
+          "adequate": 0.893101,
+          "short": 0.064282,
+          "surplus": 0.042617
+        }
+      },
+      {
+        "column": "occupancy_level",
+        "tv_distance": 0.0,
+        "tv_complement": 1.0,
+        "category_coverage": 1.0,
+        "unseen_categories": [],
+        "real_distribution": {
+          "critical": 0.190279,
+          "high": 0.279504,
+          "low": 0.204532,
+          "normal": 0.325684
+        },
+        "synthetic_distribution": {
+          "critical": 0.190279,
+          "high": 0.279504,
+          "low": 0.204532,
+          "normal": 0.325684
+        }
+      }
+    ],
+    "correlations": {
+      "pearson": {
+        "method": "pearson",
+        "n_pairs": 300,
+        "mean_abs_diff": 0.026668,
+        "max_abs_diff": 0.175197,
+        "worst_pairs": [
+          {
+            "columns": [
+              "census_start",
+              "avg_bed_wait_hours"
+            ],
+            "real": 0.061263,
+            "synthetic": -0.113934,
+            "abs_diff": 0.175197
+          },
+          {
+            "columns": [
+              "delayed_discharges",
+              "avg_bed_wait_hours"
+            ],
+            "real": -0.001744,
+            "synthetic": -0.129154,
+            "abs_diff": 0.127411
+          },
+          {
+            "columns": [
+              "available_beds",
+              "avg_bed_wait_hours"
+            ],
+            "real": -0.039153,
+            "synthetic": -0.160925,
+            "abs_diff": 0.121772
+          },
+          {
+            "columns": [
+              "census_end",
+              "avg_bed_wait_hours"
+            ],
+            "real": 0.044428,
+            "synthetic": -0.069703,
+            "abs_diff": 0.114131
+          },
+          {
+            "columns": [
+              "avg_bed_wait_hours",
+              "avg_los_days"
+            ],
+            "real": -0.059256,
+            "synthetic": -0.168969,
+            "abs_diff": 0.109713
+          }
+        ]
+      },
+      "spearman": {
+        "method": "spearman",
+        "n_pairs": 300,
+        "mean_abs_diff": 0.032024,
+        "max_abs_diff": 0.195024,
+        "worst_pairs": [
+          {
+            "columns": [
+              "census_start",
+              "avg_bed_wait_hours"
+            ],
+            "real": 0.037401,
+            "synthetic": -0.157624,
+            "abs_diff": 0.195024
+          },
+          {
+            "columns": [
+              "emergency_boarders",
+              "occupancy_rate"
+            ],
+            "real": 0.43746,
+            "synthetic": 0.243923,
+            "abs_diff": 0.193538
+          },
+          {
+            "columns": [
+              "available_beds",
+              "avg_bed_wait_hours"
+            ],
+            "real": -0.018371,
+            "synthetic": -0.181562,
+            "abs_diff": 0.163191
+          },
+          {
+            "columns": [
+              "census_end",
+              "avg_bed_wait_hours"
+            ],
+            "real": 0.045769,
+            "synthetic": -0.108316,
+            "abs_diff": 0.154086
+          },
+          {
+            "columns": [
+              "beds_closed",
+              "nurses_night_shift"
+            ],
+            "real": -0.279178,
+            "synthetic": -0.131864,
+            "abs_diff": 0.147314
+          }
+        ]
+      }
+    },
+    "cramers_v": {
+      "n_pairs": 10,
+      "mean_abs_diff": 0.030229,
+      "max_abs_diff": 0.111701,
+      "worst_pairs": [
+        {
+          "columns": [
+            "month",
+            "staffing_level"
+          ],
+          "real": 0.156047,
+          "synthetic": 0.044346,
+          "abs_diff": 0.111701
+        },
+        {
+          "columns": [
+            "ward_id",
+            "month"
+          ],
+          "real": 0.018985,
+          "synthetic": 0.089472,
+          "abs_diff": 0.070488
+        },
+        {
+          "columns": [
+            "ward_id",
+            "day_of_week"
+          ],
+          "real": 0.015188,
+          "synthetic": 0.075078,
+          "abs_diff": 0.05989
+        },
+        {
+          "columns": [
+            "day_of_week",
+            "occupancy_level"
+          ],
+          "real": 0.053719,
+          "synthetic": 0.036083,
+          "abs_diff": 0.017636
+        },
+        {
+          "columns": [
+            "month",
+            "day_of_week"
+          ],
+          "real": 0.027373,
+          "synthetic": 0.042074,
+          "abs_diff": 0.014701
+        }
+      ]
+    },
+    "metric_descriptions": {
+      "sdv_quality_score": "SDV QualityReport overall score: mean of Column Shapes and Column Pair Trends (1 = identical).",
+      "sdv_column_shapes": "SDV Column Shapes: mean of KSComplement (numeric) and TVComplement (categorical) per column.",
+      "sdv_column_pair_trends": "SDV Column Pair Trends: mean CorrelationSimilarity / ContingencySimilarity over column pairs.",
+      "sdv_diagnostic_score": "SDV DiagnosticReport: data validity (boundary / category adherence) and table structure.",
+      "ks_statistic": "Two-sample Kolmogorov-Smirnov statistic: max distance between the real and synthetic CDFs (0 = identical).",
+      "wasserstein_normalized": "Earth mover's distance between real and synthetic values divided by the real value range.",
+      "range_coverage": "Share of the real [min, max] range covered by the synthetic values.",
+      "tv_distance": "Total variation distance between real and synthetic category frequencies (0 = identical).",
+      "category_coverage": "Share of real categories that appear in the synthetic data.",
+      "correlation_mean_abs_diff": "Mean absolute difference between real and synthetic correlation coefficients over numeric column pairs.",
+      "cramers_v_mean_abs_diff": "Mean absolute difference between real and synthetic Cram\u00e9r's V over categorical column pairs.",
+      "column_shapes_score": "Mean of 1 - KS (numeric) and 1 - TVD (categorical) over all columns.",
+      "pair_trends_score": "1 - mean |\u0394 Spearman| / 2 over numeric column pairs.",
+      "validity": "Share of synthetic rows passing every hard operational rule (bedsynth.validation)."
+    },
+    "seconds": 1.327
+  },
+  "validity": {
+    "name": "validity",
+    "description": "Share of synthetic rows that satisfy every hard operational rule, with per-rule violation rates.",
+    "table": "ward_daily",
+    "basis": "raw_model_samples",
+    "n_rows": 7016,
+    "score": 0.314994,
+    "hard_valid_rate": 0.314994,
+    "n_hard_valid": 2210,
+    "hard_violation_rate": 0.685006,
+    "worst_hard_rules": [
+      {
+        "rule_id": "WD-H10",
+        "name": "occupancy_level_consistent",
+        "violation_rate": 0.481756
+      },
+      {
+        "rule_id": "WD-H11",
+        "name": "staffing_level_consistent",
+        "violation_rate": 0.269669
+      },
+      {
+        "rule_id": "WD-H06",
+        "name": "census_within_available_beds",
+        "violation_rate": 0.11545
+      }
+    ],
+    "hard_rules": [
+      {
+        "rule_id": "WD-H01",
+        "name": "valid_categories",
+        "severity": "hard",
+        "description": "ward_id, month, day_of_week, staffing_level and occupancy_level take values from their vocabularies.",
+        "columns": [
+          "ward_id",
+          "month",
+          "day_of_week",
+          "staffing_level",
+          "occupancy_level"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H02",
+        "name": "non_negative_integer_counts",
+        "severity": "hard",
+        "description": "Every bed, nurse and patient count (learned and derived) is present, a whole number and not negative.",
+        "columns": [
+          "bed_capacity",
+          "escalation_beds_open",
+          "beds_closed",
+          "available_beds",
+          "nurses_day_shift",
+          "nurses_night_shift",
+          "census_start",
+          "elective_scheduled",
+          "elective_cancelled",
+          "admissions_elective",
+          "admissions_emergency",
+          "transfers_in",
+          "transfers_out",
+          "discharges",
+          "discharges_before_noon",
+          "census_end",
+          "delayed_discharges",
+          "emergency_boarders"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H03",
+        "name": "cancellations_within_bookings",
+        "severity": "hard",
+        "description": "A ward cannot cancel more elective admissions than were booked for the day.",
+        "columns": [
+          "elective_cancelled",
+          "elective_scheduled"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H04",
+        "name": "noon_discharges_within_discharges",
+        "severity": "hard",
+        "description": "Discharges completed before noon cannot exceed the day's discharges.",
+        "columns": [
+          "discharges_before_noon",
+          "discharges"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H05",
+        "name": "delayed_within_census",
+        "severity": "hard",
+        "description": "Patients medically fit but awaiting discharge at midnight cannot exceed the midnight census.",
+        "columns": [
+          "delayed_discharges",
+          "census_start"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H06",
+        "name": "census_within_available_beds",
+        "severity": "hard",
+        "description": "The end-of-day census is non-negative and fits within the beds available that day.",
+        "columns": [
+          "census_end",
+          "available_beds"
+        ],
+        "violations": 810,
+        "violation_rate": 0.11545
+      },
+      {
+        "rule_id": "WD-H07",
+        "name": "census_start_within_physical_beds",
+        "severity": "hard",
+        "description": "The start-of-day census fits within the base beds plus the escalation beds open.",
+        "columns": [
+          "census_start",
+          "bed_capacity",
+          "escalation_beds_open"
+        ],
+        "violations": 494,
+        "violation_rate": 0.07041
+      },
+      {
+        "rule_id": "WD-H08",
+        "name": "capacity_limits",
+        "severity": "hard",
+        "description": "Escalation beds respect the ward's surge limit, closed beds are not negative and at least one bed is available.",
+        "columns": [
+          "ward_id",
+          "escalation_beds_open",
+          "beds_closed",
+          "available_beds"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H09",
+        "name": "staffing_present",
+        "severity": "hard",
+        "description": "At least one registered nurse is rostered on both the day and the night shift.",
+        "columns": [
+          "nurses_day_shift",
+          "nurses_night_shift"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H10",
+        "name": "occupancy_level_consistent",
+        "severity": "hard",
+        "description": "The occupancy band matches the midnight occupancy census_end / available_beds.",
+        "columns": [
+          "occupancy_level",
+          "census_end",
+          "available_beds"
+        ],
+        "violations": 3380,
+        "violation_rate": 0.481756
+      },
+      {
+        "rule_id": "WD-H11",
+        "name": "staffing_level_consistent",
+        "severity": "hard",
+        "description": "The staffing band matches the day-shift nurses against the ward's nurse requirement.",
+        "columns": [
+          "staffing_level",
+          "nurses_day_shift",
+          "ward_id"
+        ],
+        "violations": 1892,
+        "violation_rate": 0.269669
+      },
+      {
+        "rule_id": "WD-H12",
+        "name": "ward_admission_profile",
+        "severity": "hard",
+        "description": "Wards that take no elective admissions book none, and wards that take no transfers receive none.",
+        "columns": [
+          "ward_id",
+          "elective_scheduled",
+          "elective_cancelled",
+          "transfers_in"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H13",
+        "name": "metric_ranges",
+        "severity": "hard",
+        "description": "Average bed wait (0-96 h), bed turnaround (10-1440 min) and length of stay (0.04-90 days) are physically plausible.",
+        "columns": [
+          "avg_bed_wait_hours",
+          "avg_bed_turnaround_min",
+          "avg_los_days"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H14",
+        "name": "wait_definition",
+        "severity": "hard",
+        "description": "With no emergency admissions the day's average bed wait is defined as zero.",
+        "columns": [
+          "admissions_emergency",
+          "avg_bed_wait_hours"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H15",
+        "name": "closures_only_free_beds",
+        "severity": "hard",
+        "description": "Only free beds are closed, so the start-of-day census fits within the beds available that day.",
+        "columns": [
+          "census_start",
+          "available_beds"
+        ],
+        "violations": 708,
+        "violation_rate": 0.100912
+      }
+    ],
+    "soft_rules": [
+      {
+        "rule_id": "WD-S01",
+        "name": "night_staffing_within_day",
+        "severity": "soft",
+        "description": "Night-shift nurses do not outnumber day-shift nurses.",
+        "columns": [
+          "nurses_night_shift",
+          "nurses_day_shift"
+        ],
+        "violations": 11,
+        "violation_rate": 0.001568
+      },
+      {
+        "rule_id": "WD-S02",
+        "name": "nurse_workload_plausible",
+        "severity": "soft",
+        "description": "Patients per day-shift nurse stay within twice the ward's target nurse ratio.",
+        "columns": [
+          "patients_per_nurse",
+          "ward_id"
+        ],
+        "violations": 1,
+        "violation_rate": 0.000143
+      },
+      {
+        "rule_id": "WD-S03",
+        "name": "boarding_under_pressure",
+        "severity": "soft",
+        "description": "Emergency patients board in ED overnight only when the ward is at least 90% occupied.",
+        "columns": [
+          "emergency_boarders",
+          "occupancy_rate"
+        ],
+        "violations": 895,
+        "violation_rate": 0.127566
+      },
+      {
+        "rule_id": "WD-S04",
+        "name": "escalation_under_pressure",
+        "severity": "soft",
+        "description": "Escalation beds are open only when the ward is at least 80% occupied.",
+        "columns": [
+          "escalation_beds_open",
+          "occupancy_rate"
+        ],
+        "violations": 618,
+        "violation_rate": 0.088084
+      },
+      {
+        "rule_id": "WD-S05",
+        "name": "few_weekend_electives",
+        "severity": "soft",
+        "description": "At most two elective admissions are booked on a Saturday or Sunday.",
+        "columns": [
+          "day_of_week",
+          "elective_scheduled"
+        ],
+        "violations": 36,
+        "violation_rate": 0.005131
+      },
+      {
+        "rule_id": "WD-S06",
+        "name": "noon_discharge_share_plausible",
+        "severity": "soft",
+        "description": "On days with four or more discharges, at most 80% are completed before noon.",
+        "columns": [
+          "discharges",
+          "discharges_before_noon"
+        ],
+        "violations": 11,
+        "violation_rate": 0.001568
+      }
+    ],
+    "hard_violation_rates": {
+      "WD-H01": 0.0,
+      "WD-H02": 0.0,
+      "WD-H03": 0.0,
+      "WD-H04": 0.0,
+      "WD-H05": 0.0,
+      "WD-H06": 0.11545,
+      "WD-H07": 0.07041,
+      "WD-H08": 0.0,
+      "WD-H09": 0.0,
+      "WD-H10": 0.481756,
+      "WD-H11": 0.269669,
+      "WD-H12": 0.0,
+      "WD-H13": 0.0,
+      "WD-H14": 0.0,
+      "WD-H15": 0.100912
+    },
+    "soft_violation_rates": {
+      "WD-S01": 0.001568,
+      "WD-S02": 0.000143,
+      "WD-S03": 0.127566,
+      "WD-S04": 0.088084,
+      "WD-S05": 0.005131,
+      "WD-S06": 0.001568
+    },
+    "soft_clean_rate": 0.801739,
+    "metric_descriptions": {
+      "hard_valid_rate": "Share of rows that pass every hard operational rule (the validity score).",
+      "hard_violation_rate": "Share of rows that violate at least one hard rule.",
+      "violation_rate": "Per rule: share of rows violating that rule.",
+      "soft_clean_rate": "Share of rows that pass every soft (plausibility) rule."
+    },
+    "seconds": 0.023
+  },
+  "operational": {
+    "name": "operational_patterns",
+    "description": "Agreement of operational occupancy, scheduling and patient-flow patterns between synthetic and real data (mean of check scores; strata-forced system checks excluded).",
+    "table": "ward_daily",
+    "score": 0.859614,
+    "n_checks": 17,
+    "n_scored": 17,
+    "n_passed": 12,
+    "pass_rate": 0.705882,
+    "group_scores": {
+      "occupancy": 0.935127,
+      "demand": 0.983237,
+      "capacity": 0.416314,
+      "scheduling": 0.831142,
+      "patient_flow": 0.928133,
+      "relationships": 0.972926,
+      "staffing": 0.70576,
+      "emergency": 0.343316
+    },
+    "failed_checks": [
+      "zero_inflated_count_shares",
+      "weekly_elective_profile",
+      "relationship_occupancy_boarders",
+      "short_staffing_share_by_season",
+      "boarding_prevalence_by_occupancy_band"
+    ],
+    "n_within_real_noise": 12,
+    "beyond_real_noise": [
+      "zero_inflated_count_shares",
+      "weekly_elective_profile",
+      "relationship_occupancy_boarders",
+      "short_staffing_share_by_season",
+      "boarding_prevalence_by_occupancy_band"
+    ],
+    "system_checks": [
+      "occupancy_band_mix_by_ward"
+    ],
+    "forced_columns": [
+      "occupancy_level",
+      "ward_id"
+    ],
+    "calibration": {
+      "n": 7016,
+      "reps": 50,
+      "sd_multiplier": 3.0,
+      "seed": 42,
+      "basis": "random re-splits of the real data (train + holdout): a pseudo training split vs n rows of the remainder",
+      "real_pass_rate_cv": 0.98
+    },
+    "errors": {},
+    "n_rows": {
+      "real": 7016,
+      "synthetic": 7016
+    },
+    "checks": [
+      {
+        "name": "occupancy_mean_by_ward",
+        "description": "Mean midnight occupancy rate per ward (absolute difference; a 0.10 difference scores 0).",
+        "group": "occupancy",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "mean_abs_diff",
+        "value": 0.007216,
+        "criterion": "mean |\u0394 occupancy| <= 0.03 and every ward reproduced",
+        "threshold": 0.03,
+        "threshold_used": 0.03,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.927837,
+        "real": {
+          "AMU": 0.884463,
+          "GMED": 0.901945,
+          "ELDC": 0.921942,
+          "CARD": 0.856664,
+          "GSUR": 0.858616,
+          "ORTH": 0.848034,
+          "ICU": 0.777584,
+          "PAED": 0.705385
+        },
+        "synthetic": {
+          "AMU": 0.880166,
+          "GMED": 0.897654,
+          "ELDC": 0.919212,
+          "CARD": 0.851973,
+          "GSUR": 0.852032,
+          "ORTH": 0.840647,
+          "ICU": 0.769804,
+          "PAED": 0.685414
+        },
+        "details": {
+          "group_by": "ward_id",
+          "by_group": {
+            "AMU": {
+              "value": 0.004297,
+              "score": 0.957029
+            },
+            "GMED": {
+              "value": 0.00429,
+              "score": 0.957097
+            },
+            "ELDC": {
+              "value": 0.002731,
+              "score": 0.972693
+            },
+            "CARD": {
+              "value": 0.004691,
+              "score": 0.953092
+            },
+            "GSUR": {
+              "value": 0.006584,
+              "score": 0.934157
+            },
+            "ORTH": {
+              "value": 0.007386,
+              "score": 0.926137
+            },
+            "ICU": {
+              "value": 0.00778,
+              "score": 0.922202
+            },
+            "PAED": {
+              "value": 0.019971,
+              "score": 0.800292
+            }
+          },
+          "skipped_groups": [],
+          "missing_groups": []
+        },
+        "real_reference": {
+          "mean": 0.008368,
+          "sd": 0.002207,
+          "p95": 0.011923,
+          "noise_limit": 0.014988,
+          "max": 0.012592,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "occupancy_distribution_by_ward",
+        "description": "Distribution of midnight occupancy rate per ward (two-sample KS statistic).",
+        "group": "occupancy",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "mean_ks",
+        "value": 0.057583,
+        "criterion": "mean KS <= 0.15 and every ward reproduced",
+        "threshold": 0.15,
+        "threshold_used": 0.15,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.942417,
+        "real": {
+          "AMU": {
+            "n": 877,
+            "mean": 0.884463,
+            "p50": 0.9118,
+            "p90": 1.0
+          },
+          "GMED": {
+            "n": 877,
+            "mean": 0.901945,
+            "p50": 0.9167,
+            "p90": 1.0
+          },
+          "ELDC": {
+            "n": 877,
+            "mean": 0.921942,
+            "p50": 0.9333,
+            "p90": 1.0
+          },
+          "CARD": {
+            "n": 877,
+            "mean": 0.856664,
+            "p50": 0.8889,
+            "p90": 1.0
+          },
+          "GSUR": {
+            "n": 877,
+            "mean": 0.858616,
+            "p50": 0.871,
+            "p90": 1.0
+          },
+          "ORTH": {
+            "n": 877,
+            "mean": 0.848034,
+            "p50": 0.875,
+            "p90": 1.0
+          },
+          "ICU": {
+            "n": 877,
+            "mean": 0.777584,
+            "p50": 0.8182,
+            "p90": 1.0
+          },
+          "PAED": {
+            "n": 877,
+            "mean": 0.705385,
+            "p50": 0.7059,
+            "p90": 1.0
+          }
+        },
+        "synthetic": {
+          "AMU": {
+            "n": 877,
+            "mean": 0.880166,
+            "p50": 0.9091,
+            "p90": 1.0
+          },
+          "GMED": {
+            "n": 877,
+            "mean": 0.897654,
+            "p50": 0.9118,
+            "p90": 1.0
+          },
+          "ELDC": {
+            "n": 877,
+            "mean": 0.919212,
+            "p50": 0.9355,
+            "p90": 1.0
+          },
+          "CARD": {
+            "n": 877,
+            "mean": 0.851973,
+            "p50": 0.8947,
+            "p90": 1.0
+          },
+          "GSUR": {
+            "n": 877,
+            "mean": 0.852032,
+            "p50": 0.8667,
+            "p90": 1.0
+          },
+          "ORTH": {
+            "n": 877,
+            "mean": 0.840647,
+            "p50": 0.8462,
+            "p90": 1.0
+          },
+          "ICU": {
+            "n": 877,
+            "mean": 0.769804,
+            "p50": 0.8182,
+            "p90": 1.0
+          },
+          "PAED": {
+            "n": 877,
+            "mean": 0.685414,
+            "p50": 0.6667,
+            "p90": 1.0
+          }
+        },
+        "details": {
+          "group_by": "ward_id",
+          "by_group": {
+            "AMU": {
+              "value": 0.04561,
+              "score": 0.95439
+            },
+            "GMED": {
+              "value": 0.058153,
+              "score": 0.941847
+            },
+            "ELDC": {
+              "value": 0.063854,
+              "score": 0.936146
+            },
+            "CARD": {
+              "value": 0.047891,
+              "score": 0.952109
+            },
+            "GSUR": {
+              "value": 0.066135,
+              "score": 0.933865
+            },
+            "ORTH": {
+              "value": 0.061574,
+              "score": 0.938426
+            },
+            "ICU": {
+              "value": 0.037628,
+              "score": 0.962372
+            },
+            "PAED": {
+              "value": 0.079818,
+              "score": 0.920182
+            }
+          },
+          "skipped_groups": [],
+          "missing_groups": []
+        },
+        "real_reference": {
+          "mean": 0.062764,
+          "sd": 0.007737,
+          "p95": 0.076535,
+          "noise_limit": 0.085975,
+          "max": 0.085121,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "occupancy_band_mix_by_ward",
+        "description": "Mix of occupancy bands (low / normal / high / critical) per ward (total variation distance).",
+        "group": "occupancy",
+        "uses": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_forced": true,
+        "metric": "mean_tvd",
+        "value": 0.0,
+        "criterion": "mean TVD <= 0.10 and every ward reproduced",
+        "threshold": 0.1,
+        "threshold_used": 0.1,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 1.0,
+        "real": {
+          "AMU": {
+            "low": 0.116306,
+            "normal": 0.360319,
+            "high": 0.238312,
+            "critical": 0.285063
+          },
+          "GMED": {
+            "low": 0.041049,
+            "normal": 0.338655,
+            "high": 0.431015,
+            "critical": 0.189282
+          },
+          "ELDC": {
+            "low": 0.014823,
+            "normal": 0.245154,
+            "high": 0.516534,
+            "critical": 0.223489
+          },
+          "CARD": {
+            "low": 0.160775,
+            "normal": 0.345496,
+            "high": 0.287343,
+            "critical": 0.206385
+          },
+          "GSUR": {
+            "low": 0.156214,
+            "normal": 0.387685,
+            "high": 0.31927,
+            "critical": 0.13683
+          },
+          "ORTH": {
+            "low": 0.187001,
+            "normal": 0.41049,
+            "high": 0.240593,
+            "critical": 0.161916
+          },
+          "ICU": {
+            "low": 0.36146,
+            "normal": 0.277081,
+            "high": 0.143672,
+            "critical": 0.217788
+          },
+          "PAED": {
+            "low": 0.598632,
+            "normal": 0.240593,
+            "high": 0.059293,
+            "critical": 0.101482
+          }
+        },
+        "synthetic": {
+          "AMU": {
+            "low": 0.116306,
+            "normal": 0.360319,
+            "high": 0.238312,
+            "critical": 0.285063
+          },
+          "GMED": {
+            "low": 0.041049,
+            "normal": 0.338655,
+            "high": 0.431015,
+            "critical": 0.189282
+          },
+          "ELDC": {
+            "low": 0.014823,
+            "normal": 0.245154,
+            "high": 0.516534,
+            "critical": 0.223489
+          },
+          "CARD": {
+            "low": 0.160775,
+            "normal": 0.345496,
+            "high": 0.287343,
+            "critical": 0.206385
+          },
+          "GSUR": {
+            "low": 0.156214,
+            "normal": 0.387685,
+            "high": 0.31927,
+            "critical": 0.13683
+          },
+          "ORTH": {
+            "low": 0.187001,
+            "normal": 0.41049,
+            "high": 0.240593,
+            "critical": 0.161916
+          },
+          "ICU": {
+            "low": 0.36146,
+            "normal": 0.277081,
+            "high": 0.143672,
+            "critical": 0.217788
+          },
+          "PAED": {
+            "low": 0.598632,
+            "normal": 0.240593,
+            "high": 0.059293,
+            "critical": 0.101482
+          }
+        },
+        "details": {
+          "group_by": "ward_id",
+          "by_group": {
+            "AMU": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "GMED": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "ELDC": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "CARD": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "GSUR": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "ORTH": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "ICU": {
+              "value": 0.0,
+              "score": 1.0
+            },
+            "PAED": {
+              "value": 0.0,
+              "score": 1.0
+            }
+          },
+          "skipped_groups": [],
+          "missing_groups": []
+        },
+        "real_reference": {
+          "mean": 0.05383,
+          "sd": 0.009827,
+          "p95": 0.070939,
+          "noise_limit": 0.08331,
+          "max": 0.077538,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "monthly_emergency_profile",
+        "description": "Monthly profile of mean emergency admissions per ward-day, ward-mix adjusted (seasonal demand shape and level).",
+        "group": "demand",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "wape",
+        "value": 0.021137,
+        "criterion": "WAPE <= 0.10 and profile correlation >= 0.5",
+        "threshold": 0.1,
+        "threshold_used": 0.1,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.977143,
+        "real": {
+          "1": 4.738588,
+          "2": 4.56266,
+          "3": 4.08747,
+          "4": 3.854886,
+          "5": 3.965572,
+          "6": 3.821822,
+          "7": 3.729759,
+          "8": 3.666047,
+          "9": 3.824287,
+          "10": 4.037717,
+          "11": 4.276444,
+          "12": 4.903356
+        },
+        "synthetic": {
+          "1": 4.692887,
+          "2": 4.659855,
+          "3": 4.114855,
+          "4": 3.901733,
+          "5": 4.027539,
+          "6": 3.915994,
+          "7": 3.715551,
+          "8": 3.723233,
+          "9": 3.904875,
+          "10": 4.231752,
+          "11": 4.488863,
+          "12": 4.789432
+        },
+        "details": {
+          "group_by": "month",
+          "adjusted_within": "ward_id",
+          "profile_correlation": 0.975423
+        },
+        "real_reference": {
+          "mean": 0.039496,
+          "sd": 0.008397,
+          "p95": 0.051289,
+          "noise_limit": 0.064686,
+          "max": 0.057233,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "seasonal_pressure_contrast",
+        "description": "Winter minus summer share of critical-occupancy ward-days (absolute difference of the contrast).",
+        "group": "demand",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff",
+        "value": 0.002134,
+        "criterion": "|\u0394 (winter - summer critical share)| <= 0.05",
+        "threshold": 0.05,
+        "threshold_used": 0.073722,
+        "conditions_ok": null,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.989331,
+        "real": 0.196332,
+        "synthetic": 0.198465,
+        "details": {},
+        "real_reference": {
+          "mean": 0.023824,
+          "sd": 0.016633,
+          "p95": 0.057079,
+          "noise_limit": 0.073722,
+          "max": 0.068122,
+          "pass_rate_design": 0.88,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "zero_inflated_count_shares",
+        "description": "Share of ward-days with closed beds, with ED boarders and (on booked days) with cancellations (mean |\u0394 share|).",
+        "group": "capacity",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "mean_abs_diff",
+        "value": 0.116737,
+        "criterion": "mean |\u0394 share| <= 0.05",
+        "threshold": 0.05,
+        "threshold_used": 0.05,
+        "conditions_ok": null,
+        "conditions_waived": false,
+        "passed": false,
+        "passed_design": false,
+        "score": 0.416314,
+        "real": {
+          "beds_closed": 0.085376,
+          "emergency_boarders": 0.092503,
+          "elective_cancelled_when_booked": 0.133877
+        },
+        "synthetic": {
+          "beds_closed": 0.178307,
+          "emergency_boarders": 0.25171,
+          "elective_cancelled_when_booked": 0.231951
+        },
+        "details": {
+          "compared": [
+            "beds_closed",
+            "emergency_boarders",
+            "elective_cancelled_when_booked"
+          ]
+        },
+        "real_reference": {
+          "mean": 0.009621,
+          "sd": 0.004008,
+          "p95": 0.015489,
+          "noise_limit": 0.021645,
+          "max": 0.019209,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": false
+      },
+      {
+        "name": "weekly_elective_profile",
+        "description": "Day-of-week profile of elective bookings on wards that accept electives (ward-mix adjusted).",
+        "group": "scheduling",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "wape",
+        "value": 0.372864,
+        "criterion": "WAPE <= 0.10 and profile correlation >= 0.5",
+        "threshold": 0.1,
+        "threshold_used": 0.104099,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": false,
+        "passed_design": false,
+        "score": 0.688393,
+        "real": {
+          "Mon": 1.820119,
+          "Tue": 1.83073,
+          "Wed": 1.770486,
+          "Thu": 1.88441,
+          "Fri": 1.726432,
+          "Sat": 0.131631,
+          "Sun": 0.0
+        },
+        "synthetic": {
+          "Mon": 2.002698,
+          "Tue": 1.053271,
+          "Wed": 1.50012,
+          "Thu": 1.351394,
+          "Fri": 2.415497,
+          "Sat": 0.677211,
+          "Sun": 0.418792
+        },
+        "details": {
+          "group_by": "day_of_week",
+          "adjusted_within": "ward_id",
+          "profile_correlation": 0.749651
+        },
+        "real_reference": {
+          "mean": 0.049646,
+          "sd": 0.018151,
+          "p95": 0.075408,
+          "noise_limit": 0.104099,
+          "max": 0.082456,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": false
+      },
+      {
+        "name": "relationship_bed_pressure_cancellations",
+        "description": "Spearman correlation of start-of-day bed pressure (census_start / available beds) with the elective cancellation rate on days with bookings.",
+        "group": "scheduling",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff_spearman",
+        "value": 0.052219,
+        "criterion": "same sign and |\u0394\u03c1| <= 0.15",
+        "threshold": 0.15,
+        "threshold_used": 0.15,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.97389,
+        "real": 0.227577,
+        "synthetic": 0.175357,
+        "details": {
+          "sign_agrees": true,
+          "n_real": 2943,
+          "n_synthetic": 3255
+        },
+        "real_reference": {
+          "mean": 0.036794,
+          "sd": 0.029379,
+          "p95": 0.094155,
+          "noise_limit": 0.132047,
+          "max": 0.132047,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "weekly_discharge_profile",
+        "description": "Day-of-week profile of mean discharges per ward-day (ward-mix adjusted).",
+        "group": "patient_flow",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "wape",
+        "value": 0.050088,
+        "criterion": "WAPE <= 0.10 and profile correlation >= 0.5",
+        "threshold": 0.1,
+        "threshold_used": 0.1,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.967883,
+        "real": {
+          "Mon": 6.303585,
+          "Tue": 5.103449,
+          "Wed": 5.418106,
+          "Thu": 5.268856,
+          "Fri": 5.672811,
+          "Sat": 4.149606,
+          "Sun": 3.269664
+        },
+        "synthetic": {
+          "Mon": 6.072731,
+          "Tue": 4.7961,
+          "Wed": 5.120432,
+          "Thu": 4.818586,
+          "Fri": 5.505046,
+          "Sat": 4.070549,
+          "Sun": 3.499104
+        },
+        "details": {
+          "group_by": "day_of_week",
+          "adjusted_within": "ward_id",
+          "profile_correlation": 0.985855
+        },
+        "real_reference": {
+          "mean": 0.029765,
+          "sd": 0.007816,
+          "p95": 0.043728,
+          "noise_limit": 0.053213,
+          "max": 0.04712,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "weekend_weekday_discharge_ratio",
+        "description": "Mean weekend discharges divided by mean weekday discharges (relative error).",
+        "group": "patient_flow",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "relative_error",
+        "value": 0.11561,
+        "criterion": "relative error <= 0.10",
+        "threshold": 0.1,
+        "threshold_used": 0.136039,
+        "conditions_ok": null,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": false,
+        "score": 0.88439,
+        "real": 0.676858,
+        "synthetic": 0.755109,
+        "details": {},
+        "real_reference": {
+          "mean": 0.043965,
+          "sd": 0.030691,
+          "p95": 0.099292,
+          "noise_limit": 0.136039,
+          "max": 0.11703,
+          "pass_rate_design": 0.94,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "before_noon_discharge_share",
+        "description": "Share of discharges completed before noon (absolute difference).",
+        "group": "patient_flow",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff",
+        "value": 0.013575,
+        "criterion": "|\u0394 share| <= 0.03",
+        "threshold": 0.03,
+        "threshold_used": 0.03,
+        "conditions_ok": null,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.932126,
+        "real": 0.280841,
+        "synthetic": 0.294415,
+        "details": {},
+        "real_reference": {
+          "mean": 0.006382,
+          "sd": 0.004791,
+          "p95": 0.016289,
+          "noise_limit": 0.020754,
+          "max": 0.01974,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "relationship_census_discharges",
+        "description": "Spearman correlation of start-of-day census with discharges (sign agreement and |\u0394\u03c1|).",
+        "group": "relationships",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff_spearman",
+        "value": 0.030161,
+        "criterion": "same sign and |\u0394\u03c1| <= 0.15",
+        "threshold": 0.15,
+        "threshold_used": 0.15,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.98492,
+        "real": 0.396009,
+        "synthetic": 0.365849,
+        "details": {
+          "sign_agrees": true,
+          "n_real": 7016,
+          "n_synthetic": 7016
+        },
+        "real_reference": {
+          "mean": 0.021641,
+          "sd": 0.01545,
+          "p95": 0.049299,
+          "noise_limit": 0.06799,
+          "max": 0.060606,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "relationship_occupancy_boarders",
+        "description": "Spearman correlation of occupancy rate with emergency patients boarding at midnight.",
+        "group": "relationships",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff_spearman",
+        "value": 0.193538,
+        "criterion": "same sign and |\u0394\u03c1| <= 0.15",
+        "threshold": 0.15,
+        "threshold_used": 0.15,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": false,
+        "passed_design": false,
+        "score": 0.903231,
+        "real": 0.43746,
+        "synthetic": 0.243923,
+        "details": {
+          "sign_agrees": true,
+          "n_real": 7016,
+          "n_synthetic": 7016
+        },
+        "real_reference": {
+          "mean": 0.016077,
+          "sd": 0.011868,
+          "p95": 0.040757,
+          "noise_limit": 0.051681,
+          "max": 0.044915,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": false
+      },
+      {
+        "name": "relationship_delays_occupancy",
+        "description": "Spearman correlation of delayed-discharge rate with occupancy rate.",
+        "group": "relationships",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff_spearman",
+        "value": 0.01852,
+        "criterion": "same sign and |\u0394\u03c1| <= 0.15",
+        "threshold": 0.15,
+        "threshold_used": 0.15,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.99074,
+        "real": 0.147139,
+        "synthetic": 0.128618,
+        "details": {
+          "sign_agrees": true,
+          "n_real": 7016,
+          "n_synthetic": 7016
+        },
+        "real_reference": {
+          "mean": 0.023392,
+          "sd": 0.015948,
+          "p95": 0.051317,
+          "noise_limit": 0.071235,
+          "max": 0.064725,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "relationship_short_staffing_cancellations",
+        "description": "Spearman correlation of short staffing (0/1) with elective cancellation rate on days with bookings.",
+        "group": "relationships",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff_spearman",
+        "value": 0.003436,
+        "criterion": "same sign and |\u0394\u03c1| <= 0.15",
+        "threshold": 0.15,
+        "threshold_used": 0.158839,
+        "conditions_ok": true,
+        "conditions_waived": true,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.998282,
+        "real": 0.037952,
+        "synthetic": 0.034515,
+        "details": {
+          "sign_agrees": true,
+          "n_real": 2943,
+          "n_synthetic": 3255
+        },
+        "real_reference": {
+          "mean": 0.043454,
+          "sd": 0.038462,
+          "p95": 0.13101,
+          "noise_limit": 0.158839,
+          "max": 0.142799,
+          "pass_rate_design": 0.98,
+          "conditions_pass_rate": 0.98,
+          "conditions_waived": true,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "relationship_escalation_occupancy",
+        "description": "Spearman correlation of escalation beds open with occupancy rate.",
+        "group": "relationships",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "abs_diff_spearman",
+        "value": 0.025087,
+        "criterion": "same sign and |\u0394\u03c1| <= 0.15",
+        "threshold": 0.15,
+        "threshold_used": 0.15,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": true,
+        "passed_design": true,
+        "score": 0.987456,
+        "real": 0.290644,
+        "synthetic": 0.315732,
+        "details": {
+          "sign_agrees": true,
+          "n_real": 7016,
+          "n_synthetic": 7016
+        },
+        "real_reference": {
+          "mean": 0.019352,
+          "sd": 0.012135,
+          "p95": 0.038675,
+          "noise_limit": 0.058407,
+          "max": 0.058407,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": true
+      },
+      {
+        "name": "short_staffing_share_by_season",
+        "description": "Share of short-staffed ward-days per season (absolute difference).",
+        "group": "staffing",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "mean_abs_diff",
+        "value": 0.058848,
+        "criterion": "mean |\u0394 share| <= 0.05 and every season reproduced",
+        "threshold": 0.05,
+        "threshold_used": 0.05,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": false,
+        "passed_design": false,
+        "score": 0.70576,
+        "real": {
+          "winter": 0.237113,
+          "spring": 0.08319,
+          "summer": 0.079616,
+          "autumn": 0.095103
+        },
+        "synthetic": {
+          "winter": 0.075088,
+          "spring": 0.066562,
+          "summer": 0.06015,
+          "autumn": 0.05783
+        },
+        "details": {
+          "group_by": "season",
+          "by_group": {
+            "winter": {
+              "value": 0.162026,
+              "score": 0.189872
+            },
+            "spring": {
+              "value": 0.016628,
+              "score": 0.91686
+            },
+            "summer": {
+              "value": 0.019466,
+              "score": 0.902672
+            },
+            "autumn": {
+              "value": 0.037272,
+              "score": 0.813638
+            }
+          },
+          "skipped_groups": [],
+          "missing_groups": []
+        },
+        "real_reference": {
+          "mean": 0.014668,
+          "sd": 0.005776,
+          "p95": 0.023057,
+          "noise_limit": 0.031995,
+          "max": 0.029886,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": false
+      },
+      {
+        "name": "boarding_prevalence_by_occupancy_band",
+        "description": "Share of ward-days with emergency patients boarding at midnight, per occupancy band.",
+        "group": "emergency",
+        "uses": [],
+        "strata_forced": false,
+        "metric": "mean_abs_diff",
+        "value": 0.141953,
+        "criterion": "mean |\u0394 share| <= 0.05 and every band reproduced",
+        "threshold": 0.05,
+        "threshold_used": 0.05,
+        "conditions_ok": true,
+        "conditions_waived": false,
+        "passed": false,
+        "passed_design": false,
+        "score": 0.343316,
+        "real": {
+          "low": 0.0,
+          "normal": 0.0,
+          "high": 0.030597,
+          "critical": 0.441199
+        },
+        "synthetic": {
+          "low": 0.10662,
+          "normal": 0.220131,
+          "high": 0.252932,
+          "critical": 0.459925
+        },
+        "details": {
+          "group_by": "occupancy_level",
+          "by_group": {
+            "low": {
+              "value": 0.10662,
+              "score": 0.466899
+            },
+            "normal": {
+              "value": 0.220131,
+              "score": 0.0
+            },
+            "high": {
+              "value": 0.222336,
+              "score": 0.0
+            },
+            "critical": {
+              "value": 0.018727,
+              "score": 0.906367
+            }
+          },
+          "skipped_groups": [],
+          "missing_groups": []
+        },
+        "real_reference": {
+          "mean": 0.008285,
+          "sd": 0.005152,
+          "p95": 0.017514,
+          "noise_limit": 0.023864,
+          "max": 0.023864,
+          "pass_rate_design": 1.0,
+          "conditions_pass_rate": 1.0,
+          "conditions_waived": false,
+          "n_defined": 50
+        },
+        "within_real_noise": false
+      }
+    ],
+    "seconds": 0.106
+  },
+  "privacy": {
+    "name": "privacy",
+    "description": "Protection against copying training records: exact matches and distance to closest record compared with unseen real (holdout) rows.",
+    "table": "ward_daily",
+    "score": 0.9961,
+    "components": {
+      "exact_match_protection": 1.0,
+      "dcr_ratio_protection": 1.0,
+      "close_record_protection": 1.0,
+      "overfitting_protection": 0.9844
+    },
+    "n_rows": {
+      "train": 7016,
+      "synthetic_used": 5000,
+      "holdout_used": 1752
+    },
+    "exact_matches": {
+      "synthetic_rate": 0.0,
+      "holdout_rate": 0.0
+    },
+    "dcr": {
+      "metric": "L1 / n_columns (sdmetrics DCR definition)",
+      "reference_rows": 7016,
+      "synthetic_to_train": {
+        "median": 0.047133,
+        "mean": 0.050699,
+        "p5": 0.020767,
+        "min": 0.005895
+      },
+      "holdout_to_train": {
+        "median": 0.044425,
+        "mean": 0.048387,
+        "p5": 0.018582,
+        "min": 0.007095
+      },
+      "median_ratio": 1.060962,
+      "close_record_threshold": 0.018582,
+      "close_record_share": 0.031,
+      "closer_to_training_share": 0.5078,
+      "equal_reference_rows": 1752
+    },
+    "sdmetrics": {
+      "ran": true,
+      "rows": 1000,
+      "DCRBaselineProtection": {
+        "score": 0.251968,
+        "median_DCR_to_real_data": {
+          "synthetic_data": 0.083657,
+          "random_data_baseline": 0.332014
+        },
+        "seconds": 6.815
+      },
+      "DCROverfittingProtection": {
+        "score": 0.95,
+        "synthetic_data_percentages": {
+          "closer_to_training": 0.525,
+          "closer_to_holdout": 0.475
+        },
+        "seconds": 6.583
+      }
+    },
+    "aggregate_disclosure": {
+      "columns": [
+        "ward_id",
+        "occupancy_level"
+      ],
+      "synthetic_vs_train_tvd": 0.0,
+      "holdout_vs_train_tvd": 0.034774,
+      "disclosure_ratio": 0.0,
+      "mirrors_training_frequencies": true
+    },
+    "note": "Reference data is simulated: privacy is assessed methodologically (same checks apply to a real extract).",
+    "metric_descriptions": {
+      "exact_match_rate": "Share of synthetic rows identical to a training row on all train columns.",
+      "holdout_exact_match_rate": "Share of real holdout rows identical to a training row (natural duplicate baseline).",
+      "dcr": "Distance to closest training record: mean per-column distance (numeric |\u0394|/range, category mismatch = 1).",
+      "dcr_median_ratio": "Median synthetic DCR divided by median holdout DCR (>= 1: synthetic rows are no closer than unseen real rows).",
+      "close_record_share": "Share of synthetic rows closer to the training data than the 5th percentile of holdout DCR (expected 0.05).",
+      "closer_to_training_share": "Share of synthetic rows closer to a training row than to a holdout row, with equally sized reference sets (expected 0.5).",
+      "exact_match_protection": "1 - excess exact-match rate over the holdout baseline.",
+      "dcr_ratio_protection": "min(1, DCR median ratio).",
+      "close_record_protection": "1 - excess close-record share over the expected 0.05 (rescaled to [0, 1]).",
+      "overfitting_protection": "min(1, 2 * (1 - closer-to-training share)) - the DCROverfittingProtection formula.",
+      "sdmetrics_DCRBaselineProtection": "sdmetrics: median synthetic DCR relative to random data (cross-check, not scored).",
+      "sdmetrics_DCROverfittingProtection": "sdmetrics: closer-to-training share converted to a score (cross-check, not scored).",
+      "aggregate_disclosure": "TVD of the synthetic vs training joint mix of the generator's allocation strata, next to the holdout vs training TVD (real noise); a ratio well below 1 means exact training frequencies are reproduced (reported, not scored)."
+    },
+    "seconds": 13.963
+  },
+  "ml_utility": {
+    "name": "ml_utility",
+    "description": "Train-on-synthetic / test-on-real skill relative to train-on-real with the same number of training rows (HistGradientBoosting, real holdout as test set).",
+    "table": "ward_daily",
+    "score": 0.951027,
+    "n_tasks": 2,
+    "n_informative_tasks": 2,
+    "size_matched": true,
+    "n_rows": {
+      "train_real": 7016,
+      "train_synthetic": 7016,
+      "test_real": 1752
+    },
+    "tasks": [
+      {
+        "name": "high_pressure_classification",
+        "description": "Predict end-of-day high bed pressure from start-of-day information.",
+        "kind": "classification",
+        "target": "occupancy_level in {high, critical}",
+        "features": [
+          "ward_id",
+          "month",
+          "day_of_week",
+          "staffing_level",
+          "nurses_day_shift",
+          "escalation_beds_open",
+          "beds_closed",
+          "census_start",
+          "delayed_discharges",
+          "elective_scheduled"
+        ],
+        "n_rows": {
+          "train_real": 7016,
+          "train_real_full": 7016,
+          "train_synthetic": 7016,
+          "test_real": 1752
+        },
+        "size_matched": false,
+        "trtr": {
+          "auc": 0.789632,
+          "average_precision": 0.75095,
+          "positive_rate": 0.480594,
+          "f1": 0.7019,
+          "f1_no_skill": 0.64919
+        },
+        "trtr_full": null,
+        "tstr": {
+          "auc": 0.776674,
+          "average_precision": 0.731231,
+          "positive_rate": 0.480594,
+          "f1": 0.711161,
+          "f1_no_skill": 0.64919
+        },
+        "ratios": {
+          "auc_ratio": 0.955261,
+          "ap_lift_ratio": 0.927064
+        },
+        "informative": true,
+        "score": 0.941163,
+        "seconds": 0.492,
+        "positive_rate": {
+          "train_real": 0.469783,
+          "train_synthetic": 0.469783,
+          "test_real": 0.480594
+        }
+      },
+      {
+        "name": "discharges_regression",
+        "description": "Predict the number of discharges from start-of-day information.",
+        "kind": "regression",
+        "target": "discharges",
+        "features": [
+          "ward_id",
+          "month",
+          "day_of_week",
+          "staffing_level",
+          "nurses_day_shift",
+          "escalation_beds_open",
+          "beds_closed",
+          "census_start",
+          "delayed_discharges",
+          "elective_scheduled"
+        ],
+        "n_rows": {
+          "train_real": 7016,
+          "train_real_full": 7016,
+          "train_synthetic": 7016,
+          "test_real": 1752
+        },
+        "size_matched": false,
+        "trtr": {
+          "r2": 0.683264,
+          "mae": 1.571902
+        },
+        "trtr_full": null,
+        "tstr": {
+          "r2": 0.656542,
+          "mae": 1.620677
+        },
+        "ratios": {
+          "r2_ratio": 0.960892
+        },
+        "informative": true,
+        "score": 0.960892,
+        "seconds": 0.547
+      }
+    ],
+    "metric_descriptions": {
+      "trtr": "Train-real-test-real: model trained on a seeded real-train subsample of the same size as the synthetic training set, tested on the real holdout (the reference of every ratio).",
+      "trtr_full": "Train-real-test-real on the full real training split (context; reported when its size differs).",
+      "tstr": "Train-synthetic-test-real: model trained on synthetic data, tested on the real holdout.",
+      "r2_ratio": "TSTR R\u00b2 / TRTR R\u00b2 (clipped to [0, 1]).",
+      "auc_ratio": "(TSTR AUC - 0.5) / (TRTR AUC - 0.5) (clipped to [0, 1]); 0 for a classifier without skill.",
+      "ap_lift_ratio": "(TSTR AP - p) / (TRTR AP - p), p = positive rate of the test set (clipped to [0, 1]); 0 for a classifier without skill.",
+      "f1": "F1 of the positive class at a 0.5 probability threshold (reported, not scored).",
+      "f1_no_skill": "F1 of the all-positive classifier, 2p / (1 + p): an F1 at or below it shows no skill."
+    },
+    "seconds": 1.045
+  },
+  "optimization": {
+    "name": "optimization_utility",
+    "description": "Agreement of optimisation decisions made on synthetic vs real ward-days: elective booking quotas (out-of-sample regret on the real holdout), admission-policy evaluation and capacity plans.",
+    "table": "ward_daily",
+    "score": 0.93887,
+    "components": {
+      "booking_quota": 0.978614,
+      "policy_evaluation": 0.862512,
+      "capacity_planning": 0.975483
+    },
+    "booking_quota": {
+      "name": "booking_quota_saa",
+      "description": "Elective booking quota per ward x weekday by sample average approximation (objective admitted - 2 x cancellations); synthetic and real quotas evaluated out of sample on the real holdout.",
+      "penalty": 2.0,
+      "regret_basis": "out_of_sample_holdout",
+      "n_groups": 30,
+      "n_groups_out_of_sample": 30,
+      "quota_agreement": 0.466667,
+      "mean_abs_quota_diff": 0.633333,
+      "relative_regret": 0.021386,
+      "in_sample_relative_regret": 0.042058,
+      "real_decision_regret_vs_oracle": 0.036558,
+      "score": 0.978614,
+      "groups": [
+        {
+          "ward_id": "GMED",
+          "day_of_week": "Mon",
+          "n_real": 128,
+          "n_synthetic": 101,
+          "quota_real": 3,
+          "quota_synthetic": 3,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.898438,
+          "objective_real_at_synthetic_quota": 1.898438,
+          "in_sample_regret": 0.0,
+          "n_holdout": 29,
+          "holdout_objective_real_quota": 1.655172,
+          "holdout_objective_synthetic_quota": 1.655172,
+          "holdout_objective_oracle": 1.655172,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "GMED",
+          "day_of_week": "Tue",
+          "n_real": 120,
+          "n_synthetic": 128,
+          "quota_real": 2,
+          "quota_synthetic": 2,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.275,
+          "objective_real_at_synthetic_quota": 1.275,
+          "in_sample_regret": 0.0,
+          "n_holdout": 37,
+          "holdout_objective_real_quota": 0.783784,
+          "holdout_objective_synthetic_quota": 0.783784,
+          "holdout_objective_oracle": 0.783784,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "GMED",
+          "day_of_week": "Wed",
+          "n_real": 119,
+          "n_synthetic": 152,
+          "quota_real": 2,
+          "quota_synthetic": 3,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.394958,
+          "objective_real_at_synthetic_quota": 1.336134,
+          "in_sample_regret": 0.058824,
+          "n_holdout": 37,
+          "holdout_objective_real_quota": 1.27027,
+          "holdout_objective_synthetic_quota": 0.972973,
+          "holdout_objective_oracle": 1.27027,
+          "regret": 0.297297
+        },
+        {
+          "ward_id": "GMED",
+          "day_of_week": "Thu",
+          "n_real": 127,
+          "n_synthetic": 171,
+          "quota_real": 3,
+          "quota_synthetic": 2,
+          "max_quota": 5,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.511811,
+          "objective_real_at_synthetic_quota": 1.409449,
+          "in_sample_regret": 0.102362,
+          "n_holdout": 29,
+          "holdout_objective_real_quota": 1.551724,
+          "holdout_objective_synthetic_quota": 1.275862,
+          "holdout_objective_oracle": 1.551724,
+          "regret": 0.275862
+        },
+        {
+          "ward_id": "GMED",
+          "day_of_week": "Fri",
+          "n_real": 122,
+          "n_synthetic": 115,
+          "quota_real": 2,
+          "quota_synthetic": 3,
+          "max_quota": 6,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.262295,
+          "objective_real_at_synthetic_quota": 1.106557,
+          "in_sample_regret": 0.155738,
+          "n_holdout": 34,
+          "holdout_objective_real_quota": 1.382353,
+          "holdout_objective_synthetic_quota": 1.5,
+          "holdout_objective_oracle": 1.5,
+          "regret": -0.117647
+        },
+        {
+          "ward_id": "CARD",
+          "day_of_week": "Mon",
+          "n_real": 124,
+          "n_synthetic": 109,
+          "quota_real": 3,
+          "quota_synthetic": 3,
+          "max_quota": 9,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.766129,
+          "objective_real_at_synthetic_quota": 1.766129,
+          "in_sample_regret": 0.0,
+          "n_holdout": 33,
+          "holdout_objective_real_quota": 1.818182,
+          "holdout_objective_synthetic_quota": 1.818182,
+          "holdout_objective_oracle": 1.818182,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "CARD",
+          "day_of_week": "Tue",
+          "n_real": 121,
+          "n_synthetic": 150,
+          "quota_real": 3,
+          "quota_synthetic": 2,
+          "max_quota": 8,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.933884,
+          "objective_real_at_synthetic_quota": 1.727273,
+          "in_sample_regret": 0.206612,
+          "n_holdout": 36,
+          "holdout_objective_real_quota": 1.5,
+          "holdout_objective_synthetic_quota": 1.416667,
+          "holdout_objective_oracle": 1.5,
+          "regret": 0.083333
+        },
+        {
+          "ward_id": "CARD",
+          "day_of_week": "Wed",
+          "n_real": 130,
+          "n_synthetic": 194,
+          "quota_real": 3,
+          "quota_synthetic": 3,
+          "max_quota": 11,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 2.1,
+          "objective_real_at_synthetic_quota": 2.1,
+          "in_sample_regret": 0.0,
+          "n_holdout": 26,
+          "holdout_objective_real_quota": 2.307692,
+          "holdout_objective_synthetic_quota": 2.307692,
+          "holdout_objective_oracle": 2.615385,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "CARD",
+          "day_of_week": "Thu",
+          "n_real": 129,
+          "n_synthetic": 150,
+          "quota_real": 3,
+          "quota_synthetic": 3,
+          "max_quota": 10,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.930233,
+          "objective_real_at_synthetic_quota": 1.930233,
+          "in_sample_regret": 0.0,
+          "n_holdout": 27,
+          "holdout_objective_real_quota": 1.888889,
+          "holdout_objective_synthetic_quota": 1.888889,
+          "holdout_objective_oracle": 1.888889,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "CARD",
+          "day_of_week": "Fri",
+          "n_real": 131,
+          "n_synthetic": 88,
+          "quota_real": 3,
+          "quota_synthetic": 4,
+          "max_quota": 9,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.992366,
+          "objective_real_at_synthetic_quota": 1.916031,
+          "in_sample_regret": 0.076336,
+          "n_holdout": 25,
+          "holdout_objective_real_quota": 2.52,
+          "holdout_objective_synthetic_quota": 2.92,
+          "holdout_objective_oracle": 2.96,
+          "regret": -0.4
+        },
+        {
+          "ward_id": "GSUR",
+          "day_of_week": "Mon",
+          "n_real": 131,
+          "n_synthetic": 103,
+          "quota_real": 7,
+          "quota_synthetic": 6,
+          "max_quota": 13,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 4.916031,
+          "objective_real_at_synthetic_quota": 4.80916,
+          "in_sample_regret": 0.10687,
+          "n_holdout": 26,
+          "holdout_objective_real_quota": 5.5,
+          "holdout_objective_synthetic_quota": 5.076923,
+          "holdout_objective_oracle": 5.692308,
+          "regret": 0.423077
+        },
+        {
+          "ward_id": "GSUR",
+          "day_of_week": "Tue",
+          "n_real": 122,
+          "n_synthetic": 157,
+          "quota_real": 6,
+          "quota_synthetic": 4,
+          "max_quota": 12,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 4.081967,
+          "objective_real_at_synthetic_quota": 3.606557,
+          "in_sample_regret": 0.47541,
+          "n_holdout": 35,
+          "holdout_objective_real_quota": 3.685714,
+          "holdout_objective_synthetic_quota": 3.485714,
+          "holdout_objective_oracle": 3.8,
+          "regret": 0.2
+        },
+        {
+          "ward_id": "GSUR",
+          "day_of_week": "Wed",
+          "n_real": 122,
+          "n_synthetic": 154,
+          "quota_real": 6,
+          "quota_synthetic": 5,
+          "max_quota": 13,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.959016,
+          "objective_real_at_synthetic_quota": 3.942623,
+          "in_sample_regret": 0.016393,
+          "n_holdout": 34,
+          "holdout_objective_real_quota": 2.735294,
+          "holdout_objective_synthetic_quota": 2.970588,
+          "holdout_objective_oracle": 2.970588,
+          "regret": -0.235294
+        },
+        {
+          "ward_id": "GSUR",
+          "day_of_week": "Thu",
+          "n_real": 133,
+          "n_synthetic": 181,
+          "quota_real": 5,
+          "quota_synthetic": 4,
+          "max_quota": 12,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.421053,
+          "objective_real_at_synthetic_quota": 3.142857,
+          "in_sample_regret": 0.278195,
+          "n_holdout": 23,
+          "holdout_objective_real_quota": 3.565217,
+          "holdout_objective_synthetic_quota": 3.347826,
+          "holdout_objective_oracle": 3.565217,
+          "regret": 0.217391
+        },
+        {
+          "ward_id": "GSUR",
+          "day_of_week": "Fri",
+          "n_real": 117,
+          "n_synthetic": 84,
+          "quota_real": 5,
+          "quota_synthetic": 7,
+          "max_quota": 13,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.692308,
+          "objective_real_at_synthetic_quota": 3.435897,
+          "in_sample_regret": 0.25641,
+          "n_holdout": 39,
+          "holdout_objective_real_quota": 3.846154,
+          "holdout_objective_synthetic_quota": 3.384615,
+          "holdout_objective_oracle": 3.923077,
+          "regret": 0.461538
+        },
+        {
+          "ward_id": "ORTH",
+          "day_of_week": "Mon",
+          "n_real": 133,
+          "n_synthetic": 118,
+          "quota_real": 6,
+          "quota_synthetic": 6,
+          "max_quota": 12,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 4.353383,
+          "objective_real_at_synthetic_quota": 4.353383,
+          "in_sample_regret": 0.0,
+          "n_holdout": 24,
+          "holdout_objective_real_quota": 4.125,
+          "holdout_objective_synthetic_quota": 4.125,
+          "holdout_objective_oracle": 4.25,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "ORTH",
+          "day_of_week": "Tue",
+          "n_real": 134,
+          "n_synthetic": 159,
+          "quota_real": 5,
+          "quota_synthetic": 4,
+          "max_quota": 12,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.432836,
+          "objective_real_at_synthetic_quota": 3.373134,
+          "in_sample_regret": 0.059701,
+          "n_holdout": 23,
+          "holdout_objective_real_quota": 2.391304,
+          "holdout_objective_synthetic_quota": 2.304348,
+          "holdout_objective_oracle": 2.391304,
+          "regret": 0.086957
+        },
+        {
+          "ward_id": "ORTH",
+          "day_of_week": "Wed",
+          "n_real": 118,
+          "n_synthetic": 183,
+          "quota_real": 4,
+          "quota_synthetic": 5,
+          "max_quota": 13,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 2.29661,
+          "objective_real_at_synthetic_quota": 2.0,
+          "in_sample_regret": 0.29661,
+          "n_holdout": 38,
+          "holdout_objective_real_quota": 2.815789,
+          "holdout_objective_synthetic_quota": 2.394737,
+          "holdout_objective_oracle": 2.815789,
+          "regret": 0.421053
+        },
+        {
+          "ward_id": "ORTH",
+          "day_of_week": "Thu",
+          "n_real": 130,
+          "n_synthetic": 145,
+          "quota_real": 4,
+          "quota_synthetic": 4,
+          "max_quota": 12,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 2.684615,
+          "objective_real_at_synthetic_quota": 2.684615,
+          "in_sample_regret": 0.0,
+          "n_holdout": 26,
+          "holdout_objective_real_quota": 2.5,
+          "holdout_objective_synthetic_quota": 2.5,
+          "holdout_objective_oracle": 2.5,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "ORTH",
+          "day_of_week": "Fri",
+          "n_real": 116,
+          "n_synthetic": 69,
+          "quota_real": 5,
+          "quota_synthetic": 6,
+          "max_quota": 12,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.241379,
+          "objective_real_at_synthetic_quota": 3.0,
+          "in_sample_regret": 0.241379,
+          "n_holdout": 40,
+          "holdout_objective_real_quota": 3.05,
+          "holdout_objective_synthetic_quota": 2.775,
+          "holdout_objective_oracle": 3.05,
+          "regret": 0.275
+        },
+        {
+          "ward_id": "ICU",
+          "day_of_week": "Mon",
+          "n_real": 130,
+          "n_synthetic": 171,
+          "quota_real": 2,
+          "quota_synthetic": 2,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.030769,
+          "objective_real_at_synthetic_quota": 1.030769,
+          "in_sample_regret": 0.0,
+          "n_holdout": 27,
+          "holdout_objective_real_quota": 0.888889,
+          "holdout_objective_synthetic_quota": 0.888889,
+          "holdout_objective_oracle": 0.888889,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "ICU",
+          "day_of_week": "Tue",
+          "n_real": 129,
+          "n_synthetic": 113,
+          "quota_real": 2,
+          "quota_synthetic": 2,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 0.837209,
+          "objective_real_at_synthetic_quota": 0.837209,
+          "in_sample_regret": 0.0,
+          "n_holdout": 28,
+          "holdout_objective_real_quota": 1.142857,
+          "holdout_objective_synthetic_quota": 1.142857,
+          "holdout_objective_oracle": 1.142857,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "ICU",
+          "day_of_week": "Wed",
+          "n_real": 119,
+          "n_synthetic": 148,
+          "quota_real": 2,
+          "quota_synthetic": 2,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.142857,
+          "objective_real_at_synthetic_quota": 1.142857,
+          "in_sample_regret": 0.0,
+          "n_holdout": 37,
+          "holdout_objective_real_quota": 0.540541,
+          "holdout_objective_synthetic_quota": 0.540541,
+          "holdout_objective_oracle": 0.594595,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "ICU",
+          "day_of_week": "Thu",
+          "n_real": 131,
+          "n_synthetic": 106,
+          "quota_real": 2,
+          "quota_synthetic": 2,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 1.083969,
+          "objective_real_at_synthetic_quota": 1.083969,
+          "in_sample_regret": 0.0,
+          "n_holdout": 25,
+          "holdout_objective_real_quota": 0.44,
+          "holdout_objective_synthetic_quota": 0.44,
+          "holdout_objective_oracle": 0.64,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "ICU",
+          "day_of_week": "Fri",
+          "n_real": 123,
+          "n_synthetic": 164,
+          "quota_real": 2,
+          "quota_synthetic": 2,
+          "max_quota": 6,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 0.902439,
+          "objective_real_at_synthetic_quota": 0.902439,
+          "in_sample_regret": 0.0,
+          "n_holdout": 33,
+          "holdout_objective_real_quota": 0.818182,
+          "holdout_objective_synthetic_quota": 0.818182,
+          "holdout_objective_oracle": 0.818182,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "PAED",
+          "day_of_week": "Mon",
+          "n_real": 127,
+          "n_synthetic": 91,
+          "quota_real": 5,
+          "quota_synthetic": 5,
+          "max_quota": 8,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 2.401575,
+          "objective_real_at_synthetic_quota": 2.401575,
+          "in_sample_regret": 0.0,
+          "n_holdout": 30,
+          "holdout_objective_real_quota": 2.9,
+          "holdout_objective_synthetic_quota": 2.9,
+          "holdout_objective_oracle": 2.9,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "PAED",
+          "day_of_week": "Tue",
+          "n_real": 125,
+          "n_synthetic": 135,
+          "quota_real": 4,
+          "quota_synthetic": 4,
+          "max_quota": 7,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 2.368,
+          "objective_real_at_synthetic_quota": 2.368,
+          "in_sample_regret": 0.0,
+          "n_holdout": 32,
+          "holdout_objective_real_quota": 2.78125,
+          "holdout_objective_synthetic_quota": 2.78125,
+          "holdout_objective_oracle": 2.84375,
+          "regret": 0.0
+        },
+        {
+          "ward_id": "PAED",
+          "day_of_week": "Wed",
+          "n_real": 121,
+          "n_synthetic": 111,
+          "quota_real": 6,
+          "quota_synthetic": 5,
+          "max_quota": 8,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.570248,
+          "objective_real_at_synthetic_quota": 3.561983,
+          "in_sample_regret": 0.008264,
+          "n_holdout": 35,
+          "holdout_objective_real_quota": 3.6,
+          "holdout_objective_synthetic_quota": 3.457143,
+          "holdout_objective_oracle": 3.6,
+          "regret": 0.142857
+        },
+        {
+          "ward_id": "PAED",
+          "day_of_week": "Thu",
+          "n_real": 127,
+          "n_synthetic": 178,
+          "quota_real": 6,
+          "quota_synthetic": 4,
+          "max_quota": 8,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.212598,
+          "objective_real_at_synthetic_quota": 2.889764,
+          "in_sample_regret": 0.322835,
+          "n_holdout": 29,
+          "holdout_objective_real_quota": 1.758621,
+          "holdout_objective_synthetic_quota": 2.448276,
+          "holdout_objective_oracle": 2.448276,
+          "regret": -0.689655
+        },
+        {
+          "ward_id": "PAED",
+          "day_of_week": "Fri",
+          "n_real": 125,
+          "n_synthetic": 158,
+          "quota_real": 5,
+          "quota_synthetic": 4,
+          "max_quota": 8,
+          "missing_in_synthetic": false,
+          "objective_real_optimal": 3.68,
+          "objective_real_at_synthetic_quota": 3.256,
+          "in_sample_regret": 0.424,
+          "n_holdout": 31,
+          "holdout_objective_real_quota": 3.16129,
+          "holdout_objective_synthetic_quota": 3.129032,
+          "holdout_objective_oracle": 3.16129,
+          "regret": 0.032258
+        }
+      ]
+    },
+    "policy_evaluation": {
+      "name": "policy_evaluation",
+      "description": "Elective admission-control policies (occupancy target, optional nurse-ratio cap) simulated on real vs synthetic ward-days; score = accuracy of the predicted policy objectives.",
+      "n_policies": 8,
+      "kpis": [
+        {
+          "policy": "target_85",
+          "target": 0.85,
+          "nurse_cap": false,
+          "real": {
+            "elective_admission_rate": 0.409978,
+            "overflow_share": 0.00038,
+            "mean_projected_occupancy": 0.797412,
+            "objective": 0.538008
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.501307,
+            "overflow_share": 0.00209,
+            "mean_projected_occupancy": 0.795868,
+            "objective": 0.652033
+          }
+        },
+        {
+          "policy": "target_85_nurse_cap",
+          "target": 0.85,
+          "nurse_cap": true,
+          "real": {
+            "elective_admission_rate": 0.389732,
+            "overflow_share": 0.00038,
+            "mean_projected_occupancy": 0.796327,
+            "objective": 0.511403
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.487079,
+            "overflow_share": 0.00209,
+            "mean_projected_occupancy": 0.795131,
+            "objective": 0.633409
+          }
+        },
+        {
+          "policy": "target_90",
+          "target": 0.9,
+          "nurse_cap": false,
+          "real": {
+            "elective_admission_rate": 0.56081,
+            "overflow_share": 0.00171,
+            "mean_projected_occupancy": 0.805505,
+            "objective": 0.733561
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.652729,
+            "overflow_share": 0.005891,
+            "mean_projected_occupancy": 0.803956,
+            "objective": 0.842645
+          }
+        },
+        {
+          "policy": "target_90_nurse_cap",
+          "target": 0.9,
+          "nurse_cap": true,
+          "real": {
+            "elective_admission_rate": 0.52538,
+            "overflow_share": 0.00133,
+            "mean_projected_occupancy": 0.803596,
+            "objective": 0.687761
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.628484,
+            "overflow_share": 0.005701,
+            "mean_projected_occupancy": 0.802669,
+            "objective": 0.811288
+          }
+        },
+        {
+          "policy": "target_95",
+          "target": 0.95,
+          "nurse_cap": false,
+          "real": {
+            "elective_admission_rate": 0.681273,
+            "overflow_share": 0.003041,
+            "mean_projected_occupancy": 0.811665,
+            "objective": 0.888826
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.757695,
+            "overflow_share": 0.009692,
+            "mean_projected_occupancy": 0.809318,
+            "objective": 0.972064
+          }
+        },
+        {
+          "policy": "target_95_nurse_cap",
+          "target": 0.95,
+          "nurse_cap": true,
+          "real": {
+            "elective_admission_rate": 0.628778,
+            "overflow_share": 0.002471,
+            "mean_projected_occupancy": 0.808895,
+            "objective": 0.821361
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.722271,
+            "overflow_share": 0.009122,
+            "mean_projected_occupancy": 0.807464,
+            "objective": 0.926834
+          }
+        },
+        {
+          "policy": "target_100",
+          "target": 1.0,
+          "nurse_cap": false,
+          "real": {
+            "elective_admission_rate": 0.854375,
+            "overflow_share": 0.009502,
+            "mean_projected_occupancy": 0.82094,
+            "objective": 1.100722
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.890679,
+            "overflow_share": 0.018624,
+            "mean_projected_occupancy": 0.816434,
+            "objective": 1.127518
+          }
+        },
+        {
+          "policy": "target_100_nurse_cap",
+          "target": 1.0,
+          "nurse_cap": true,
+          "real": {
+            "elective_admission_rate": 0.753001,
+            "overflow_share": 0.006651,
+            "mean_projected_occupancy": 0.81555,
+            "objective": 0.974724
+          },
+          "synthetic": {
+            "elective_admission_rate": 0.824042,
+            "overflow_share": 0.015013,
+            "mean_projected_occupancy": 0.81295,
+            "objective": 1.04751
+          }
+        }
+      ],
+      "objective_accuracy": 0.862512,
+      "best_policy": {
+        "real": "target_100",
+        "synthetic": "target_100"
+      },
+      "top1_agreement": true,
+      "ranking": {
+        "real": [
+          "target_100",
+          "target_100_nurse_cap",
+          "target_95",
+          "target_95_nurse_cap",
+          "target_90",
+          "target_90_nurse_cap",
+          "target_85",
+          "target_85_nurse_cap"
+        ],
+        "synthetic": [
+          "target_100",
+          "target_100_nurse_cap",
+          "target_95",
+          "target_95_nurse_cap",
+          "target_90",
+          "target_90_nurse_cap",
+          "target_85",
+          "target_85_nurse_cap"
+        ]
+      },
+      "real_ranking_monotone": true,
+      "kendall_tau": 1.0,
+      "kpi_mean_abs_diff": 0.029992,
+      "score": 0.862512
+    },
+    "capacity_planning": {
+      "name": "capacity_planning",
+      "description": "Beds needed per ward = p95 of census_end + emergency_boarders.",
+      "quantile": 0.95,
+      "wards": [
+        {
+          "ward_id": "AMU",
+          "beds_needed_real": 36.0,
+          "beds_needed_synthetic": 35.2,
+          "relative_error": 0.022222
+        },
+        {
+          "ward_id": "GMED",
+          "beds_needed_real": 35.0,
+          "beds_needed_synthetic": 35.0,
+          "relative_error": 0.0
+        },
+        {
+          "ward_id": "ELDC",
+          "beds_needed_real": 34.0,
+          "beds_needed_synthetic": 33.0,
+          "relative_error": 0.029412
+        },
+        {
+          "ward_id": "CARD",
+          "beds_needed_real": 22.2,
+          "beds_needed_synthetic": 23.0,
+          "relative_error": 0.036036
+        },
+        {
+          "ward_id": "GSUR",
+          "beds_needed_real": 32.0,
+          "beds_needed_synthetic": 32.0,
+          "relative_error": 0.0
+        },
+        {
+          "ward_id": "ORTH",
+          "beds_needed_real": 27.0,
+          "beds_needed_synthetic": 26.0,
+          "relative_error": 0.037037
+        },
+        {
+          "ward_id": "ICU",
+          "beds_needed_real": 14.0,
+          "beds_needed_synthetic": 15.0,
+          "relative_error": 0.071429
+        },
+        {
+          "ward_id": "PAED",
+          "beds_needed_real": 19.0,
+          "beds_needed_synthetic": 19.0,
+          "relative_error": 0.0
+        }
+      ],
+      "mean_relative_error": 0.024517,
+      "score": 0.975483
+    },
+    "metric_descriptions": {
+      "quota_agreement": "Share of ward x weekday groups where the synthetic-optimal quota equals the real-optimal quota.",
+      "relative_regret": "Holdout objective lost by the synthetic-optimal quotas relative to the real-optimal quotas, divided by the holdout objective of the real-optimal quotas (summed over groups; out of sample).",
+      "in_sample_relative_regret": "The same regret evaluated on the training split (the real quota is optimal there).",
+      "real_decision_regret_vs_oracle": "Holdout objective lost by the real-optimal quotas against the holdout optimum (real-vs-real floor of the regret).",
+      "objective_accuracy": "1 - mean over policies of min(1, |synthetic objective - real objective| / |real objective|).",
+      "kendall_tau": "Kendall rank correlation between the policy rankings on real and on synthetic data (diagnostic).",
+      "top1_agreement": "Whether the best policy on synthetic data is the best policy on real data (diagnostic).",
+      "kpi_mean_abs_diff": "Mean |real - synthetic| over the policy KPI table (rates and occupancy).",
+      "capacity_relative_error": "Mean relative error of the per-ward 95th percentile of census_end + emergency_boarders."
+    },
+    "seconds": 0.236
+  },
+  "scenario_coverage": {
+    "name": "scenario_coverage",
+    "description": "Ability to generate every catalogue scenario (fulfilment, strata fidelity) and fidelity of each scenario subset to the matching real subset.",
+    "table": "ward_daily",
+    "model_id": "gc_segmented",
+    "score": 0.942516,
+    "rows_per_scenario": 400,
+    "time_budget_seconds": 20,
+    "max_attempts": 8,
+    "total_budget_seconds": 150,
+    "n_scenarios": 16,
+    "n_evaluated": 16,
+    "n_succeeded": 16,
+    "complete": true,
+    "failed_scenarios": [],
+    "not_evaluated_scenarios": [],
+    "budget_stopped_scenarios": [],
+    "throttled_scenarios": [],
+    "rebalanced_scenarios": [
+      "emergency_pressure",
+      "escalation_capacity",
+      "reduced_capacity",
+      "scheduled_procedures",
+      "elective_cancellations",
+      "high_turnover",
+      "delayed_discharge_pressure"
+    ],
+    "mean_fulfilment": 0.999688,
+    "mean_strata_fidelity": 0.888521,
+    "mean_acceptance_rate": 0.176488,
+    "mean_fidelity": 0.940927,
+    "mean_combination_coverage": 0.986294,
+    "scenarios": [
+      {
+        "name": "baseline",
+        "title": "Baseline operations",
+        "category": "baseline",
+        "description": "Unconditional sample reproducing the real mix of wards, seasons and pressures.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 7016,
+          "share": 1.0
+        },
+        "requested": 400,
+        "seed": 42,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.256492,
+        "seconds": 2.087,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 32,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 2,
+          "quota_moves": 2
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.012434,
+        "strata_rounding_tvd": 0.007434,
+        "strata_fidelity": 0.987566,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 29,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.993783,
+        "fidelity": 0.959354,
+        "fidelity_components": {
+          "column_shapes": 0.943097,
+          "column_pair_trends": 0.97561,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.844329,
+            "synthetic": 0.835939,
+            "relative_diff": 0.009937
+          },
+          "emergency_boarders": {
+            "real": 0.191705,
+            "synthetic": 0.4075,
+            "relative_diff": 1.125665
+          },
+          "avg_bed_wait_hours": {
+            "real": 2.451079,
+            "synthetic": 2.375225,
+            "relative_diff": 0.030947
+          },
+          "elective_scheduled": {
+            "real": 0.985604,
+            "synthetic": 0.9425,
+            "relative_diff": 0.043734
+          },
+          "elective_cancellation_rate": {
+            "real": 0.027119,
+            "synthetic": 0.045776,
+            "relative_diff": 0.687974
+          },
+          "delayed_discharge_rate": {
+            "real": 0.06615,
+            "synthetic": 0.072321,
+            "relative_diff": 0.093279
+          },
+          "bed_turnover_rate": {
+            "real": 0.258373,
+            "synthetic": 0.25134,
+            "relative_diff": 0.027222
+          },
+          "patients_per_nurse": {
+            "real": 4.162755,
+            "synthetic": 4.05185,
+            "relative_diff": 0.026642
+          },
+          "escalation_beds_open": {
+            "real": 0.968786,
+            "synthetic": 1.0225,
+            "relative_diff": 0.055445
+          },
+          "beds_closed": {
+            "real": 0.145667,
+            "synthetic": 0.275,
+            "relative_diff": 0.887867
+          }
+        },
+        "score": 0.976568
+      },
+      {
+        "name": "normal_occupancy",
+        "title": "Normal occupancy",
+        "category": "occupancy",
+        "description": "Ward-days running at 75-90% midnight occupancy.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 2285,
+          "share": 0.325684
+        },
+        "requested": 400,
+        "seed": 43,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.382015,
+        "seconds": 0.654,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 8,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 0,
+          "quota_moves": 0
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.002243,
+        "strata_rounding_tvd": 0.002243,
+        "strata_fidelity": 0.997757,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 8,
+          "n_material_combinations": 8,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.998879,
+        "fidelity": 0.951956,
+        "fidelity_components": {
+          "column_shapes": 0.929454,
+          "column_pair_trends": 0.974457,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.82599,
+            "synthetic": 0.817225,
+            "relative_diff": 0.010612
+          },
+          "emergency_boarders": {
+            "real": 0.0,
+            "synthetic": 0.3075,
+            "relative_diff": 307500.0
+          },
+          "avg_bed_wait_hours": {
+            "real": 1.904906,
+            "synthetic": 2.33315,
+            "relative_diff": 0.224811
+          },
+          "elective_scheduled": {
+            "real": 1.082276,
+            "synthetic": 1.175,
+            "relative_diff": 0.085675
+          },
+          "elective_cancellation_rate": {
+            "real": 0.021467,
+            "synthetic": 0.059818,
+            "relative_diff": 1.786521
+          },
+          "delayed_discharge_rate": {
+            "real": 0.068588,
+            "synthetic": 0.071567,
+            "relative_diff": 0.043437
+          },
+          "bed_turnover_rate": {
+            "real": 0.272603,
+            "synthetic": 0.260288,
+            "relative_diff": 0.045175
+          },
+          "patients_per_nurse": {
+            "real": 4.120158,
+            "synthetic": 3.924575,
+            "relative_diff": 0.04747
+          },
+          "escalation_beds_open": {
+            "real": 0.891904,
+            "synthetic": 0.8875,
+            "relative_diff": 0.004937
+          },
+          "beds_closed": {
+            "real": 0.131729,
+            "synthetic": 0.23,
+            "relative_diff": 0.746013
+          }
+        },
+        "score": 0.975417
+      },
+      {
+        "name": "high_occupancy",
+        "title": "High occupancy",
+        "category": "occupancy",
+        "description": "Ward-days at or above 90% midnight occupancy (high or critical band).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 3296,
+          "share": 0.469783
+        },
+        "requested": 400,
+        "seed": 44,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.154821,
+        "seconds": 1.874,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 16,
+          "stratified_combinations": 2,
+          "rebalanced_rows": 0,
+          "quota_moves": 0
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.00466,
+        "strata_rounding_tvd": 0.00466,
+        "strata_fidelity": 0.99534,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 16,
+          "n_material_combinations": 16,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.99767,
+        "fidelity": 0.951864,
+        "fidelity_components": {
+          "column_shapes": 0.930677,
+          "column_pair_trends": 0.973051,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.959021,
+            "synthetic": 0.960334,
+            "relative_diff": 0.001369
+          },
+          "emergency_boarders": {
+            "real": 0.40807,
+            "synthetic": 0.5725,
+            "relative_diff": 0.402944
+          },
+          "avg_bed_wait_hours": {
+            "real": 3.266899,
+            "synthetic": 2.553375,
+            "relative_diff": 0.21841
+          },
+          "elective_scheduled": {
+            "real": 1.011529,
+            "synthetic": 1.065,
+            "relative_diff": 0.052861
+          },
+          "elective_cancellation_rate": {
+            "real": 0.035735,
+            "synthetic": 0.065127,
+            "relative_diff": 0.822506
+          },
+          "delayed_discharge_rate": {
+            "real": 0.07285,
+            "synthetic": 0.073028,
+            "relative_diff": 0.002442
+          },
+          "bed_turnover_rate": {
+            "real": 0.227879,
+            "synthetic": 0.208851,
+            "relative_diff": 0.083501
+          },
+          "patients_per_nurse": {
+            "real": 4.989539,
+            "synthetic": 4.903475,
+            "relative_diff": 0.017249
+          },
+          "escalation_beds_open": {
+            "real": 1.307646,
+            "synthetic": 1.56,
+            "relative_diff": 0.192984
+          },
+          "beds_closed": {
+            "real": 0.183252,
+            "synthetic": 0.175,
+            "relative_diff": 0.045033
+          }
+        },
+        "score": 0.974767
+      },
+      {
+        "name": "low_occupancy",
+        "title": "Low occupancy",
+        "category": "occupancy",
+        "description": "Ward-days below 75% midnight occupancy.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 1435,
+          "share": 0.204532
+        },
+        "requested": 400,
+        "seed": 45,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.516677,
+        "seconds": 0.783,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 8,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 0,
+          "quota_moves": 0
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.003075,
+        "strata_rounding_tvd": 0.003075,
+        "strata_fidelity": 0.996925,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 8,
+          "n_material_combinations": 7,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.998463,
+        "fidelity": 0.95552,
+        "fidelity_components": {
+          "column_shapes": 0.940625,
+          "column_pair_trends": 0.970414,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.610099,
+            "synthetic": 0.592642,
+            "relative_diff": 0.028614
+          },
+          "emergency_boarders": {
+            "real": 0.0,
+            "synthetic": 0.1275,
+            "relative_diff": 127500.0
+          },
+          "avg_bed_wait_hours": {
+            "real": 1.446941,
+            "synthetic": 1.773875,
+            "relative_diff": 0.225949
+          },
+          "elective_scheduled": {
+            "real": 0.772125,
+            "synthetic": 0.89,
+            "relative_diff": 0.152662
+          },
+          "elective_cancellation_rate": {
+            "real": 0.01633,
+            "synthetic": 0.048166,
+            "relative_diff": 1.9496
+          },
+          "delayed_discharge_rate": {
+            "real": 0.046882,
+            "synthetic": 0.051843,
+            "relative_diff": 0.105815
+          },
+          "bed_turnover_rate": {
+            "real": 0.305756,
+            "synthetic": 0.331346,
+            "relative_diff": 0.083696
+          },
+          "patients_per_nurse": {
+            "real": 2.331575,
+            "synthetic": 2.234325,
+            "relative_diff": 0.04171
+          },
+          "escalation_beds_open": {
+            "real": 0.312892,
+            "synthetic": 0.3725,
+            "relative_diff": 0.190507
+          },
+          "beds_closed": {
+            "real": 0.081533,
+            "synthetic": 0.1675,
+            "relative_diff": 1.05438
+          }
+        },
+        "score": 0.976991
+      },
+      {
+        "name": "winter_demand",
+        "title": "Winter seasonal demand",
+        "category": "seasonal",
+        "description": "December-February operations (respiratory season, emergency surge).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 1746,
+          "share": 0.24886
+        },
+        "requested": 400,
+        "seed": 46,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.19955,
+        "seconds": 2.867,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 89,
+          "stratified_combinations": 3,
+          "rebalanced_rows": 0,
+          "quota_moves": 0
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.014711,
+        "strata_rounding_tvd": 0.009184,
+        "strata_fidelity": 0.985289,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 31,
+          "n_material_combinations": 29,
+          "coverage": 1.0,
+          "weighted_coverage": 0.999427,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.992645,
+        "fidelity": 0.954535,
+        "fidelity_components": {
+          "column_shapes": 0.931534,
+          "column_pair_trends": 0.977536,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.891467,
+            "synthetic": 0.884204,
+            "relative_diff": 0.008148
+          },
+          "emergency_boarders": {
+            "real": 0.350515,
+            "synthetic": 0.49,
+            "relative_diff": 0.397941
+          },
+          "avg_bed_wait_hours": {
+            "real": 3.352898,
+            "synthetic": 2.647675,
+            "relative_diff": 0.210332
+          },
+          "elective_scheduled": {
+            "real": 0.930126,
+            "synthetic": 1.0625,
+            "relative_diff": 0.142318
+          },
+          "elective_cancellation_rate": {
+            "real": 0.031438,
+            "synthetic": 0.055722,
+            "relative_diff": 0.772418
+          },
+          "delayed_discharge_rate": {
+            "real": 0.069843,
+            "synthetic": 0.073167,
+            "relative_diff": 0.047599
+          },
+          "bed_turnover_rate": {
+            "real": 0.276936,
+            "synthetic": 0.257291,
+            "relative_diff": 0.070936
+          },
+          "patients_per_nurse": {
+            "real": 4.779192,
+            "synthetic": 4.324525,
+            "relative_diff": 0.095135
+          },
+          "escalation_beds_open": {
+            "real": 1.987973,
+            "synthetic": 1.82,
+            "relative_diff": 0.084494
+          },
+          "beds_closed": {
+            "real": 0.272623,
+            "synthetic": 0.2675,
+            "relative_diff": 0.018792
+          }
+        },
+        "score": 0.97359
+      },
+      {
+        "name": "summer_demand",
+        "title": "Summer seasonal demand",
+        "category": "seasonal",
+        "description": "June-August operations (lower emergency demand, reduced August electives).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 1771,
+          "share": 0.252423
+        },
+        "requested": 400,
+        "seed": 47,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.318935,
+        "seconds": 2.763,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 92,
+          "stratified_combinations": 3,
+          "rebalanced_rows": 9,
+          "quota_moves": 9
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.036726,
+        "strata_rounding_tvd": 0.011342,
+        "strata_fidelity": 0.963274,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 27,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.981637,
+        "fidelity": 0.957977,
+        "fidelity_components": {
+          "column_shapes": 0.946598,
+          "column_pair_trends": 0.969356,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.806072,
+            "synthetic": 0.794774,
+            "relative_diff": 0.014016
+          },
+          "emergency_boarders": {
+            "real": 0.107849,
+            "synthetic": 0.305,
+            "relative_diff": 1.828037
+          },
+          "avg_bed_wait_hours": {
+            "real": 1.907301,
+            "synthetic": 2.156075,
+            "relative_diff": 0.130433
+          },
+          "elective_scheduled": {
+            "real": 0.922643,
+            "synthetic": 1.0425,
+            "relative_diff": 0.129907
+          },
+          "elective_cancellation_rate": {
+            "real": 0.018344,
+            "synthetic": 0.038134,
+            "relative_diff": 1.078776
+          },
+          "delayed_discharge_rate": {
+            "real": 0.063825,
+            "synthetic": 0.066502,
+            "relative_diff": 0.04194
+          },
+          "bed_turnover_rate": {
+            "real": 0.247522,
+            "synthetic": 0.239662,
+            "relative_diff": 0.031755
+          },
+          "patients_per_nurse": {
+            "real": 3.779577,
+            "synthetic": 3.667325,
+            "relative_diff": 0.029699
+          },
+          "escalation_beds_open": {
+            "real": 0.229249,
+            "synthetic": 0.39,
+            "relative_diff": 0.701207
+          },
+          "beds_closed": {
+            "real": 0.08978,
+            "synthetic": 0.2075,
+            "relative_diff": 1.311211
+          }
+        },
+        "score": 0.969807
+      },
+      {
+        "name": "emergency_pressure",
+        "title": "Emergency bed pressure",
+        "category": "emergency",
+        "description": "High-occupancy days with emergency patients still waiting for a bed at midnight.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 649,
+          "share": 0.092503
+        },
+        "requested": 400,
+        "seed": 48,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.050985,
+        "seconds": 2.748,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 16,
+          "stratified_combinations": 2,
+          "rebalanced_rows": 0,
+          "quota_moves": 0,
+          "pilot_rows": 2752
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.50255,
+        "strata_rounding_tvd": 0.005701,
+        "strata_fidelity": 0.49745,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 16,
+          "n_material_combinations": 9,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.748725,
+        "fidelity": 0.931243,
+        "fidelity_components": {
+          "column_shapes": 0.898153,
+          "column_pair_trends": 0.964333,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.995072,
+            "synthetic": 0.959024,
+            "relative_diff": 0.036226
+          },
+          "emergency_boarders": {
+            "real": 2.072419,
+            "synthetic": 1.535,
+            "relative_diff": 0.25932
+          },
+          "avg_bed_wait_hours": {
+            "real": 5.64376,
+            "synthetic": 3.69475,
+            "relative_diff": 0.345339
+          },
+          "elective_scheduled": {
+            "real": 1.05547,
+            "synthetic": 1.08,
+            "relative_diff": 0.023241
+          },
+          "elective_cancellation_rate": {
+            "real": 0.05479,
+            "synthetic": 0.089557,
+            "relative_diff": 0.634551
+          },
+          "delayed_discharge_rate": {
+            "real": 0.067865,
+            "synthetic": 0.072226,
+            "relative_diff": 0.064261
+          },
+          "bed_turnover_rate": {
+            "real": 0.31438,
+            "synthetic": 0.285171,
+            "relative_diff": 0.092911
+          },
+          "patients_per_nurse": {
+            "real": 4.569168,
+            "synthetic": 4.459975,
+            "relative_diff": 0.023898
+          },
+          "escalation_beds_open": {
+            "real": 1.439137,
+            "synthetic": 1.49,
+            "relative_diff": 0.035343
+          },
+          "beds_closed": {
+            "real": 0.288136,
+            "synthetic": 0.1975,
+            "relative_diff": 0.314559
+          }
+        },
+        "score": 0.839984
+      },
+      {
+        "name": "escalation_capacity",
+        "title": "Escalation beds open under pressure",
+        "category": "utilization",
+        "description": "High- or critical-occupancy days on which temporary surge (escalation) beds were open (escalation is decided hospital-wide, so on its own it would mostly select winter hub-ward days).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 1595,
+          "share": 0.227338
+        },
+        "requested": 400,
+        "seed": 49,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.100499,
+        "seconds": 2.547,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 14,
+          "stratified_combinations": 2,
+          "rebalanced_rows": 1,
+          "quota_moves": 1,
+          "pilot_rows": 4457
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.103942,
+        "strata_rounding_tvd": 0.005784,
+        "strata_fidelity": 0.896058,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 16,
+          "n_material_combinations": 14,
+          "coverage": 1.0,
+          "weighted_coverage": 0.989342,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.948029,
+        "fidelity": 0.934087,
+        "fidelity_components": {
+          "column_shapes": 0.90668,
+          "column_pair_trends": 0.961493,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.961987,
+            "synthetic": 0.957719,
+            "relative_diff": 0.004437
+          },
+          "emergency_boarders": {
+            "real": 0.44326,
+            "synthetic": 0.47,
+            "relative_diff": 0.060325
+          },
+          "avg_bed_wait_hours": {
+            "real": 3.898633,
+            "synthetic": 2.64435,
+            "relative_diff": 0.321724
+          },
+          "elective_scheduled": {
+            "real": 0.929781,
+            "synthetic": 0.9325,
+            "relative_diff": 0.002925
+          },
+          "elective_cancellation_rate": {
+            "real": 0.042307,
+            "synthetic": 0.054002,
+            "relative_diff": 0.276416
+          },
+          "delayed_discharge_rate": {
+            "real": 0.078159,
+            "synthetic": 0.090083,
+            "relative_diff": 0.152571
+          },
+          "bed_turnover_rate": {
+            "real": 0.226329,
+            "synthetic": 0.197079,
+            "relative_diff": 0.129235
+          },
+          "patients_per_nurse": {
+            "real": 5.484897,
+            "synthetic": 5.386975,
+            "relative_diff": 0.017853
+          },
+          "escalation_beds_open": {
+            "real": 2.702194,
+            "synthetic": 2.435,
+            "relative_diff": 0.098881
+          },
+          "beds_closed": {
+            "real": 0.255799,
+            "synthetic": 0.3,
+            "relative_diff": 0.172794
+          }
+        },
+        "score": 0.941058
+      },
+      {
+        "name": "reduced_capacity",
+        "title": "Reduced bed capacity",
+        "category": "utilization",
+        "description": "Days with beds closed (staffing, infection control or maintenance).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 599,
+          "share": 0.085376
+        },
+        "requested": 400,
+        "seed": 50,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.040759,
+        "seconds": 3.357,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [
+          "Low acceptance rate (4.1% < 5%): most sampled rows violated hard validation rules or the scenario conditions/filters."
+        ],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 32,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 2,
+          "quota_moves": 2,
+          "pilot_rows": 1752
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.19086,
+        "strata_rounding_tvd": 0.010255,
+        "strata_fidelity": 0.80914,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 30,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.90457,
+        "fidelity": 0.911682,
+        "fidelity_components": {
+          "column_shapes": 0.857951,
+          "column_pair_trends": 0.965413,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.873206,
+            "synthetic": 0.855422,
+            "relative_diff": 0.020365
+          },
+          "emergency_boarders": {
+            "real": 0.320534,
+            "synthetic": 0.405,
+            "relative_diff": 0.263516
+          },
+          "avg_bed_wait_hours": {
+            "real": 2.671836,
+            "synthetic": 2.30605,
+            "relative_diff": 0.136904
+          },
+          "elective_scheduled": {
+            "real": 0.976628,
+            "synthetic": 0.8375,
+            "relative_diff": 0.142457
+          },
+          "elective_cancellation_rate": {
+            "real": 0.041035,
+            "synthetic": 0.067662,
+            "relative_diff": 0.648889
+          },
+          "delayed_discharge_rate": {
+            "real": 0.064282,
+            "synthetic": 0.072559,
+            "relative_diff": 0.12876
+          },
+          "bed_turnover_rate": {
+            "real": 0.282207,
+            "synthetic": 0.252545,
+            "relative_diff": 0.105105
+          },
+          "patients_per_nurse": {
+            "real": 5.692855,
+            "synthetic": 4.60255,
+            "relative_diff": 0.191522
+          },
+          "escalation_beds_open": {
+            "real": 1.372287,
+            "synthetic": 1.2675,
+            "relative_diff": 0.076359
+          },
+          "beds_closed": {
+            "real": 1.706177,
+            "synthetic": 1.4325,
+            "relative_diff": 0.160404
+          }
+        },
+        "score": 0.908126
+      },
+      {
+        "name": "scheduled_procedures",
+        "title": "Scheduled procedure days",
+        "category": "scheduling",
+        "description": "Weekday elective lists on surgical and cardiology wards (2+ bookings).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 1518,
+          "share": 0.216363
+        },
+        "requested": 400,
+        "seed": 51,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.128508,
+        "seconds": 1.699,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 60,
+          "stratified_combinations": 15,
+          "rebalanced_rows": 2,
+          "quota_moves": 2,
+          "pilot_rows": 5319
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.120823,
+        "strata_rounding_tvd": 0.003781,
+        "strata_fidelity": 0.879177,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 12,
+          "n_material_combinations": 12,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.939588,
+        "fidelity": 0.935165,
+        "fidelity_components": {
+          "column_shapes": 0.901442,
+          "column_pair_trends": 0.968887,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.870166,
+            "synthetic": 0.861322,
+            "relative_diff": 0.010163
+          },
+          "emergency_boarders": {
+            "real": 0.162714,
+            "synthetic": 0.3125,
+            "relative_diff": 0.920547
+          },
+          "avg_bed_wait_hours": {
+            "real": 3.014368,
+            "synthetic": 3.136475,
+            "relative_diff": 0.040508
+          },
+          "elective_scheduled": {
+            "real": 3.326087,
+            "synthetic": 3.4125,
+            "relative_diff": 0.02598
+          },
+          "elective_cancellation_rate": {
+            "real": 0.086243,
+            "synthetic": 0.157103,
+            "relative_diff": 0.821623
+          },
+          "delayed_discharge_rate": {
+            "real": 0.050125,
+            "synthetic": 0.05686,
+            "relative_diff": 0.13436
+          },
+          "bed_turnover_rate": {
+            "real": 0.226435,
+            "synthetic": 0.224424,
+            "relative_diff": 0.00888
+          },
+          "patients_per_nurse": {
+            "real": 4.934124,
+            "synthetic": 4.658925,
+            "relative_diff": 0.055775
+          },
+          "escalation_beds_open": {
+            "real": 0.644269,
+            "synthetic": 0.73,
+            "relative_diff": 0.133067
+          },
+          "beds_closed": {
+            "real": 0.1278,
+            "synthetic": 0.2,
+            "relative_diff": 0.564948
+          }
+        },
+        "score": 0.937377
+      },
+      {
+        "name": "elective_cancellations",
+        "title": "Elective cancellations",
+        "category": "scheduling",
+        "description": "Days on which at least one booked elective admission was cancelled.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 394,
+          "share": 0.056157
+        },
+        "requested": 400,
+        "seed": 52,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.05318,
+        "seconds": 2.059,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 16,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 1,
+          "quota_moves": 1,
+          "pilot_rows": 914
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.223756,
+        "strata_rounding_tvd": 0.005673,
+        "strata_fidelity": 0.776244,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 22,
+          "n_material_combinations": 18,
+          "coverage": 0.833333,
+          "weighted_coverage": 0.93401,
+          "missing_material_combinations": [
+            [
+              "GMED",
+              "high"
+            ],
+            [
+              "GMED",
+              "normal"
+            ],
+            [
+              "PAED",
+              "low"
+            ]
+          ],
+          "strata_forced": true
+        },
+        "coverage": 0.888122,
+        "fidelity": 0.922644,
+        "fidelity_components": {
+          "column_shapes": 0.892879,
+          "column_pair_trends": 0.952409,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.894319,
+            "synthetic": 0.867696,
+            "relative_diff": 0.029769
+          },
+          "emergency_boarders": {
+            "real": 0.34264,
+            "synthetic": 0.39,
+            "relative_diff": 0.138222
+          },
+          "avg_bed_wait_hours": {
+            "real": 4.900914,
+            "synthetic": 3.312325,
+            "relative_diff": 0.324141
+          },
+          "elective_scheduled": {
+            "real": 3.637056,
+            "synthetic": 3.0475,
+            "relative_diff": 0.162097
+          },
+          "elective_cancellation_rate": {
+            "real": 0.482912,
+            "synthetic": 0.496178,
+            "relative_diff": 0.027472
+          },
+          "delayed_discharge_rate": {
+            "real": 0.046361,
+            "synthetic": 0.051773,
+            "relative_diff": 0.116726
+          },
+          "bed_turnover_rate": {
+            "real": 0.228793,
+            "synthetic": 0.190556,
+            "relative_diff": 0.167122
+          },
+          "patients_per_nurse": {
+            "real": 4.756624,
+            "synthetic": 4.7211,
+            "relative_diff": 0.007468
+          },
+          "escalation_beds_open": {
+            "real": 0.847716,
+            "synthetic": 0.805,
+            "relative_diff": 0.050389
+          },
+          "beds_closed": {
+            "real": 0.170051,
+            "synthetic": 0.2175,
+            "relative_diff": 0.27903
+          }
+        },
+        "score": 0.905383
+      },
+      {
+        "name": "high_turnover",
+        "title": "High bed turnover (inpatient wards)",
+        "category": "turnover",
+        "description": "Inpatient-ward days on which at least 30% of available beds were vacated (discharges + transfers out). The acute assessment and children's wards, where rapid turnover is the norm every day, are excluded so the scenario selects busy days rather than ward types.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 803,
+          "share": 0.114453
+        },
+        "requested": 400,
+        "seed": 53,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 398,
+        "fulfilment": 0.995,
+        "acceptance_rate": 0.013521,
+        "seconds": 3.683,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [
+          "Generated 398 of 400 requested rows after 8 attempt(s) (1 condition combination(s) short); the scenario is rare under model 'gc_segmented': increase max_attempts or relax the conditions/filters.",
+          "Low acceptance rate (1.4% < 5%): most sampled rows violated hard validation rules or the scenario conditions/filters."
+        ],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 20,
+          "stratified_combinations": 5,
+          "rebalanced_rows": 15,
+          "quota_moves": 15,
+          "pilot_rows": 1310
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.346934,
+        "strata_rounding_tvd": 0.006956,
+        "strata_fidelity": 0.653066,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 21,
+          "n_material_combinations": 17,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.824033,
+        "fidelity": 0.88577,
+        "fidelity_components": {
+          "column_shapes": 0.849814,
+          "column_pair_trends": 0.921726,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.819442,
+            "synthetic": 0.807232,
+            "relative_diff": 0.0149
+          },
+          "emergency_boarders": {
+            "real": 0.11457,
+            "synthetic": 0.208543,
+            "relative_diff": 0.820215
+          },
+          "avg_bed_wait_hours": {
+            "real": 4.307758,
+            "synthetic": 3.282764,
+            "relative_diff": 0.237942
+          },
+          "elective_scheduled": {
+            "real": 1.907846,
+            "synthetic": 1.932161,
+            "relative_diff": 0.012745
+          },
+          "elective_cancellation_rate": {
+            "real": 0.045164,
+            "synthetic": 0.057082,
+            "relative_diff": 0.263882
+          },
+          "delayed_discharge_rate": {
+            "real": 0.057846,
+            "synthetic": 0.08661,
+            "relative_diff": 0.497248
+          },
+          "bed_turnover_rate": {
+            "real": 0.369245,
+            "synthetic": 0.358356,
+            "relative_diff": 0.029492
+          },
+          "patients_per_nurse": {
+            "real": 3.609178,
+            "synthetic": 4.047563,
+            "relative_diff": 0.121464
+          },
+          "escalation_beds_open": {
+            "real": 0.732254,
+            "synthetic": 0.914573,
+            "relative_diff": 0.248983
+          },
+          "beds_closed": {
+            "real": 0.163138,
+            "synthetic": 0.306533,
+            "relative_diff": 0.878975
+          }
+        },
+        "score": 0.854902
+      },
+      {
+        "name": "delayed_discharge_pressure",
+        "title": "Delayed discharge pressure",
+        "category": "delayed_discharge",
+        "description": "Days on which 15%+ of inpatients at midnight were medically fit but awaiting discharge.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 842,
+          "share": 0.120011
+        },
+        "requested": 400,
+        "seed": 54,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.040003,
+        "seconds": 3.139,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [
+          "Low acceptance rate (4.0% < 5%): most sampled rows violated hard validation rules or the scenario conditions/filters."
+        ],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 29,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 9,
+          "quota_moves": 9,
+          "pilot_rows": 1007
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.172132,
+        "strata_rounding_tvd": 0.011057,
+        "strata_fidelity": 0.827868,
+        "rebalancing_flag": true,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 19,
+          "coverage": 0.947368,
+          "weighted_coverage": 0.964371,
+          "missing_material_combinations": [
+            [
+              "CARD",
+              "critical"
+            ]
+          ],
+          "strata_forced": true
+        },
+        "coverage": 0.913934,
+        "fidelity": 0.940891,
+        "fidelity_components": {
+          "column_shapes": 0.916665,
+          "column_pair_trends": 0.965117,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.867283,
+            "synthetic": 0.864008,
+            "relative_diff": 0.003776
+          },
+          "emergency_boarders": {
+            "real": 0.289786,
+            "synthetic": 0.455,
+            "relative_diff": 0.570123
+          },
+          "avg_bed_wait_hours": {
+            "real": 2.27652,
+            "synthetic": 1.550575,
+            "relative_diff": 0.318884
+          },
+          "elective_scheduled": {
+            "real": 0.429929,
+            "synthetic": 0.3,
+            "relative_diff": 0.30221
+          },
+          "elective_cancellation_rate": {
+            "real": 0.010372,
+            "synthetic": 0.014542,
+            "relative_diff": 0.401984
+          },
+          "delayed_discharge_rate": {
+            "real": 0.197124,
+            "synthetic": 0.192942,
+            "relative_diff": 0.021217
+          },
+          "bed_turnover_rate": {
+            "real": 0.306079,
+            "synthetic": 0.308196,
+            "relative_diff": 0.006915
+          },
+          "patients_per_nurse": {
+            "real": 4.647791,
+            "synthetic": 4.62395,
+            "relative_diff": 0.00513
+          },
+          "escalation_beds_open": {
+            "real": 1.535629,
+            "synthetic": 1.85,
+            "relative_diff": 0.204718
+          },
+          "beds_closed": {
+            "real": 0.137767,
+            "synthetic": 0.27,
+            "relative_diff": 0.959828
+          }
+        },
+        "score": 0.927413
+      },
+      {
+        "name": "staffing_shortage",
+        "title": "Staffing shortage",
+        "category": "staffing",
+        "description": "Days with nurse staffing below the ward requirement.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 867,
+          "share": 0.123575
+        },
+        "requested": 400,
+        "seed": 55,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.135036,
+        "seconds": 3.355,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 30,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 1,
+          "quota_moves": 1
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.011834,
+        "strata_rounding_tvd": 0.010476,
+        "strata_fidelity": 0.988166,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 29,
+          "coverage": 1.0,
+          "weighted_coverage": 0.997693,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.994083,
+        "fidelity": 0.951925,
+        "fidelity_components": {
+          "column_shapes": 0.9259,
+          "column_pair_trends": 0.977949,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.863818,
+            "synthetic": 0.85527,
+            "relative_diff": 0.009897
+          },
+          "emergency_boarders": {
+            "real": 0.250288,
+            "synthetic": 0.4075,
+            "relative_diff": 0.628122
+          },
+          "avg_bed_wait_hours": {
+            "real": 2.879308,
+            "synthetic": 2.528325,
+            "relative_diff": 0.121898
+          },
+          "elective_scheduled": {
+            "real": 0.988466,
+            "synthetic": 1.125,
+            "relative_diff": 0.138127
+          },
+          "elective_cancellation_rate": {
+            "real": 0.034656,
+            "synthetic": 0.066763,
+            "relative_diff": 0.926459
+          },
+          "delayed_discharge_rate": {
+            "real": 0.064637,
+            "synthetic": 0.067824,
+            "relative_diff": 0.049309
+          },
+          "bed_turnover_rate": {
+            "real": 0.277099,
+            "synthetic": 0.264716,
+            "relative_diff": 0.044688
+          },
+          "patients_per_nurse": {
+            "real": 6.071753,
+            "synthetic": 5.844625,
+            "relative_diff": 0.037407
+          },
+          "escalation_beds_open": {
+            "real": 1.313725,
+            "synthetic": 1.1825,
+            "relative_diff": 0.099888
+          },
+          "beds_closed": {
+            "real": 0.814302,
+            "synthetic": 0.64,
+            "relative_diff": 0.214051
+          }
+        },
+        "score": 0.973004
+      },
+      {
+        "name": "staffing_surplus",
+        "title": "Staffing surplus",
+        "category": "staffing",
+        "description": "Days with more day-shift nurses than the requirement plus its slack (extra bank or agency cover), the opposite end of the staffing range to staffing_shortage.",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 472,
+          "share": 0.067275
+        },
+        "requested": 400,
+        "seed": 56,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.159835,
+        "seconds": 3.927,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 32,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 5,
+          "quota_moves": 5
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.021653,
+        "strata_rounding_tvd": 0.009703,
+        "strata_fidelity": 0.978347,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 31,
+          "coverage": 1.0,
+          "weighted_coverage": 1.0,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.989174,
+        "fidelity": 0.958556,
+        "fidelity_components": {
+          "column_shapes": 0.93969,
+          "column_pair_trends": 0.977422,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.833522,
+            "synthetic": 0.826111,
+            "relative_diff": 0.008891
+          },
+          "emergency_boarders": {
+            "real": 0.184322,
+            "synthetic": 0.39,
+            "relative_diff": 1.115862
+          },
+          "avg_bed_wait_hours": {
+            "real": 2.14072,
+            "synthetic": 2.028825,
+            "relative_diff": 0.05227
+          },
+          "elective_scheduled": {
+            "real": 0.940678,
+            "synthetic": 1.0075,
+            "relative_diff": 0.071036
+          },
+          "elective_cancellation_rate": {
+            "real": 0.019784,
+            "synthetic": 0.036356,
+            "relative_diff": 0.837681
+          },
+          "delayed_discharge_rate": {
+            "real": 0.065503,
+            "synthetic": 0.075785,
+            "relative_diff": 0.156967
+          },
+          "bed_turnover_rate": {
+            "real": 0.271254,
+            "synthetic": 0.251225,
+            "relative_diff": 0.073836
+          },
+          "patients_per_nurse": {
+            "real": 2.94286,
+            "synthetic": 2.9419,
+            "relative_diff": 0.000326
+          },
+          "escalation_beds_open": {
+            "real": 0.995763,
+            "synthetic": 0.8975,
+            "relative_diff": 0.098681
+          },
+          "beds_closed": {
+            "real": 0.042373,
+            "synthetic": 0.015,
+            "relative_diff": 0.646
+          }
+        },
+        "score": 0.973865
+      },
+      {
+        "name": "weekend_operations",
+        "title": "Weekend operations",
+        "category": "patient_flow",
+        "description": "Saturday/Sunday operations (few electives, reduced discharges).",
+        "status": "evaluated",
+        "real_support": {
+          "rows": 2009,
+          "share": 0.286345
+        },
+        "requested": 400,
+        "seed": 57,
+        "time_budget_seconds": 20.0,
+        "max_attempts": 8,
+        "generated": 400,
+        "fulfilment": 1.0,
+        "acceptance_rate": 0.272989,
+        "seconds": 2.222,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "warnings": [],
+        "in_scenario_rate": 1.0,
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 62,
+          "stratified_combinations": 2,
+          "rebalanced_rows": 2,
+          "quota_moves": 2
+        },
+        "strata_columns": [
+          "ward_id",
+          "occupancy_level"
+        ],
+        "strata_mix_tvd": 0.015327,
+        "strata_rounding_tvd": 0.008258,
+        "strata_fidelity": 0.984673,
+        "rebalancing_flag": false,
+        "combinations": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "n_real_combinations": 32,
+          "n_material_combinations": 28,
+          "coverage": 1.0,
+          "weighted_coverage": 0.999502,
+          "missing_material_combinations": [],
+          "strata_forced": true
+        },
+        "coverage": 0.992336,
+        "fidelity": 0.951659,
+        "fidelity_components": {
+          "column_shapes": 0.931452,
+          "column_pair_trends": 0.971866,
+          "validity": null
+        },
+        "kpi_means": {
+          "occupancy_rate": {
+            "real": 0.843424,
+            "synthetic": 0.83661,
+            "relative_diff": 0.008078
+          },
+          "emergency_boarders": {
+            "real": 0.250373,
+            "synthetic": 0.405,
+            "relative_diff": 0.617584
+          },
+          "avg_bed_wait_hours": {
+            "real": 2.2055,
+            "synthetic": 2.15345,
+            "relative_diff": 0.0236
+          },
+          "elective_scheduled": {
+            "real": 0.048283,
+            "synthetic": 0.43,
+            "relative_diff": 7.905876
+          },
+          "elective_cancellation_rate": {
+            "real": 0.000747,
+            "synthetic": 0.070833,
+            "relative_diff": 93.868998
+          },
+          "delayed_discharge_rate": {
+            "real": 0.065745,
+            "synthetic": 0.066351,
+            "relative_diff": 0.009224
+          },
+          "bed_turnover_rate": {
+            "real": 0.203866,
+            "synthetic": 0.204993,
+            "relative_diff": 0.005529
+          },
+          "patients_per_nurse": {
+            "real": 4.169881,
+            "synthetic": 4.105075,
+            "relative_diff": 0.015541
+          },
+          "escalation_beds_open": {
+            "real": 0.975112,
+            "synthetic": 1.1475,
+            "relative_diff": 0.176788
+          },
+          "beds_closed": {
+            "real": 0.163763,
+            "synthetic": 0.2325,
+            "relative_diff": 0.419734
+          }
+        },
+        "score": 0.971998
+      }
+    ],
+    "metric_descriptions": {
+      "real_support": "Rows (and share) of the real reference data that belong to the scenario.",
+      "fulfilment": "Generated rows / requested rows (capped at 1).",
+      "strata_mix_tvd": "Total variation distance between the output's allocation-strata mix and the real scenario subset's mix (> 0 when the generator had to move quota to other strata).",
+      "strata_rounding_tvd": "Smallest strata-mix TVD an output of that many rows can reach (rounding floor); the rebalancing flag needs a TVD more than strata_tvd_flag above it.",
+      "strata_fidelity": "1 - strata_mix_tvd.",
+      "combination_coverage": "Share of material real combinations (>= 1% of the real scenario subset) present in the synthetic subset (strata-forced when its columns are allocation strata).",
+      "weighted_combination_coverage": "Share of real scenario rows whose combination appears in the synthetic subset.",
+      "in_scenario_rate": "Share of generated rows that satisfy the scenario's conditions and filters.",
+      "fidelity": "quick_quality score of the synthetic scenario subset against the real scenario subset (allocation-strata columns excluded).",
+      "kpi_means": "Mean of each scenario KPI in real vs synthetic subsets, with relative difference."
+    },
+    "seconds": 40.134
+  },
+  "output_validity": {
+    "name": "validity",
+    "description": "Share of synthetic rows that satisfy every hard operational rule, with per-rule violation rates.",
+    "table": "ward_daily",
+    "basis": "generator_output",
+    "n_rows": 7016,
+    "score": 1.0,
+    "hard_valid_rate": 1.0,
+    "n_hard_valid": 7016,
+    "hard_violation_rate": 0.0,
+    "worst_hard_rules": [],
+    "hard_rules": [
+      {
+        "rule_id": "WD-H01",
+        "name": "valid_categories",
+        "severity": "hard",
+        "description": "ward_id, month, day_of_week, staffing_level and occupancy_level take values from their vocabularies.",
+        "columns": [
+          "ward_id",
+          "month",
+          "day_of_week",
+          "staffing_level",
+          "occupancy_level"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H02",
+        "name": "non_negative_integer_counts",
+        "severity": "hard",
+        "description": "Every bed, nurse and patient count (learned and derived) is present, a whole number and not negative.",
+        "columns": [
+          "bed_capacity",
+          "escalation_beds_open",
+          "beds_closed",
+          "available_beds",
+          "nurses_day_shift",
+          "nurses_night_shift",
+          "census_start",
+          "elective_scheduled",
+          "elective_cancelled",
+          "admissions_elective",
+          "admissions_emergency",
+          "transfers_in",
+          "transfers_out",
+          "discharges",
+          "discharges_before_noon",
+          "census_end",
+          "delayed_discharges",
+          "emergency_boarders"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H03",
+        "name": "cancellations_within_bookings",
+        "severity": "hard",
+        "description": "A ward cannot cancel more elective admissions than were booked for the day.",
+        "columns": [
+          "elective_cancelled",
+          "elective_scheduled"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H04",
+        "name": "noon_discharges_within_discharges",
+        "severity": "hard",
+        "description": "Discharges completed before noon cannot exceed the day's discharges.",
+        "columns": [
+          "discharges_before_noon",
+          "discharges"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H05",
+        "name": "delayed_within_census",
+        "severity": "hard",
+        "description": "Patients medically fit but awaiting discharge at midnight cannot exceed the midnight census.",
+        "columns": [
+          "delayed_discharges",
+          "census_start"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H06",
+        "name": "census_within_available_beds",
+        "severity": "hard",
+        "description": "The end-of-day census is non-negative and fits within the beds available that day.",
+        "columns": [
+          "census_end",
+          "available_beds"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H07",
+        "name": "census_start_within_physical_beds",
+        "severity": "hard",
+        "description": "The start-of-day census fits within the base beds plus the escalation beds open.",
+        "columns": [
+          "census_start",
+          "bed_capacity",
+          "escalation_beds_open"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H08",
+        "name": "capacity_limits",
+        "severity": "hard",
+        "description": "Escalation beds respect the ward's surge limit, closed beds are not negative and at least one bed is available.",
+        "columns": [
+          "ward_id",
+          "escalation_beds_open",
+          "beds_closed",
+          "available_beds"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H09",
+        "name": "staffing_present",
+        "severity": "hard",
+        "description": "At least one registered nurse is rostered on both the day and the night shift.",
+        "columns": [
+          "nurses_day_shift",
+          "nurses_night_shift"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H10",
+        "name": "occupancy_level_consistent",
+        "severity": "hard",
+        "description": "The occupancy band matches the midnight occupancy census_end / available_beds.",
+        "columns": [
+          "occupancy_level",
+          "census_end",
+          "available_beds"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H11",
+        "name": "staffing_level_consistent",
+        "severity": "hard",
+        "description": "The staffing band matches the day-shift nurses against the ward's nurse requirement.",
+        "columns": [
+          "staffing_level",
+          "nurses_day_shift",
+          "ward_id"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H12",
+        "name": "ward_admission_profile",
+        "severity": "hard",
+        "description": "Wards that take no elective admissions book none, and wards that take no transfers receive none.",
+        "columns": [
+          "ward_id",
+          "elective_scheduled",
+          "elective_cancelled",
+          "transfers_in"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H13",
+        "name": "metric_ranges",
+        "severity": "hard",
+        "description": "Average bed wait (0-96 h), bed turnaround (10-1440 min) and length of stay (0.04-90 days) are physically plausible.",
+        "columns": [
+          "avg_bed_wait_hours",
+          "avg_bed_turnaround_min",
+          "avg_los_days"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H14",
+        "name": "wait_definition",
+        "severity": "hard",
+        "description": "With no emergency admissions the day's average bed wait is defined as zero.",
+        "columns": [
+          "admissions_emergency",
+          "avg_bed_wait_hours"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      },
+      {
+        "rule_id": "WD-H15",
+        "name": "closures_only_free_beds",
+        "severity": "hard",
+        "description": "Only free beds are closed, so the start-of-day census fits within the beds available that day.",
+        "columns": [
+          "census_start",
+          "available_beds"
+        ],
+        "violations": 0,
+        "violation_rate": 0.0
+      }
+    ],
+    "soft_rules": [
+      {
+        "rule_id": "WD-S01",
+        "name": "night_staffing_within_day",
+        "severity": "soft",
+        "description": "Night-shift nurses do not outnumber day-shift nurses.",
+        "columns": [
+          "nurses_night_shift",
+          "nurses_day_shift"
+        ],
+        "violations": 5,
+        "violation_rate": 0.000713
+      },
+      {
+        "rule_id": "WD-S02",
+        "name": "nurse_workload_plausible",
+        "severity": "soft",
+        "description": "Patients per day-shift nurse stay within twice the ward's target nurse ratio.",
+        "columns": [
+          "patients_per_nurse",
+          "ward_id"
+        ],
+        "violations": 1,
+        "violation_rate": 0.000143
+      },
+      {
+        "rule_id": "WD-S03",
+        "name": "boarding_under_pressure",
+        "severity": "soft",
+        "description": "Emergency patients board in ED overnight only when the ward is at least 90% occupied.",
+        "columns": [
+          "emergency_boarders",
+          "occupancy_rate"
+        ],
+        "violations": 656,
+        "violation_rate": 0.093501
+      },
+      {
+        "rule_id": "WD-S04",
+        "name": "escalation_under_pressure",
+        "severity": "soft",
+        "description": "Escalation beds are open only when the ward is at least 80% occupied.",
+        "columns": [
+          "escalation_beds_open",
+          "occupancy_rate"
+        ],
+        "violations": 557,
+        "violation_rate": 0.07939
+      },
+      {
+        "rule_id": "WD-S05",
+        "name": "few_weekend_electives",
+        "severity": "soft",
+        "description": "At most two elective admissions are booked on a Saturday or Sunday.",
+        "columns": [
+          "day_of_week",
+          "elective_scheduled"
+        ],
+        "violations": 37,
+        "violation_rate": 0.005274
+      },
+      {
+        "rule_id": "WD-S06",
+        "name": "noon_discharge_share_plausible",
+        "severity": "soft",
+        "description": "On days with four or more discharges, at most 80% are completed before noon.",
+        "columns": [
+          "discharges",
+          "discharges_before_noon"
+        ],
+        "violations": 14,
+        "violation_rate": 0.001995
+      }
+    ],
+    "hard_violation_rates": {
+      "WD-H01": 0.0,
+      "WD-H02": 0.0,
+      "WD-H03": 0.0,
+      "WD-H04": 0.0,
+      "WD-H05": 0.0,
+      "WD-H06": 0.0,
+      "WD-H07": 0.0,
+      "WD-H08": 0.0,
+      "WD-H09": 0.0,
+      "WD-H10": 0.0,
+      "WD-H11": 0.0,
+      "WD-H12": 0.0,
+      "WD-H13": 0.0,
+      "WD-H14": 0.0,
+      "WD-H15": 0.0
+    },
+    "soft_violation_rates": {
+      "WD-S01": 0.000713,
+      "WD-S02": 0.000143,
+      "WD-S03": 0.093501,
+      "WD-S04": 0.07939,
+      "WD-S05": 0.005274,
+      "WD-S06": 0.001995
+    },
+    "soft_clean_rate": 0.835804,
+    "metric_descriptions": {
+      "hard_valid_rate": "Share of rows that pass every hard operational rule (the validity score).",
+      "hard_violation_rate": "Share of rows that violate at least one hard rule.",
+      "violation_rate": "Per rule: share of rows violating that rule.",
+      "soft_clean_rate": "Share of rows that pass every soft (plausibility) rule."
+    },
+    "seconds": 0.023
+  },
+  "model_view": {
+    "name": "model_view",
+    "description": "Families re-scored on raw model samples (no rejection, no allocation strata): what the model learned on its own. The composite uses the generator output (system view).",
+    "basis": "raw_model_samples",
+    "n_rows": 7016,
+    "statistical": {
+      "score": 0.93398,
+      "score_source": "sdv_quality_report",
+      "properties": {
+        "Column Shapes": 0.94942,
+        "Column Pair Trends": 0.918541
+      },
+      "summary": {
+        "column_shapes_score": 0.94942,
+        "pair_trends_score": 0.974991,
+        "fallback_score": 0.962206,
+        "mean_ks_statistic": 0.050901,
+        "mean_wasserstein_normalized": 0.011006,
+        "mean_range_coverage": 0.890794,
+        "mean_tv_distance": 0.048974,
+        "mean_category_coverage": 1.0,
+        "pearson_mean_abs_diff": 0.029454,
+        "spearman_mean_abs_diff": 0.033964,
+        "cramers_v_mean_abs_diff": 0.033035,
+        "worst_numeric_columns": [
+          "emergency_boarders",
+          "beds_closed",
+          "avg_bed_wait_hours",
+          "occupancy_rate",
+          "escalation_beds_open"
+        ],
+        "worst_categorical_columns": [
+          "day_of_week",
+          "occupancy_level",
+          "month",
+          "staffing_level",
+          "ward_id"
+        ]
+      },
+      "error": null,
+      "seconds": 1.357
+    },
+    "operational": {
+      "score": 0.830338,
+      "n_checks": 18,
+      "n_passed": 13,
+      "pass_rate": 0.722222,
+      "failed_checks": [
+        "occupancy_band_mix_by_ward",
+        "zero_inflated_count_shares",
+        "weekly_elective_profile",
+        "relationship_occupancy_boarders",
+        "boarding_prevalence_by_occupancy_band"
+      ],
+      "beyond_real_noise": [
+        "occupancy_distribution_by_ward",
+        "occupancy_band_mix_by_ward",
+        "zero_inflated_count_shares",
+        "weekly_elective_profile",
+        "relationship_occupancy_boarders",
+        "relationship_escalation_occupancy",
+        "short_staffing_share_by_season",
+        "boarding_prevalence_by_occupancy_band"
+      ],
+      "system_checks": [],
+      "group_scores": {
+        "occupancy": 0.89337,
+        "demand": 0.777595,
+        "capacity": 0.299344,
+        "scheduling": 0.821737,
+        "patient_flow": 0.953954,
+        "relationships": 0.955112,
+        "staffing": 0.830381,
+        "emergency": 0.30017
+      },
+      "seconds": 0.103,
+      "checks": [
+        {
+          "name": "occupancy_mean_by_ward",
+          "group": "occupancy",
+          "metric": "mean_abs_diff",
+          "value": 0.009697,
+          "score": 0.903029,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "occupancy_distribution_by_ward",
+          "group": "occupancy",
+          "metric": "mean_ks",
+          "value": 0.121294,
+          "score": 0.878706,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "occupancy_band_mix_by_ward",
+          "group": "occupancy",
+          "metric": "mean_tvd",
+          "value": 0.101625,
+          "score": 0.898375,
+          "passed": false,
+          "strata_forced": false
+        },
+        {
+          "name": "monthly_emergency_profile",
+          "group": "demand",
+          "metric": "wape",
+          "value": 0.040908,
+          "score": 0.91015,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "seasonal_pressure_contrast",
+          "group": "demand",
+          "metric": "abs_diff",
+          "value": 0.070992,
+          "score": 0.64504,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "zero_inflated_count_shares",
+          "group": "capacity",
+          "metric": "mean_abs_diff",
+          "value": 0.140131,
+          "score": 0.299344,
+          "passed": false,
+          "strata_forced": false
+        },
+        {
+          "name": "weekly_elective_profile",
+          "group": "scheduling",
+          "metric": "wape",
+          "value": 0.396246,
+          "score": 0.670056,
+          "passed": false,
+          "strata_forced": false
+        },
+        {
+          "name": "relationship_bed_pressure_cancellations",
+          "group": "scheduling",
+          "metric": "abs_diff_spearman",
+          "value": 0.053163,
+          "score": 0.973418,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "weekly_discharge_profile",
+          "group": "patient_flow",
+          "metric": "wape",
+          "value": 0.026828,
+          "score": 0.981362,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "weekend_weekday_discharge_ratio",
+          "group": "patient_flow",
+          "metric": "relative_error",
+          "value": 0.068961,
+          "score": 0.931039,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "before_noon_discharge_share",
+          "group": "patient_flow",
+          "metric": "abs_diff",
+          "value": 0.010108,
+          "score": 0.94946,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "relationship_census_discharges",
+          "group": "relationships",
+          "metric": "abs_diff_spearman",
+          "value": 0.00391,
+          "score": 0.998045,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "relationship_occupancy_boarders",
+          "group": "relationships",
+          "metric": "abs_diff_spearman",
+          "value": 0.27812,
+          "score": 0.86094,
+          "passed": false,
+          "strata_forced": false
+        },
+        {
+          "name": "relationship_delays_occupancy",
+          "group": "relationships",
+          "metric": "abs_diff_spearman",
+          "value": 0.043061,
+          "score": 0.97847,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "relationship_short_staffing_cancellations",
+          "group": "relationships",
+          "metric": "abs_diff_spearman",
+          "value": 0.055982,
+          "score": 0.972009,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "relationship_escalation_occupancy",
+          "group": "relationships",
+          "metric": "abs_diff_spearman",
+          "value": 0.06781,
+          "score": 0.966095,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "short_staffing_share_by_season",
+          "group": "staffing",
+          "metric": "mean_abs_diff",
+          "value": 0.033924,
+          "score": 0.830381,
+          "passed": true,
+          "strata_forced": false
+        },
+        {
+          "name": "boarding_prevalence_by_occupancy_band",
+          "group": "emergency",
+          "metric": "mean_abs_diff",
+          "value": 0.157817,
+          "score": 0.30017,
+          "passed": false,
+          "strata_forced": false
+        }
+      ]
+    },
+    "seconds": 1.46
+  },
+  "composite": {
+    "name": "composite",
+    "description": "Weighted sum of fidelity, validity, operational, utility and privacy scores (weights from settings.evaluation.composite_weights, renormalised over the components defined for the table; a failed family scores 0 and marks the composite incomplete).",
+    "score": 0.805164,
+    "complete": true,
+    "components": {
+      "fidelity": 0.953031,
+      "validity": 0.314994,
+      "operational": 0.859614,
+      "utility": 0.944948,
+      "privacy": 0.9961
+    },
+    "component_parts": {
+      "fidelity": {
+        "statistical": 0.953031
+      },
+      "validity": {
+        "validity": 0.314994
+      },
+      "operational": {
+        "operational": 0.859614
+      },
+      "utility": {
+        "ml_utility": 0.951027,
+        "optimization": 0.93887
+      },
+      "privacy": {
+        "privacy": 0.9961
+      }
+    },
+    "component_descriptions": {
+      "fidelity": "SDV QualityReport overall score (column shapes + column pair trends).",
+      "validity": "Share of raw model samples that pass every hard operational rule.",
+      "operational": "Mean score of the occupancy / scheduling / patient-flow pattern checks.",
+      "utility": "Mean of ML utility (train-synthetic-test-real) and optimisation utility (decision agreement).",
+      "privacy": "Distance-to-closest-record based protection against copying training records."
+    },
+    "weights": {
+      "fidelity": 0.3,
+      "validity": 0.2,
+      "operational": 0.25,
+      "utility": 0.15,
+      "privacy": 0.1
+    },
+    "effective_weights": {
+      "fidelity": 0.3,
+      "validity": 0.2,
+      "operational": 0.25,
+      "utility": 0.15,
+      "privacy": 0.1
+    },
+    "missing_components": [],
+    "failed_families": [],
+    "failed_components": []
+  },
+  "timings": {
+    "statistical": 1.327,
+    "validity": 0.023,
+    "operational": 0.106,
+    "privacy": 13.963,
+    "ml_utility": 1.045,
+    "optimization": 0.236,
+    "scenario_coverage": 40.134,
+    "output_validity": 0.023,
+    "model_view": 1.46,
+    "total": 58.319
+  },
+  "generation": {
+    "requested": 7016,
+    "generated": 7016,
+    "shortfall": 0,
+    "chunks": 1,
+    "acceptance_rate": 0.254415,
+    "time_budget_seconds": 90,
+    "stopped_reasons": [],
+    "throttled_rounds": 0,
+    "allocation_strata": {
+      "columns": [
+        "ward_id",
+        "occupancy_level"
+      ],
+      "source": "reference_train_split",
+      "strata_cells": 32,
+      "rebalanced_rows": 0,
+      "quota_moves": 0
+    },
+    "strata_mix_tvd": 0.0,
+    "strata_rounding_tvd": 0.0,
+    "rebalancing_flag": false,
+    "seconds": 3.079,
+    "warnings": []
+  },
+  "run": {
+    "quick": false,
+    "rows": 7016,
+    "rows_per_scenario": 400,
+    "scenarios": true,
+    "seed": 42,
+    "sdmetrics": true,
+    "sample_time_budget_seconds": 90,
+    "scenario_time_budget_seconds": 20,
+    "scenario_max_attempts": 8,
+    "coverage_time_budget_seconds": 150
+  },
+  "model_card": {
+    "experiment_id": "gc_segmented",
+    "model": "gaussian_copula",
+    "description": "Ablation step: GaussianCopula segmented per ward, SDV built-in constraints only (Inequality, FixedCombinations), ordinal metadata + demand-ordered encodings, tuned marginals (the pre-Week-3 gc_tuned recipe, without programmable constraints)",
+    "segment_label": "ward_id",
+    "constraint_groups": [
+      "inequality",
+      "fixed_combinations"
+    ],
+    "effective_constraint_groups": [
+      "inequality"
+    ],
+    "fitted_at": "2026-11-15T05:00:56+00:00",
+    "fit_seconds": 22.733,
+    "training_rows": 7016,
+    "quick": false,
+    "epochs": null,
+    "raw_hard_valid_rate": 0.301,
+    "hard_violation_rates": {
+      "WD-H06": 0.117,
+      "WD-H07": 0.0715,
+      "WD-H10": 0.486,
+      "WD-H11": 0.291,
+      "WD-H15": 0.106
+    },
+    "soft_violation_rates": {
+      "WD-S01": 0.001,
+      "WD-S03": 0.1245,
+      "WD-S04": 0.0925,
+      "WD-S05": 0.0025,
+      "WD-S06": 0.002
+    }
+  }
+}

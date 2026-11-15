@@ -1,0 +1,1077 @@
+{
+  "step": 35,
+  "name": "scenario high_occupancy",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "ward_daily",
+      "num_rows": 100,
+      "scenario": "high_occupancy",
+      "seed": 144,
+      "evaluate": true
+    }
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 1439.3,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "1437.1"
+    },
+    "body": {
+      "dataset_id": "ds-42c61363bab8",
+      "persisted": true,
+      "created_at": "2026-11-15T05:36:47+00:00",
+      "table": "ward_daily",
+      "n_rows": 100,
+      "model": {
+        "id": "gc_tuned",
+        "synthesizer": "GaussianCopulaSynthesizer",
+        "sdv_version": "2.2.0",
+        "fitted_at": "2026-11-15T05:01:30+00:00"
+      },
+      "scenario": {
+        "name": "high_occupancy",
+        "title": "High occupancy",
+        "description": "Ward-days at or above 90% midnight occupancy (high or critical band).",
+        "category": "occupancy"
+      },
+      "request": {
+        "table": "ward_daily",
+        "num_rows": 100,
+        "scenario": "high_occupancy",
+        "model_id": null,
+        "wards": null,
+        "conditions": null,
+        "filters": null,
+        "seed": 144,
+        "max_attempts": null,
+        "time_budget_seconds": 60.0,
+        "mode": "sample",
+        "start_date": null,
+        "end_date": null,
+        "include_derived": true,
+        "validate": true,
+        "evaluate": true,
+        "format": "json",
+        "persist": true
+      },
+      "generation": {
+        "table": "ward_daily",
+        "model_id": "gc_tuned",
+        "model": {
+          "id": "gc_tuned",
+          "experiment_id": "gc_tuned",
+          "synthesizer": "GaussianCopulaSynthesizer",
+          "model": "gaussian_copula",
+          "segment_by": "ward_id",
+          "constraint_groups": [
+            "inequality",
+            "fixed_combinations",
+            "regime_labels",
+            "structural_zeros",
+            "capacity",
+            "conditional_marginals"
+          ],
+          "sdv_version": "2.2.0",
+          "fitted_at": "2026-11-15T05:01:30+00:00"
+        },
+        "scenario": "high_occupancy",
+        "mode": "sample",
+        "seed": 144,
+        "num_rows_requested": 100,
+        "num_rows_generated": 100,
+        "shortfall": 0,
+        "attempts": 3,
+        "max_attempts": 25,
+        "sampled_rows": 163,
+        "accepted_rows": 141,
+        "acceptance_rate": 0.865031,
+        "raw_hard_valid_rate": 0.865031,
+        "rejected_by_rule": {
+          "WD-H06": 22,
+          "WD-H15": 3
+        },
+        "rejected_by_filter": 0,
+        "first_batch_factor": 1.6,
+        "acceptance_prior": 0.9305,
+        "time_budget_seconds": 60.0,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "rows_per_second": 126.8,
+        "condition_allocation": [
+          {
+            "conditions": {
+              "occupancy_level": "high"
+            },
+            "requested": 59,
+            "generated": 59,
+            "reference_count": 1961,
+            "sampled": 90,
+            "accepted": 90,
+            "feasible": true
+          },
+          {
+            "conditions": {
+              "occupancy_level": "critical"
+            },
+            "requested": 41,
+            "generated": 41,
+            "reference_count": 1335,
+            "sampled": 73,
+            "accepted": 51,
+            "feasible": true
+          }
+        ],
+        "conditions": {
+          "occupancy_level": [
+            "high",
+            "critical"
+          ]
+        },
+        "filters": {},
+        "reference_source": "reference_train_split",
+        "include_derived": true,
+        "elapsed_seconds": 1.381,
+        "warnings": [],
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "occupancy_level"
+          ],
+          "source": "reference_train_split",
+          "strata_cells": 16,
+          "stratified_combinations": 2,
+          "rebalanced_rows": 0,
+          "quota_moves": 0
+        }
+      },
+      "validation": {
+        "n_rows": 100,
+        "n_hard_valid": 100,
+        "hard_valid_rate": 1.0,
+        "all_hard_rules_passed": true,
+        "hard_rules": {
+          "checked": 15,
+          "passed": 15,
+          "failed": 0,
+          "violations": 0
+        },
+        "soft_rules": {
+          "checked": 6,
+          "passed": 3,
+          "failed": 3,
+          "violations": 3
+        },
+        "rules": [
+          {
+            "rule_id": "WD-H01",
+            "name": "valid_categories",
+            "severity": "hard",
+            "description": "ward_id, month, day_of_week, staffing_level and occupancy_level take values from their vocabularies.",
+            "columns": [
+              "ward_id",
+              "month",
+              "day_of_week",
+              "staffing_level",
+              "occupancy_level"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H02",
+            "name": "non_negative_integer_counts",
+            "severity": "hard",
+            "description": "Every bed, nurse and patient count (learned and derived) is present, a whole number and not negative.",
+            "columns": [
+              "bed_capacity",
+              "escalation_beds_open",
+              "beds_closed",
+              "available_beds",
+              "nurses_day_shift",
+              "nurses_night_shift",
+              "census_start",
+              "elective_scheduled",
+              "elective_cancelled",
+              "admissions_elective",
+              "admissions_emergency",
+              "transfers_in",
+              "transfers_out",
+              "discharges",
+              "discharges_before_noon",
+              "census_end",
+              "delayed_discharges",
+              "emergency_boarders"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H03",
+            "name": "cancellations_within_bookings",
+            "severity": "hard",
+            "description": "A ward cannot cancel more elective admissions than were booked for the day.",
+            "columns": [
+              "elective_cancelled",
+              "elective_scheduled"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H04",
+            "name": "noon_discharges_within_discharges",
+            "severity": "hard",
+            "description": "Discharges completed before noon cannot exceed the day's discharges.",
+            "columns": [
+              "discharges_before_noon",
+              "discharges"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H05",
+            "name": "delayed_within_census",
+            "severity": "hard",
+            "description": "Patients medically fit but awaiting discharge at midnight cannot exceed the midnight census.",
+            "columns": [
+              "delayed_discharges",
+              "census_start"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H06",
+            "name": "census_within_available_beds",
+            "severity": "hard",
+            "description": "The end-of-day census is non-negative and fits within the beds available that day.",
+            "columns": [
+              "census_end",
+              "available_beds"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H07",
+            "name": "census_start_within_physical_beds",
+            "severity": "hard",
+            "description": "The start-of-day census fits within the base beds plus the escalation beds open.",
+            "columns": [
+              "census_start",
+              "bed_capacity",
+              "escalation_beds_open"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H08",
+            "name": "capacity_limits",
+            "severity": "hard",
+            "description": "Escalation beds respect the ward's surge limit, closed beds are not negative and at least one bed is available.",
+            "columns": [
+              "ward_id",
+              "escalation_beds_open",
+              "beds_closed",
+              "available_beds"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H09",
+            "name": "staffing_present",
+            "severity": "hard",
+            "description": "At least one registered nurse is rostered on both the day and the night shift.",
+            "columns": [
+              "nurses_day_shift",
+              "nurses_night_shift"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H10",
+            "name": "occupancy_level_consistent",
+            "severity": "hard",
+            "description": "The occupancy band matches the midnight occupancy census_end / available_beds.",
+            "columns": [
+              "occupancy_level",
+              "census_end",
+              "available_beds"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H11",
+            "name": "staffing_level_consistent",
+            "severity": "hard",
+            "description": "The staffing band matches the day-shift nurses against the ward's nurse requirement.",
+            "columns": [
+              "staffing_level",
+              "nurses_day_shift",
+              "ward_id"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H12",
+            "name": "ward_admission_profile",
+            "severity": "hard",
+            "description": "Wards that take no elective admissions book none, and wards that take no transfers receive none.",
+            "columns": [
+              "ward_id",
+              "elective_scheduled",
+              "elective_cancelled",
+              "transfers_in"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H13",
+            "name": "metric_ranges",
+            "severity": "hard",
+            "description": "Average bed wait (0-96 h), bed turnaround (10-1440 min) and length of stay (0.04-90 days) are physically plausible.",
+            "columns": [
+              "avg_bed_wait_hours",
+              "avg_bed_turnaround_min",
+              "avg_los_days"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H14",
+            "name": "wait_definition",
+            "severity": "hard",
+            "description": "With no emergency admissions the day's average bed wait is defined as zero.",
+            "columns": [
+              "admissions_emergency",
+              "avg_bed_wait_hours"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-H15",
+            "name": "closures_only_free_beds",
+            "severity": "hard",
+            "description": "Only free beds are closed, so the start-of-day census fits within the beds available that day.",
+            "columns": [
+              "census_start",
+              "available_beds"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-S01",
+            "name": "night_staffing_within_day",
+            "severity": "soft",
+            "description": "Night-shift nurses do not outnumber day-shift nurses.",
+            "columns": [
+              "nurses_night_shift",
+              "nurses_day_shift"
+            ],
+            "violations": 1,
+            "violation_rate": 0.01,
+            "passed": false,
+            "example_rows": [
+              74
+            ]
+          },
+          {
+            "rule_id": "WD-S02",
+            "name": "nurse_workload_plausible",
+            "severity": "soft",
+            "description": "Patients per day-shift nurse stay within twice the ward's target nurse ratio.",
+            "columns": [
+              "patients_per_nurse",
+              "ward_id"
+            ],
+            "violations": 1,
+            "violation_rate": 0.01,
+            "passed": false,
+            "example_rows": [
+              96
+            ]
+          },
+          {
+            "rule_id": "WD-S03",
+            "name": "boarding_under_pressure",
+            "severity": "soft",
+            "description": "Emergency patients board in ED overnight only when the ward is at least 90% occupied.",
+            "columns": [
+              "emergency_boarders",
+              "occupancy_rate"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-S04",
+            "name": "escalation_under_pressure",
+            "severity": "soft",
+            "description": "Escalation beds are open only when the ward is at least 80% occupied.",
+            "columns": [
+              "escalation_beds_open",
+              "occupancy_rate"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-S05",
+            "name": "few_weekend_electives",
+            "severity": "soft",
+            "description": "At most two elective admissions are booked on a Saturday or Sunday.",
+            "columns": [
+              "day_of_week",
+              "elective_scheduled"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "WD-S06",
+            "name": "noon_discharge_share_plausible",
+            "severity": "soft",
+            "description": "On days with four or more discharges, at most 80% are completed before noon.",
+            "columns": [
+              "discharges",
+              "discharges_before_noon"
+            ],
+            "violations": 1,
+            "violation_rate": 0.01,
+            "passed": false,
+            "example_rows": [
+              30
+            ]
+          }
+        ]
+      },
+      "quality": {
+        "score": 0.9673,
+        "reference": {
+          "split": "train",
+          "subset": "matching",
+          "reference_rows": 3296,
+          "rows_compared": 3296,
+          "synthetic_rows_compared": 100
+        },
+        "metrics": {
+          "name": "quick_quality",
+          "description": "Fast fidelity estimate: column shapes (1-KS / 1-TVD), Spearman pair trends and hard-rule validity.",
+          "table": "ward_daily",
+          "score": 0.967298,
+          "components": {
+            "column_shapes": 0.942242,
+            "column_pair_trends": 0.959653,
+            "validity": 1.0
+          },
+          "validity_note": null,
+          "column_scores": {
+            "escalation_beds_open": 0.91392,
+            "beds_closed": 0.982306,
+            "available_beds": 0.938883,
+            "nurses_day_shift": 0.967294,
+            "nurses_night_shift": 0.971663,
+            "census_start": 0.961869,
+            "elective_scheduled": 0.969879,
+            "elective_cancelled": 0.967488,
+            "admissions_elective": 0.980316,
+            "admissions_emergency": 0.871845,
+            "transfers_in": 0.90807,
+            "transfers_out": 0.907998,
+            "discharges": 0.916735,
+            "discharges_before_noon": 0.958956,
+            "census_end": 0.957706,
+            "delayed_discharges": 0.948155,
+            "emergency_boarders": 0.973095,
+            "avg_bed_wait_hours": 0.935583,
+            "avg_bed_turnaround_min": 0.885862,
+            "avg_los_days": 0.93142,
+            "occupancy_rate": 0.954248,
+            "bed_turnover_rate": 0.937306,
+            "patients_per_nurse": 0.934563,
+            "delayed_discharge_rate": 0.931456,
+            "elective_cancellation_rate": 0.967488,
+            "ward_id": 0.985121,
+            "month": 0.866942,
+            "day_of_week": 0.87733,
+            "staffing_level": 0.968726,
+            "occupancy_level": 0.995036
+          },
+          "worst_columns": [
+            {
+              "column": "month",
+              "score": 0.866942
+            },
+            {
+              "column": "admissions_emergency",
+              "score": 0.871845
+            },
+            {
+              "column": "day_of_week",
+              "score": 0.87733
+            },
+            {
+              "column": "avg_bed_turnaround_min",
+              "score": 0.885862
+            },
+            {
+              "column": "transfers_out",
+              "score": 0.907998
+            }
+          ],
+          "worst_pairs": [
+            {
+              "columns": [
+                "available_beds",
+                "avg_bed_wait_hours"
+              ],
+              "real": -0.157763,
+              "synthetic": -0.434848,
+              "abs_diff": 0.277085
+            },
+            {
+              "columns": [
+                "beds_closed",
+                "transfers_in"
+              ],
+              "real": -0.025109,
+              "synthetic": 0.249287,
+              "abs_diff": 0.274396
+            },
+            {
+              "columns": [
+                "census_start",
+                "avg_bed_wait_hours"
+              ],
+              "real": -0.133048,
+              "synthetic": -0.401328,
+              "abs_diff": 0.26828
+            }
+          ],
+          "excluded_columns": [],
+          "n_rows": {
+            "real": 3296,
+            "synthetic": 100
+          },
+          "metric_descriptions": {
+            "column_shapes": "Mean of 1 - KS (numeric) and 1 - TVD (categorical) over all columns.",
+            "column_pair_trends": "1 - mean |\u0394 Spearman| / 2 over numeric column pairs.",
+            "validity": "Share of synthetic rows passing every hard operational rule (bedsynth.validation)."
+          },
+          "seconds": 0.032
+        }
+      },
+      "columns": [
+        {
+          "name": "record_id",
+          "dtype": "str",
+          "role": "key",
+          "unit": null,
+          "description": "Record identifier, e.g. WD-000001."
+        },
+        {
+          "name": "ward_id",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Ward code."
+        },
+        {
+          "name": "ward_type",
+          "dtype": "str",
+          "role": "derived",
+          "unit": null,
+          "description": "Ward service type (from ward catalogue)."
+        },
+        {
+          "name": "month",
+          "dtype": "int",
+          "role": "train",
+          "unit": null,
+          "description": "Calendar month 1-12."
+        },
+        {
+          "name": "season",
+          "dtype": "str",
+          "role": "derived",
+          "unit": null,
+          "description": "Meteorological season derived from month."
+        },
+        {
+          "name": "day_of_week",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Day of week (Mon..Sun)."
+        },
+        {
+          "name": "is_weekend",
+          "dtype": "bool",
+          "role": "derived",
+          "unit": null,
+          "description": "Saturday or Sunday."
+        },
+        {
+          "name": "bed_capacity",
+          "dtype": "int",
+          "role": "derived",
+          "unit": "beds",
+          "description": "Funded base beds of the ward (catalogue)."
+        },
+        {
+          "name": "escalation_beds_open",
+          "dtype": "int",
+          "role": "train",
+          "unit": "beds",
+          "description": "Temporary surge beds opened that day."
+        },
+        {
+          "name": "beds_closed",
+          "dtype": "int",
+          "role": "train",
+          "unit": "beds",
+          "description": "Beds unavailable (staffing, infection control, maintenance); only free beds are closed."
+        },
+        {
+          "name": "available_beds",
+          "dtype": "int",
+          "role": "derived",
+          "unit": "beds",
+          "description": "bed_capacity + escalation_beds_open - beds_closed."
+        },
+        {
+          "name": "staffing_level",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Declared nurse staffing status (consistent with nurses_day_shift vs requirement)."
+        },
+        {
+          "name": "nurses_day_shift",
+          "dtype": "int",
+          "role": "train",
+          "unit": "nurses",
+          "description": "Registered nurses rostered on the day shift."
+        },
+        {
+          "name": "nurses_night_shift",
+          "dtype": "int",
+          "role": "train",
+          "unit": "nurses",
+          "description": "Registered nurses rostered on the night shift."
+        },
+        {
+          "name": "census_start",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Inpatients in the ward at 00:00."
+        },
+        {
+          "name": "elective_scheduled",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Elective (planned) admissions booked for the day."
+        },
+        {
+          "name": "elective_cancelled",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Booked electives cancelled on the day (bed shortage, staffing, patient)."
+        },
+        {
+          "name": "admissions_elective",
+          "dtype": "int",
+          "role": "derived",
+          "unit": "patients",
+          "description": "elective_scheduled - elective_cancelled."
+        },
+        {
+          "name": "admissions_emergency",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Emergency admissions into the ward."
+        },
+        {
+          "name": "transfers_in",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Patients transferred in from other wards."
+        },
+        {
+          "name": "transfers_out",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Patients transferred out to other wards."
+        },
+        {
+          "name": "discharges",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Patients discharged from hospital."
+        },
+        {
+          "name": "discharges_before_noon",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Discharges completed before 12:00."
+        },
+        {
+          "name": "census_end",
+          "dtype": "int",
+          "role": "derived",
+          "unit": "patients",
+          "description": "Inpatients at 24:00 (flow balance)."
+        },
+        {
+          "name": "delayed_discharges",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Patients at 00:00 medically fit for discharge but still occupying a bed."
+        },
+        {
+          "name": "emergency_boarders",
+          "dtype": "int",
+          "role": "train",
+          "unit": "patients",
+          "description": "Emergency patients waiting in ED for a bed in this ward at 24:00."
+        },
+        {
+          "name": "avg_bed_wait_hours",
+          "dtype": "float",
+          "role": "train",
+          "unit": "hours",
+          "description": "Mean bed-request-to-admission wait of the day's emergency admissions (0 if none)."
+        },
+        {
+          "name": "avg_bed_turnaround_min",
+          "dtype": "float",
+          "role": "train",
+          "unit": "minutes",
+          "description": "7-day rolling mean minutes from patient departure to bed ready."
+        },
+        {
+          "name": "avg_los_days",
+          "dtype": "float",
+          "role": "train",
+          "unit": "days",
+          "description": "7-day rolling mean length of stay of patients leaving the ward."
+        },
+        {
+          "name": "occupancy_rate",
+          "dtype": "float",
+          "role": "derived",
+          "unit": "ratio",
+          "description": "census_end / available_beds (midnight occupancy)."
+        },
+        {
+          "name": "occupancy_level",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Occupancy band: low <0.75 <= normal <0.90 <= high <0.97 <= critical."
+        },
+        {
+          "name": "bed_turnover_rate",
+          "dtype": "float",
+          "role": "derived",
+          "unit": "ratio",
+          "description": "(discharges + transfers_out) / available_beds."
+        },
+        {
+          "name": "patients_per_nurse",
+          "dtype": "float",
+          "role": "derived",
+          "unit": "ratio",
+          "description": "census_end / nurses_day_shift."
+        },
+        {
+          "name": "delayed_discharge_rate",
+          "dtype": "float",
+          "role": "derived",
+          "unit": "ratio",
+          "description": "delayed_discharges / census_start (0 if empty)."
+        },
+        {
+          "name": "elective_cancellation_rate",
+          "dtype": "float",
+          "role": "derived",
+          "unit": "ratio",
+          "description": "elective_cancelled / elective_scheduled (0 if none booked)."
+        }
+      ],
+      "warnings": [],
+      "links": {
+        "self": "/api/v1/datasets/ds-42c61363bab8",
+        "download_csv": "/api/v1/datasets/ds-42c61363bab8/download?format=csv",
+        "download_json": "/api/v1/datasets/ds-42c61363bab8/download?format=json"
+      },
+      "records": [
+        {
+          "record_id": "WD-000001",
+          "ward_id": "AMU",
+          "ward_type": "acute",
+          "month": 1,
+          "season": "winter",
+          "day_of_week": "Mon",
+          "is_weekend": false,
+          "bed_capacity": 28,
+          "escalation_beds_open": 0,
+          "beds_closed": 0,
+          "available_beds": 28,
+          "staffing_level": "adequate",
+          "nurses_day_shift": 6,
+          "nurses_night_shift": 4,
+          "census_start": 21,
+          "elective_scheduled": 0,
+          "elective_cancelled": 0,
+          "admissions_elective": 0,
+          "admissions_emergency": 20,
+          "transfers_in": 0,
+          "transfers_out": 7,
+          "discharges": 8,
+          "discharges_before_noon": 3,
+          "census_end": 26,
+          "delayed_discharges": 3,
+          "emergency_boarders": 3,
+          "avg_bed_wait_hours": 1.75,
+          "avg_bed_turnaround_min": 102.2,
+          "avg_los_days": 1.39,
+          "occupancy_rate": 0.9286,
+          "occupancy_level": "high",
+          "bed_turnover_rate": 0.5357,
+          "patients_per_nurse": 4.33,
+          "delayed_discharge_rate": 0.1429,
+          "elective_cancellation_rate": 0.0
+        },
+        {
+          "record_id": "WD-000002",
+          "ward_id": "GMED",
+          "ward_type": "medical",
+          "month": 3,
+          "season": "spring",
+          "day_of_week": "Thu",
+          "is_weekend": false,
+          "bed_capacity": 32,
+          "escalation_beds_open": 1,
+          "beds_closed": 2,
+          "available_beds": 31,
+          "staffing_level": "short",
+          "nurses_day_shift": 3,
+          "nurses_night_shift": 3,
+          "census_start": 29,
+          "elective_scheduled": 0,
+          "elective_cancelled": 0,
+          "admissions_elective": 0,
+          "admissions_emergency": 2,
+          "transfers_in": 5,
+          "transfers_out": 1,
+          "discharges": 4,
+          "discharges_before_noon": 1,
+          "census_end": 31,
+          "delayed_discharges": 0,
+          "emergency_boarders": 0,
+          "avg_bed_wait_hours": 5.82,
+          "avg_bed_turnaround_min": 104.6,
+          "avg_los_days": 4.81,
+          "occupancy_rate": 1.0,
+          "occupancy_level": "critical",
+          "bed_turnover_rate": 0.1613,
+          "patients_per_nurse": 10.33,
+          "delayed_discharge_rate": 0.0,
+          "elective_cancellation_rate": 0.0
+        },
+        {
+          "record_id": "WD-000003",
+          "ward_id": "GMED",
+          "ward_type": "medical",
+          "month": 1,
+          "season": "winter",
+          "day_of_week": "Wed",
+          "is_weekend": false,
+          "bed_capacity": 32,
+          "escalation_beds_open": 4,
+          "beds_closed": 0,
+          "available_beds": 36,
+          "staffing_level": "adequate",
+          "nurses_day_shift": 5,
+          "nurses_night_shift": 4,
+          "census_start": 32,
+          "elective_scheduled": 0,
+          "elective_cancelled": 0,
+          "admissions_elective": 0,
+          "admissions_emergency": 3,
+          "transfers_in": 3,
+          "transfers_out": 1,
+          "discharges": 3,
+          "discharges_before_noon": 1,
+          "census_end": 34,
+          "delayed_discharges": 3,
+          "emergency_boarders": 0,
+          "avg_bed_wait_hours": 3.77,
+          "avg_bed_turnaround_min": 99.2,
+          "avg_los_days": 5.0,
+          "occupancy_rate": 0.9444,
+          "occupancy_level": "high",
+          "bed_turnover_rate": 0.1111,
+          "patients_per_nurse": 6.8,
+          "delayed_discharge_rate": 0.0938,
+          "elective_cancellation_rate": 0.0
+        },
+        {
+          "record_id": "WD-000004",
+          "ward_id": "ICU",
+          "ward_type": "critical_care",
+          "month": 10,
+          "season": "autumn",
+          "day_of_week": "Sun",
+          "is_weekend": true,
+          "bed_capacity": 12,
+          "escalation_beds_open": 2,
+          "beds_closed": 0,
+          "available_beds": 14,
+          "staffing_level": "adequate",
+          "nurses_day_shift": 8,
+          "nurses_night_shift": 6,
+          "census_start": 14,
+          "elective_scheduled": 0,
+          "elective_cancelled": 0,
+          "admissions_elective": 0,
+          "admissions_emergency": 1,
+          "transfers_in": 1,
+          "transfers_out": 3,
+          "discharges": 0,
+          "discharges_before_noon": 0,
+          "census_end": 13,
+          "delayed_discharges": 1,
+          "emergency_boarders": 0,
+          "avg_bed_wait_hours": 17.0,
+          "avg_bed_turnaround_min": 80.5,
+          "avg_los_days": 4.97,
+          "occupancy_rate": 0.9286,
+          "occupancy_level": "high",
+          "bed_turnover_rate": 0.2143,
+          "patients_per_nurse": 1.62,
+          "delayed_discharge_rate": 0.0714,
+          "elective_cancellation_rate": 0.0
+        },
+        {
+          "record_id": "WD-000005",
+          "ward_id": "CARD",
+          "ward_type": "medical",
+          "month": 10,
+          "season": "autumn",
+          "day_of_week": "Tue",
+          "is_weekend": false,
+          "bed_capacity": 20,
+          "escalation_beds_open": 1,
+          "beds_closed": 0,
+          "available_beds": 21,
+          "staffing_level": "adequate",
+          "nurses_day_shift": 5,
+          "nurses_night_shift": 3,
+          "census_start": 21,
+          "elective_scheduled": 1,
+          "elective_cancelled": 0,
+          "admissions_elective": 1,
+          "admissions_emergency": 4,
+          "transfers_in": 2,
+          "transfers_out": 0,
+          "discharges": 8,
+          "discharges_before_noon": 2,
+          "census_end": 20,
+          "delayed_discharges": 1,
+          "emergency_boarders": 0,
+          "avg_bed_wait_hours": 1.79,
+          "avg_bed_turnaround_min": 73.5,
+          "avg_los_days": 2.93,
+          "occupancy_rate": 0.9524,
+          "occupancy_level": "high",
+          "bed_turnover_rate": 0.381,
+          "patients_per_nurse": 4.0,
+          "delayed_discharge_rate": 0.0476,
+          "elective_cancellation_rate": 0.0
+        }
+      ],
+      "records_truncated": {
+        "shown": 5,
+        "total": 100
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "requested rows delivered",
+      "passed": true
+    },
+    {
+      "check": "all hard rules passed",
+      "passed": true
+    },
+    {
+      "check": "every row inside the scenario",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

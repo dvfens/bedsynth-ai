@@ -1,0 +1,44 @@
+{
+  "step": 29,
+  "name": "invalid request (422)",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "ward_daily",
+      "num_rows": 0
+    }
+  },
+  "response": {
+    "status_code": 422,
+    "expected_status": 422,
+    "elapsed_ms": 2.5,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "0.7"
+    },
+    "body": {
+      "detail": "num_rows: Input should be greater than or equal to 1",
+      "error_type": "validation_error",
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "num_rows"
+          ],
+          "msg": "Input should be greater than or equal to 1",
+          "type": "greater_than_equal"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "uniform error body",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,99 @@
+{
+  "step": 5,
+  "name": "list tables",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/tables",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 30.1,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "28.1"
+    },
+    "body": {
+      "tables": [
+        {
+          "name": "ward_daily",
+          "title": "Ward-day operations",
+          "description": "Daily capacity, nurse staffing, patient flow, emergency demand, elective scheduling, bed turnover and midnight occupancy for each of the eight wards of a 194-bed hospital.",
+          "grain": "One row per ward per calendar day",
+          "key_column": "record_id",
+          "n_columns": 35,
+          "n_training_columns": 22,
+          "n_derived_columns": 12,
+          "n_scenarios": 16,
+          "conditionable_columns": [
+            "ward_id",
+            "month",
+            "day_of_week",
+            "staffing_level",
+            "occupancy_level"
+          ],
+          "supports_calendar_mode": true,
+          "default_model": "gc_tuned",
+          "trained_models": [
+            "ctgan",
+            "gc_baseline",
+            "gc_segmented",
+            "gc_tuned",
+            "tvae"
+          ],
+          "reference_data_available": true,
+          "links": {
+            "schema": "/api/v1/tables/ward_daily/schema",
+            "scenarios": "/api/v1/scenarios?table=ward_daily",
+            "models": "/api/v1/models?table=ward_daily"
+          }
+        },
+        {
+          "name": "patient_stays",
+          "title": "Patient ward stays",
+          "description": "Admission and discharge timing, elective booking and rescheduling, bed waits, length of stay, discharge delays and bed turnaround. Strictly non-clinical: no diagnoses, procedures or personal identifiers.",
+          "grain": "One row per inpatient ward stay (bed episode)",
+          "key_column": "stay_id",
+          "n_columns": 24,
+          "n_training_columns": 15,
+          "n_derived_columns": 8,
+          "n_scenarios": 10,
+          "conditionable_columns": [
+            "ward_id",
+            "admission_source",
+            "admission_month",
+            "admission_day_of_week",
+            "separation_type",
+            "discharge_destination",
+            "delay_reason"
+          ],
+          "supports_calendar_mode": false,
+          "default_model": "gc_tuned",
+          "trained_models": [
+            "ctgan",
+            "gc_baseline",
+            "gc_segmented",
+            "gc_tuned",
+            "tvae"
+          ],
+          "reference_data_available": true,
+          "links": {
+            "schema": "/api/v1/tables/patient_stays/schema",
+            "scenarios": "/api/v1/scenarios?table=patient_stays",
+            "models": "/api/v1/models?table=patient_stays"
+          }
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "two tables",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

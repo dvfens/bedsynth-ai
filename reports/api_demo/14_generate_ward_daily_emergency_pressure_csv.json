@@ -1,0 +1,56 @@
+{
+  "step": 14,
+  "name": "generate ward_daily emergency_pressure (csv)",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "ward_daily",
+      "num_rows": 150,
+      "scenario": "emergency_pressure",
+      "seed": 44,
+      "format": "csv"
+    }
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 4649.4,
+    "headers": {
+      "x-bedsynth-dataset-id": "ds-14f9eb6bd922",
+      "x-bedsynth-table": "ward_daily",
+      "x-bedsynth-rows": "150",
+      "x-bedsynth-model": "gc_tuned",
+      "x-bedsynth-scenario": "emergency_pressure",
+      "x-bedsynth-seed": "44",
+      "x-bedsynth-persisted": "true",
+      "x-bedsynth-hard-rules-passed": "true",
+      "content-disposition": "attachment; filename=\"ds-14f9eb6bd922.csv\"",
+      "content-type": "text/csv; charset=utf-8",
+      "x-process-time-ms": "4647.2",
+      "saved_as": "14_generate_ward_daily_emergency_pressure_csv.csv"
+    },
+    "body": "record_id,ward_id,ward_type,month,season,day_of_week,is_weekend,bed_capacity,escalation_beds_open,beds_closed,available_beds,staffing_level,nurses_day_shift,nurses_night_shift,census_start,elective_scheduled,elective_cancelled,admissions_elective,admissions_emergency,transfers_in,transfers_out,discharges,discharges_before_noon,census_end,delayed_discharges,emergency_boarders,avg_bed_wait_hours,avg_bed_turnaround_min,avg_los_days,occupancy_rate,occupancy_level,bed_turnover_rate,patients_per_nurse,delayed_discharge_rate,elective_cancellation_rate\nWD-000001,AMU,acute,8,summer,Thu,False,28,3,0,31,adequate,6,4,31,0,0,0,17,0,10,9,2,29,6,4,1.6,101.1,1.41,0.9355,high,0.6129,4.83,0.1935,0.0\nWD-000002,AMU,acute,2,winter,Tue,False,28,0,0,28,adequate,7,4,28,0,0,0,20,0,10,12,2,26,5,1,2.67,95.2,1.47,0.9286,high,0.7857,3.71,0.1786,0.0\nWD-000003,ORTH,surgical,3,spring,Wed,False,24,2,0,26,adequate,4,3,26,4,0,4,0,0,1,3,1,26,2,3,0.0,98.2,4.99,1.0,critical,0.1538,6.5,0.0769,0.0\nWD-000004,ORTH,surgical,10,autumn,Mon,False,24,2,0,26,adequate,4,2,22,3,0,3,5,0,0,4,3,26,0,3,2.65,113.3,3.56,1.0,critical,0.1538,6.5,0.0,0.0\nWD-000005,AMU,acute,1,winter,Sun,True,28,4,0,32,surplus,9,4,31,0,0,0,14,0,7,6,0,32,6,4,2.64,102.6,1.42,1.0,critical,0.4062,3.56,0.1935,0.0\nWD-000006,ORTH,surgical,10,autumn,Tue,False,24,1,0,25,adequate,4,3,22,3,0,3,3,0,1,2,0,25,3,3,14.33,83.7,5.24,1.0,critical,0.12,6.25,0.1364,0.0\nWD-000007,CARD,medical,6,summer,Sat,True,20,0,0,20,adequate,5,3,16,0,0,0,6,0,0,4,0,18,0,2,12.48,96.4,3.55,0.9,high,0.2,3.6,0.0,0.0\nWD-000008,GSUR,surgical,8,summer,Wed,False,30,2,0,32,adequate,5,4,26,3,0,3,2,2,0,1,1,32,1,1,1.32,83.9,6.08,1.0,critical,0.0312,6.4,0.0385,0.0\nWD-000009,PAED,paediatric,1,winter,Tue,False,18,0,0,18,adequate,6,4,13,1,0,1,8,0,0,4,1,18,0,4,6.14,97.0,1.62,1.0,critical,0.2222,3.0,0.0,0.0\nWD-000010,AMU,acute,9,autumn,Wed,False,28,2,0,30,adequate,7,4,19,0,0,0,19,0,6,5,0,27,2,3,1.39,105.6,1.59,0.9,high,0.3667,3.86,0.1053,0.0\nWD-000011,CARD,medical,10,autumn,Mon,False,20,2,0,22,\n... (truncated)"
+  },
+  "checks": [
+    {
+      "check": "text/csv response",
+      "passed": true
+    },
+    {
+      "check": "X-BedSynth headers present",
+      "passed": true
+    },
+    {
+      "check": "rows header matches body",
+      "passed": true
+    },
+    {
+      "check": "every row has emergency boarders",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

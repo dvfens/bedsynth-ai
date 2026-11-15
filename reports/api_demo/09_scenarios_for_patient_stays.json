@@ -1,0 +1,214 @@
+{
+  "step": 9,
+  "name": "scenarios for patient_stays",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/scenarios",
+    "params": {
+      "table": "patient_stays"
+    },
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 2.8,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "1.0"
+    },
+    "body": {
+      "count": 10,
+      "categories": {
+        "baseline": "Representative mix of everyday operating conditions",
+        "occupancy": "Normal, high and low bed occupancy",
+        "seasonal": "Seasonal demand",
+        "patient_flow": "Admission and discharge patterns",
+        "emergency": "Emergency bed requirements",
+        "utilization": "Ward utilisation and capacity",
+        "scheduling": "Scheduled procedures and elective scheduling conditions",
+        "turnover": "Bed turnover",
+        "delayed_discharge": "Delayed discharge",
+        "staffing": "Varying staffing conditions"
+      },
+      "scenarios": [
+        {
+          "name": "stays_baseline",
+          "table": "patient_stays",
+          "title": "Baseline stays",
+          "category": "baseline",
+          "category_description": "Representative mix of everyday operating conditions",
+          "description": "Unconditional sample of ward stays reproducing the real admission mix.",
+          "conditions": {},
+          "filters": {},
+          "support": null
+        },
+        {
+          "name": "emergency_admissions",
+          "table": "patient_stays",
+          "title": "Emergency admissions",
+          "category": "patient_flow",
+          "category_description": "Admission and discharge patterns",
+          "description": "Stays admitted through the emergency department.",
+          "conditions": {
+            "admission_source": [
+              "emergency"
+            ]
+          },
+          "filters": {},
+          "support": null
+        },
+        {
+          "name": "elective_admissions",
+          "table": "patient_stays",
+          "title": "Elective (scheduled) admissions",
+          "category": "scheduling",
+          "category_description": "Scheduled procedures and elective scheduling conditions",
+          "description": "Planned admissions for scheduled procedures.",
+          "conditions": {
+            "admission_source": [
+              "elective"
+            ]
+          },
+          "filters": {},
+          "support": null
+        },
+        {
+          "name": "rescheduled_electives",
+          "table": "patient_stays",
+          "title": "Rescheduled electives",
+          "category": "scheduling",
+          "category_description": "Scheduled procedures and elective scheduling conditions",
+          "description": "Elective admissions that were postponed at least once.",
+          "conditions": {
+            "admission_source": [
+              "elective"
+            ]
+          },
+          "filters": {
+            "times_rescheduled": {
+              "min": 1
+            }
+          },
+          "support": null
+        },
+        {
+          "name": "delayed_discharge_stays",
+          "table": "patient_stays",
+          "title": "Delayed discharges",
+          "category": "delayed_discharge",
+          "category_description": "Delayed discharge",
+          "description": "Stays whose departure was delayed by 4+ hours after the patient was ready to leave.",
+          "conditions": {
+            "delay_reason": [
+              "awaiting_transport",
+              "awaiting_medication",
+              "awaiting_documentation",
+              "awaiting_care_package",
+              "awaiting_care_facility_bed",
+              "awaiting_downstream_bed"
+            ]
+          },
+          "filters": {
+            "discharge_delay_hours": {
+              "min": 4.0
+            }
+          },
+          "support": null
+        },
+        {
+          "name": "long_stay_patients",
+          "table": "patient_stays",
+          "title": "Long-stay patients",
+          "category": "utilization",
+          "category_description": "Ward utilisation and capacity",
+          "description": "Stays of 7 or more nights ('stranded' patients).",
+          "conditions": {},
+          "filters": {
+            "los_nights": {
+              "min": 7
+            }
+          },
+          "support": null
+        },
+        {
+          "name": "weekend_discharges",
+          "table": "patient_stays",
+          "title": "Weekend discharges",
+          "category": "patient_flow",
+          "category_description": "Admission and discharge patterns",
+          "description": "Stays ending on a Saturday or Sunday.",
+          "conditions": {},
+          "filters": {
+            "discharge_day_of_week": {
+              "in": [
+                "Sat",
+                "Sun"
+              ]
+            }
+          },
+          "support": null
+        },
+        {
+          "name": "winter_admissions",
+          "table": "patient_stays",
+          "title": "Winter admissions",
+          "category": "seasonal",
+          "category_description": "Seasonal demand",
+          "description": "Stays admitted December-February.",
+          "conditions": {
+            "admission_month": [
+              12,
+              1,
+              2
+            ]
+          },
+          "filters": {},
+          "support": null
+        },
+        {
+          "name": "slow_bed_turnaround",
+          "table": "patient_stays",
+          "title": "Slow bed turnaround",
+          "category": "turnover",
+          "category_description": "Bed turnover",
+          "description": "Stays after which the bed took 3+ hours to be ready (deep clean, night/weekend).",
+          "conditions": {},
+          "filters": {
+            "bed_turnaround_minutes": {
+              "min": 180
+            }
+          },
+          "support": null
+        },
+        {
+          "name": "long_bed_waits",
+          "table": "patient_stays",
+          "title": "Long emergency bed waits",
+          "category": "emergency",
+          "category_description": "Emergency bed requirements",
+          "description": "Emergency admissions that waited 4+ hours for a bed.",
+          "conditions": {
+            "admission_source": [
+              "emergency"
+            ]
+          },
+          "filters": {
+            "bed_wait_hours": {
+              "min": 4
+            }
+          },
+          "support": null
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "only patient_stays",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

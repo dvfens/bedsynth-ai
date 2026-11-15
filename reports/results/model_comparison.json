@@ -1,0 +1,1268 @@
+{
+  "generated_at": "2026-11-15T05:31:06+00:00",
+  "description": "Composite score and components per trained model, next to the real-holdout ceiling and the no-learning floor; the best complete, comparable composite per table becomes the registry default.",
+  "composite_weights": {
+    "fidelity": 0.3,
+    "validity": 0.2,
+    "operational": 0.25,
+    "utility": 0.15,
+    "privacy": 0.1
+  },
+  "selection_rule": "highest composite among entries with status ok, complete composite (no failed family), the same run configuration as the latest run and the current model version",
+  "tables": {
+    "ward_daily": {
+      "models": [
+        {
+          "model_id": "gc_tuned",
+          "status": "ok",
+          "composite": 0.958271,
+          "complete": true,
+          "components": {
+            "fidelity": 0.968472,
+            "validity": 0.937856,
+            "operational": 0.945605,
+            "utility": 0.960379,
+            "privacy": 0.997
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.968472,
+            "validity": 0.937856,
+            "operational": 0.945605,
+            "privacy": 0.997,
+            "ml_utility": 0.965706,
+            "optimization": 0.955052,
+            "scenario_coverage": 0.949286
+          },
+          "model_view": {
+            "statistical": 0.95093,
+            "operational": 0.95682
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 7016,
+            "shortfall": 0,
+            "acceptance_rate": 0.946078,
+            "strata_mix_tvd": 0.0,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 1.653
+          },
+          "n_rows": {
+            "real_train": 7016,
+            "real_holdout": 1752,
+            "synthetic": 7016,
+            "raw_synthetic": 7016
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:01:30+00:00",
+          "model_card": {
+            "experiment_id": "gc_tuned",
+            "model": "gaussian_copula",
+            "description": "GaussianCopula segmented per ward (ward_daily) and per ward x admission source (patient_stays), every constraint group incl. programmable band labels, learned structural zeros, the escalation cover and exact per-group marginals (delay hours per reason, elective lists per weekday, ED boarders and bed waits per recomputed occupancy band, closed beds per recomputed staffing band, day-shift nurses per month, escalation beds beyond the census need, length of stay per admission weekday, admission/discharge hours and waits per ward x source), ordinal metadata + demand-ordered encodings, tuned per-column marginals (Week 3 improvement)",
+            "segment_label": "ward_id",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "effective_constraint_groups": [
+              "inequality",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "fitted_at": "2026-11-15T05:01:30+00:00",
+            "fit_seconds": 33.886,
+            "training_rows": 7016,
+            "quick": false,
+            "epochs": null,
+            "raw_hard_valid_rate": 0.9305,
+            "hard_violation_rates": {
+              "WD-H06": 0.0655,
+              "WD-H15": 0.011
+            },
+            "soft_violation_rates": {
+              "WD-S01": 0.007,
+              "WD-S02": 0.0005,
+              "WD-S04": 0.0935,
+              "WD-S06": 0.0015
+            }
+          },
+          "evaluated_at": "2026-11-15T05:22:19+00:00",
+          "seconds": 60.397,
+          "results_file": "ward_daily__gc_tuned.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.921821,
+            "operational": 0.886425,
+            "utility": 0.858826,
+            "privacy": null,
+            "composite": 0.917738
+          }
+        },
+        {
+          "model_id": "tvae",
+          "status": "ok",
+          "composite": 0.832428,
+          "complete": true,
+          "components": {
+            "fidelity": 0.886063,
+            "validity": 0.769527,
+            "operational": 0.795749,
+            "utility": 0.759508,
+            "privacy": 0.9984
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.886063,
+            "validity": 0.769527,
+            "operational": 0.795749,
+            "privacy": 0.9984,
+            "ml_utility": 0.669258,
+            "optimization": 0.849757,
+            "scenario_coverage": 0.895265
+          },
+          "model_view": {
+            "statistical": 0.833378,
+            "operational": 0.749785
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 7016,
+            "shortfall": 0,
+            "acceptance_rate": 0.687813,
+            "strata_mix_tvd": 0.000143,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 3.523
+          },
+          "n_rows": {
+            "real_train": 7016,
+            "real_holdout": 1752,
+            "synthetic": 7016,
+            "raw_synthetic": 7016
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:06:26+00:00",
+          "model_card": {
+            "experiment_id": "tvae",
+            "model": "tvae",
+            "description": "TVAE (variational autoencoder), global model with every constraint group (SDV built-ins + programmable)",
+            "segment_label": "global",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "effective_constraint_groups": [
+              "inequality",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "fitted_at": "2026-11-15T05:06:26+00:00",
+            "fit_seconds": 75.849,
+            "training_rows": 7016,
+            "quick": false,
+            "epochs": 200,
+            "raw_hard_valid_rate": 0.7795,
+            "hard_violation_rates": {
+              "WD-H06": 0.196,
+              "WD-H07": 0.153,
+              "WD-H15": 0.1625
+            },
+            "soft_violation_rates": {
+              "WD-S01": 0.045,
+              "WD-S02": 0.0145,
+              "WD-S04": 0.123
+            }
+          },
+          "evaluated_at": "2026-11-15T05:23:23+00:00",
+          "seconds": 80.169,
+          "results_file": "ward_daily__tvae.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.710059,
+            "operational": -0.18354,
+            "utility": -0.881131,
+            "privacy": null,
+            "composite": 0.342174
+          }
+        },
+        {
+          "model_id": "gc_segmented",
+          "status": "ok",
+          "composite": 0.805164,
+          "complete": true,
+          "components": {
+            "fidelity": 0.953031,
+            "validity": 0.314994,
+            "operational": 0.859614,
+            "utility": 0.944948,
+            "privacy": 0.9961
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.953031,
+            "validity": 0.314994,
+            "operational": 0.859614,
+            "privacy": 0.9961,
+            "ml_utility": 0.951027,
+            "optimization": 0.93887,
+            "scenario_coverage": 0.942516
+          },
+          "model_view": {
+            "statistical": 0.93398,
+            "operational": 0.830338
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 7016,
+            "shortfall": 0,
+            "acceptance_rate": 0.254415,
+            "strata_mix_tvd": 0.0,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 3.079
+          },
+          "n_rows": {
+            "real_train": 7016,
+            "real_holdout": 1752,
+            "synthetic": 7016,
+            "raw_synthetic": 7016
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:00:56+00:00",
+          "model_card": {
+            "experiment_id": "gc_segmented",
+            "model": "gaussian_copula",
+            "description": "Ablation step: GaussianCopula segmented per ward, SDV built-in constraints only (Inequality, FixedCombinations), ordinal metadata + demand-ordered encodings, tuned marginals (the pre-Week-3 gc_tuned recipe, without programmable constraints)",
+            "segment_label": "ward_id",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations"
+            ],
+            "effective_constraint_groups": [
+              "inequality"
+            ],
+            "fitted_at": "2026-11-15T05:00:56+00:00",
+            "fit_seconds": 22.733,
+            "training_rows": 7016,
+            "quick": false,
+            "epochs": null,
+            "raw_hard_valid_rate": 0.301,
+            "hard_violation_rates": {
+              "WD-H06": 0.117,
+              "WD-H07": 0.0715,
+              "WD-H10": 0.486,
+              "WD-H11": 0.291,
+              "WD-H15": 0.106
+            },
+            "soft_violation_rates": {
+              "WD-S01": 0.001,
+              "WD-S03": 0.1245,
+              "WD-S04": 0.0925,
+              "WD-S05": 0.0025,
+              "WD-S06": 0.002
+            }
+          },
+          "evaluated_at": "2026-11-15T05:21:18+00:00",
+          "seconds": 58.319,
+          "results_file": "ward_daily__gc_segmented.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.138246,
+            "operational": 0.272453,
+            "utility": 0.725162,
+            "privacy": null,
+            "composite": 0.217478
+          }
+        },
+        {
+          "model_id": "ctgan",
+          "status": "ok",
+          "composite": 0.758495,
+          "complete": true,
+          "components": {
+            "fidelity": 0.864008,
+            "validity": 0.515251,
+            "operational": 0.756648,
+            "utility": 0.714002,
+            "privacy": 0.9998
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.864008,
+            "validity": 0.515251,
+            "operational": 0.756648,
+            "privacy": 0.9998,
+            "ml_utility": 0.492211,
+            "optimization": 0.935794,
+            "scenario_coverage": 0.892463
+          },
+          "model_view": {
+            "statistical": 0.786351,
+            "operational": 0.637802
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 7016,
+            "shortfall": 0,
+            "acceptance_rate": 0.373485,
+            "strata_mix_tvd": 0.000285,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 6.469
+          },
+          "n_rows": {
+            "real_train": 7016,
+            "real_holdout": 1752,
+            "synthetic": 7016,
+            "raw_synthetic": 7016
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:05:09+00:00",
+          "model_card": {
+            "experiment_id": "ctgan",
+            "model": "ctgan",
+            "description": "CTGAN (conditional GAN), global model with every constraint group (SDV built-ins + programmable)",
+            "segment_label": "global",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "effective_constraint_groups": [
+              "inequality",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "fitted_at": "2026-11-15T05:05:09+00:00",
+            "fit_seconds": 217.885,
+            "training_rows": 7016,
+            "quick": false,
+            "epochs": 200,
+            "raw_hard_valid_rate": 0.521,
+            "hard_violation_rates": {
+              "WD-H02": 0.0125,
+              "WD-H06": 0.372,
+              "WD-H07": 0.4,
+              "WD-H15": 0.4085
+            },
+            "soft_violation_rates": {
+              "WD-S01": 0.1375,
+              "WD-S02": 0.0715,
+              "WD-S04": 0.2445,
+              "WD-S06": 0.0195
+            }
+          },
+          "evaluated_at": "2026-11-15T05:16:07+00:00",
+          "seconds": 115.036,
+          "results_file": "ward_daily__ctgan.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.390174,
+            "operational": -0.462719,
+            "utility": -1.275306,
+            "privacy": null,
+            "composite": 0.004029
+          }
+        },
+        {
+          "model_id": "gc_baseline",
+          "status": "ok",
+          "composite": 0.562631,
+          "complete": true,
+          "components": {
+            "fidelity": 0.799381,
+            "validity": 0.03435,
+            "operational": 0.583412,
+            "utility": 0.470958,
+            "privacy": 0.9945
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.799381,
+            "validity": 0.03435,
+            "operational": 0.583412,
+            "privacy": 0.9945,
+            "ml_utility": 0.291727,
+            "optimization": 0.650188,
+            "scenario_coverage": 0.805812
+          },
+          "model_view": {
+            "statistical": 0.771902,
+            "operational": 0.586469
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 7016,
+            "shortfall": 0,
+            "acceptance_rate": 0.018827,
+            "strata_mix_tvd": 0.318558,
+            "rebalancing_flag": true,
+            "stopped_reasons": [],
+            "throttled_rounds": 7,
+            "seconds": 23.153
+          },
+          "n_rows": {
+            "real_train": 7016,
+            "real_holdout": 1752,
+            "synthetic": 7016,
+            "raw_synthetic": 7016
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:00:33+00:00",
+          "model_card": {
+            "experiment_id": "gc_baseline",
+            "model": "gaussian_copula",
+            "description": "GaussianCopula, single global model, default encodings, no SDV constraints (Week 2 baseline)",
+            "segment_label": "global",
+            "constraint_groups": [],
+            "effective_constraint_groups": [],
+            "fitted_at": "2026-11-15T05:00:33+00:00",
+            "fit_seconds": 1.925,
+            "training_rows": 7016,
+            "quick": false,
+            "epochs": null,
+            "raw_hard_valid_rate": 0.0335,
+            "hard_violation_rates": {
+              "WD-H02": 0.0005,
+              "WD-H04": 0.004,
+              "WD-H05": 0.0005,
+              "WD-H06": 0.4265,
+              "WD-H07": 0.2435,
+              "WD-H08": 0.3085,
+              "WD-H10": 0.7575,
+              "WD-H11": 0.584,
+              "WD-H12": 0.299,
+              "WD-H15": 0.2535
+            },
+            "soft_violation_rates": {
+              "WD-S01": 0.0075,
+              "WD-S02": 0.078,
+              "WD-S03": 0.17,
+              "WD-S04": 0.2105,
+              "WD-S05": 0.012
+            }
+          },
+          "evaluated_at": "2026-11-15T05:18:26+00:00",
+          "seconds": 168.509,
+          "results_file": "ward_daily__gc_baseline.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": -0.214811,
+            "operational": -1.699615,
+            "utility": -3.380568,
+            "privacy": null,
+            "composite": -0.891787
+          }
+        }
+      ],
+      "references": [
+        {
+          "model_id": "real_holdout",
+          "kind": "ceiling",
+          "description": "Ceiling: real holdout rows (unseen by every model) drawn with the generator's allocation-strata quotas; ML utility and the quota decision use a size-matched real-train subsample, privacy compares holdout halves.",
+          "status": "ok",
+          "error": null,
+          "composite": 0.976257,
+          "components": {
+            "fidelity": 0.968354,
+            "validity": 1.0,
+            "operational": 0.961512,
+            "utility": 0.976677,
+            "privacy": 0.988708
+          },
+          "family_scores": {
+            "statistical": 0.968354,
+            "validity": 1.0,
+            "operational": 0.961512,
+            "privacy": 0.988708,
+            "ml_utility": 1.0,
+            "optimization": 0.953354,
+            "scenario_coverage": 0.976679
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "results_file": "ward_daily__reference__real_holdout.json"
+        },
+        {
+          "model_id": "null_stratified_marginals",
+          "kind": "floor",
+          "description": "Floor: no learning - allocation stratum by training frequency, every other column drawn independently from training rows of that stratum, hard-invalid rows rejected.",
+          "status": "ok",
+          "error": null,
+          "composite": 0.757614,
+          "components": {
+            "fidelity": 0.944249,
+            "validity": 0.205103,
+            "operational": 0.821455,
+            "utility": 0.861231,
+            "privacy": 0.9877
+          },
+          "family_scores": {
+            "statistical": 0.944249,
+            "validity": 0.205103,
+            "operational": 0.821455,
+            "privacy": 0.9877,
+            "ml_utility": 0.801195,
+            "optimization": 0.921268,
+            "scenario_coverage": 0.960563
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 7016,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "results_file": "ward_daily__reference__null_stratified_marginals.json"
+        }
+      ],
+      "best_model": "gc_tuned",
+      "best_composite": 0.958271,
+      "run_config": {
+        "quick": false,
+        "rows": 7016,
+        "rows_per_scenario": 400,
+        "scenarios": true,
+        "seed": 42,
+        "sdmetrics": true,
+        "sample_time_budget_seconds": 90,
+        "scenario_time_budget_seconds": 20,
+        "scenario_max_attempts": 8,
+        "coverage_time_budget_seconds": 150
+      },
+      "noise_calibration": {
+        "n": 7016,
+        "reps": 50,
+        "sd_multiplier": 3.0,
+        "seed": 42,
+        "basis": "random re-splits of the real data (train + holdout): a pseudo training split vs n rows of the remainder",
+        "real_pass_rate_cv": 0.98
+      }
+    },
+    "patient_stays": {
+      "models": [
+        {
+          "model_id": "gc_tuned",
+          "status": "ok",
+          "composite": 0.965249,
+          "complete": true,
+          "components": {
+            "fidelity": 0.977263,
+            "validity": 0.96025,
+            "operational": 0.955462,
+            "utility": 0.943361,
+            "privacy": 0.9965
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.977263,
+            "validity": 0.96025,
+            "operational": 0.955462,
+            "privacy": 0.9965,
+            "ml_utility": 0.943361,
+            "optimization": null,
+            "scenario_coverage": 0.962307
+          },
+          "model_view": {
+            "statistical": 0.977425,
+            "operational": 0.956159
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 20000,
+            "shortfall": 0,
+            "acceptance_rate": 0.949579,
+            "strata_mix_tvd": 0.001232,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 3.272
+          },
+          "n_rows": {
+            "real_train": 45002,
+            "real_holdout": 11251,
+            "synthetic": 20000,
+            "raw_synthetic": 20000
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:07:18+00:00",
+          "model_card": {
+            "experiment_id": "gc_tuned",
+            "model": "gaussian_copula",
+            "description": "GaussianCopula segmented per ward (ward_daily) and per ward x admission source (patient_stays), every constraint group incl. programmable band labels, learned structural zeros, the escalation cover and exact per-group marginals (delay hours per reason, elective lists per weekday, ED boarders and bed waits per recomputed occupancy band, closed beds per recomputed staffing band, day-shift nurses per month, escalation beds beyond the census need, length of stay per admission weekday, admission/discharge hours and waits per ward x source), ordinal metadata + demand-ordered encodings, tuned per-column marginals (Week 3 improvement)",
+            "segment_label": "ward_id x admission_source",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "effective_constraint_groups": [
+              "fixed_combinations",
+              "conditional_marginals"
+            ],
+            "fitted_at": "2026-11-15T05:07:18+00:00",
+            "fit_seconds": 28.772,
+            "training_rows": 45002,
+            "quick": false,
+            "epochs": null,
+            "raw_hard_valid_rate": 0.9575,
+            "hard_violation_rates": {
+              "PS-H04": 0.019,
+              "PS-H08": 0.038
+            },
+            "soft_violation_rates": {
+              "PS-S02": 0.0095,
+              "PS-S03": 0.0215,
+              "PS-S05": 0.003
+            }
+          },
+          "evaluated_at": "2026-11-15T05:29:40+00:00",
+          "seconds": 38.681,
+          "results_file": "patient_stays__gc_tuned.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.801051,
+            "operational": null,
+            "utility": 0.36138,
+            "privacy": null,
+            "composite": 0.642977
+          }
+        },
+        {
+          "model_id": "ctgan",
+          "status": "ok",
+          "composite": 0.788698,
+          "complete": true,
+          "components": {
+            "fidelity": 0.92959,
+            "validity": 0.8326,
+            "operational": 0.752188,
+            "utility": 0.36836,
+            "privacy": 1.0
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.92959,
+            "validity": 0.8326,
+            "operational": 0.752188,
+            "privacy": 1.0,
+            "ml_utility": 0.36836,
+            "optimization": null,
+            "scenario_coverage": 0.917658
+          },
+          "model_view": {
+            "statistical": 0.914969,
+            "operational": 0.71583
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 20000,
+            "shortfall": 0,
+            "acceptance_rate": 0.614886,
+            "strata_mix_tvd": 0.020614,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 5.139
+          },
+          "n_rows": {
+            "real_train": 45002,
+            "real_holdout": 11251,
+            "synthetic": 20000,
+            "raw_synthetic": 20000
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:12:57+00:00",
+          "model_card": {
+            "experiment_id": "ctgan",
+            "model": "ctgan",
+            "description": "CTGAN (conditional GAN), global model with every constraint group (SDV built-ins + programmable)",
+            "segment_label": "global",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "effective_constraint_groups": [
+              "fixed_combinations",
+              "structural_zeros",
+              "conditional_marginals"
+            ],
+            "fitted_at": "2026-11-15T05:12:57+00:00",
+            "fit_seconds": 338.312,
+            "training_rows": 20000,
+            "quick": false,
+            "epochs": 200,
+            "raw_hard_valid_rate": 0.848,
+            "hard_violation_rates": {
+              "PS-H04": 0.0095,
+              "PS-H05": 0.11,
+              "PS-H08": 0.048,
+              "PS-H14": 0.11
+            },
+            "soft_violation_rates": {
+              "PS-S02": 0.0055,
+              "PS-S03": 0.0155,
+              "PS-S04": 0.021,
+              "PS-S05": 0.003
+            }
+          },
+          "evaluated_at": "2026-11-15T05:25:23+00:00",
+          "seconds": 60.394,
+          "results_file": "patient_stays__ctgan.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.162162,
+            "operational": null,
+            "utility": -6.674853,
+            "privacy": null,
+            "composite": -2.314921
+          }
+        },
+        {
+          "model_id": "tvae",
+          "status": "ok",
+          "composite": 0.748808,
+          "complete": true,
+          "components": {
+            "fidelity": 0.824875,
+            "validity": 0.87345,
+            "operational": 0.639098,
+            "utility": 0.452204,
+            "privacy": 0.9905
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.824875,
+            "validity": 0.87345,
+            "operational": 0.639098,
+            "privacy": 0.9905,
+            "ml_utility": 0.452204,
+            "optimization": null,
+            "scenario_coverage": 0.763042
+          },
+          "model_view": {
+            "statistical": 0.744819,
+            "operational": 0.614767
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 20000,
+            "shortfall": 0,
+            "acceptance_rate": 0.863563,
+            "strata_mix_tvd": 0.010932,
+            "rebalancing_flag": false,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 2.984
+          },
+          "n_rows": {
+            "real_train": 45002,
+            "real_holdout": 11251,
+            "synthetic": 20000,
+            "raw_synthetic": 20000
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:15:38+00:00",
+          "model_card": {
+            "experiment_id": "tvae",
+            "model": "tvae",
+            "description": "TVAE (variational autoencoder), global model with every constraint group (SDV built-ins + programmable)",
+            "segment_label": "global",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations",
+              "regime_labels",
+              "structural_zeros",
+              "capacity",
+              "conditional_marginals"
+            ],
+            "effective_constraint_groups": [
+              "fixed_combinations",
+              "structural_zeros",
+              "conditional_marginals"
+            ],
+            "fitted_at": "2026-11-15T05:15:38+00:00",
+            "fit_seconds": 160.371,
+            "training_rows": 20000,
+            "quick": false,
+            "epochs": 200,
+            "raw_hard_valid_rate": 0.8755,
+            "hard_violation_rates": {
+              "PS-H04": 0.002,
+              "PS-H05": 0.0765,
+              "PS-H08": 0.048,
+              "PS-H14": 0.0765
+            },
+            "soft_violation_rates": {
+              "PS-S03": 0.0035,
+              "PS-S04": 0.0365
+            }
+          },
+          "evaluated_at": "2026-11-15T05:30:22+00:00",
+          "seconds": 43.724,
+          "results_file": "patient_stays__tvae.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": 0.366617,
+            "operational": null,
+            "utility": -5.648862,
+            "privacy": null,
+            "composite": -2.983229
+          }
+        },
+        {
+          "model_id": "gc_segmented",
+          "status": "ok",
+          "composite": 0.69797,
+          "complete": true,
+          "components": {
+            "fidelity": 0.902967,
+            "validity": 0.24265,
+            "operational": 0.766547,
+            "utility": 0.582424,
+            "privacy": 0.9955
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.902967,
+            "validity": 0.24265,
+            "operational": 0.766547,
+            "privacy": 0.9955,
+            "ml_utility": 0.582424,
+            "optimization": null,
+            "scenario_coverage": 0.89606
+          },
+          "model_view": {
+            "statistical": 0.861639,
+            "operational": 0.736052
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 20000,
+            "shortfall": 0,
+            "acceptance_rate": 0.043603,
+            "strata_mix_tvd": 0.284308,
+            "rebalancing_flag": true,
+            "stopped_reasons": [],
+            "throttled_rounds": 0,
+            "seconds": 12.169
+          },
+          "n_rows": {
+            "real_train": 45002,
+            "real_holdout": 11251,
+            "synthetic": 20000,
+            "raw_synthetic": 20000
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:06:48+00:00",
+          "model_card": {
+            "experiment_id": "gc_segmented",
+            "model": "gaussian_copula",
+            "description": "Ablation step: GaussianCopula segmented per ward, SDV built-in constraints only (Inequality, FixedCombinations), ordinal metadata + demand-ordered encodings, tuned marginals (the pre-Week-3 gc_tuned recipe, without programmable constraints)",
+            "segment_label": "ward_id",
+            "constraint_groups": [
+              "inequality",
+              "fixed_combinations"
+            ],
+            "effective_constraint_groups": [
+              "fixed_combinations"
+            ],
+            "fitted_at": "2026-11-15T05:06:48+00:00",
+            "fit_seconds": 15.633,
+            "training_rows": 45002,
+            "quick": false,
+            "epochs": null,
+            "raw_hard_valid_rate": 0.255,
+            "hard_violation_rates": {
+              "PS-H04": 0.0425,
+              "PS-H05": 0.0115,
+              "PS-H06": 0.1955,
+              "PS-H07": 0.615,
+              "PS-H08": 0.089,
+              "PS-H13": 0.1495,
+              "PS-H14": 0.0115
+            },
+            "soft_violation_rates": {
+              "PS-S01": 0.0445,
+              "PS-S02": 0.013,
+              "PS-S03": 0.0205,
+              "PS-S05": 0.0015
+            }
+          },
+          "evaluated_at": "2026-11-15T05:28:51+00:00",
+          "seconds": 45.172,
+          "results_file": "patient_stays__gc_segmented.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": -2.790541,
+            "operational": null,
+            "utility": -4.055372,
+            "privacy": null,
+            "composite": -3.834958
+          }
+        },
+        {
+          "model_id": "gc_baseline",
+          "status": "ok",
+          "composite": 0.390291,
+          "complete": true,
+          "components": {
+            "fidelity": 0.550557,
+            "validity": 0.006,
+            "operational": 0.408829,
+            "utility": 0.1527,
+            "privacy": 0.988119
+          },
+          "missing_components": [],
+          "failed_families": [],
+          "family_scores": {
+            "statistical": 0.550557,
+            "validity": 0.006,
+            "operational": 0.408829,
+            "privacy": 0.988119,
+            "ml_utility": 0.1527,
+            "optimization": null,
+            "scenario_coverage": 0.478002
+          },
+          "model_view": {
+            "statistical": 0.737613,
+            "operational": 0.557012
+          },
+          "output_validity": 1.0,
+          "generation": {
+            "generated": 1978,
+            "shortfall": 18022,
+            "acceptance_rate": 0.002953,
+            "strata_mix_tvd": 0.966056,
+            "rebalancing_flag": true,
+            "stopped_reasons": [],
+            "throttled_rounds": 25,
+            "seconds": 37.297
+          },
+          "n_rows": {
+            "real_train": 45002,
+            "real_holdout": 11251,
+            "synthetic": 1978,
+            "raw_synthetic": 20000
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "model_fitted_at": "2026-11-15T05:06:33+00:00",
+          "model_card": {
+            "experiment_id": "gc_baseline",
+            "model": "gaussian_copula",
+            "description": "GaussianCopula, single global model, default encodings, no SDV constraints (Week 2 baseline)",
+            "segment_label": "global",
+            "constraint_groups": [],
+            "effective_constraint_groups": [],
+            "fitted_at": "2026-11-15T05:06:33+00:00",
+            "fit_seconds": 6.269,
+            "training_rows": 45002,
+            "quick": false,
+            "epochs": null,
+            "raw_hard_valid_rate": 0.0055,
+            "hard_violation_rates": {
+              "PS-H04": 0.0805,
+              "PS-H06": 0.849,
+              "PS-H07": 0.7875,
+              "PS-H08": 0.3295,
+              "PS-H09": 0.344,
+              "PS-H10": 0.116,
+              "PS-H11": 0.123,
+              "PS-H13": 0.0825
+            },
+            "soft_violation_rates": {
+              "PS-S01": 0.0665,
+              "PS-S02": 0.0275,
+              "PS-S03": 0.0145,
+              "PS-S04": 0.0315,
+              "PS-S05": 0.08
+            }
+          },
+          "evaluated_at": "2026-11-15T05:27:01+00:00",
+          "seconds": 97.421,
+          "results_file": "patient_stays__gc_baseline.json",
+          "comparable": true,
+          "normalised": {
+            "fidelity": null,
+            "validity": -3.974975,
+            "operational": null,
+            "utility": -9.313864,
+            "privacy": null,
+            "composite": -8.989747
+          }
+        }
+      ],
+      "references": [
+        {
+          "model_id": "real_holdout",
+          "kind": "ceiling",
+          "description": "Ceiling: real holdout rows (unseen by every model) drawn with the generator's allocation-strata quotas; ML utility and the quota decision use a size-matched real-train subsample, privacy compares holdout halves.",
+          "status": "ok",
+          "error": null,
+          "composite": 0.986559,
+          "components": {
+            "fidelity": 0.986064,
+            "validity": 1.0,
+            "operational": 0.965755,
+            "utility": 0.995549,
+            "privacy": 0.999688
+          },
+          "family_scores": {
+            "statistical": 0.986064,
+            "validity": 1.0,
+            "operational": 0.965755,
+            "privacy": 0.999688,
+            "ml_utility": 0.995549,
+            "optimization": null,
+            "scenario_coverage": 0.977454
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "results_file": "patient_stays__reference__real_holdout.json"
+        },
+        {
+          "model_id": "null_stratified_marginals",
+          "kind": "floor",
+          "description": "Floor: no learning - allocation stratum by training frequency, every other column drawn independently from training rows of that stratum, hard-invalid rows rejected.",
+          "status": "ok",
+          "error": null,
+          "composite": 0.926871,
+          "components": {
+            "fidelity": 0.980588,
+            "validity": 0.8002,
+            "operational": 0.94232,
+            "utility": 0.913829,
+            "privacy": 1.0
+          },
+          "family_scores": {
+            "statistical": 0.980588,
+            "validity": 0.8002,
+            "operational": 0.94232,
+            "privacy": 1.0,
+            "ml_utility": 0.913829,
+            "optimization": null,
+            "scenario_coverage": 0.975972
+          },
+          "run_config": {
+            "quick": false,
+            "rows": 20000,
+            "rows_per_scenario": 400,
+            "scenarios": true,
+            "seed": 42,
+            "sdmetrics": true,
+            "sample_time_budget_seconds": 90,
+            "scenario_time_budget_seconds": 20,
+            "scenario_max_attempts": 8,
+            "coverage_time_budget_seconds": 150
+          },
+          "results_file": "patient_stays__reference__null_stratified_marginals.json"
+        }
+      ],
+      "best_model": "gc_tuned",
+      "best_composite": 0.965249,
+      "run_config": {
+        "quick": false,
+        "rows": 20000,
+        "rows_per_scenario": 400,
+        "scenarios": true,
+        "seed": 42,
+        "sdmetrics": true,
+        "sample_time_budget_seconds": 90,
+        "scenario_time_budget_seconds": 20,
+        "scenario_max_attempts": 8,
+        "coverage_time_budget_seconds": 150
+      },
+      "noise_calibration": {
+        "n": 20000,
+        "reps": 50,
+        "sd_multiplier": 3.0,
+        "seed": 42,
+        "basis": "random re-splits of the real data (train + holdout): a pseudo training split vs n rows of the remainder",
+        "real_pass_rate_cv": 1.0
+      }
+    }
+  },
+  "run_seconds": 920.3
+}

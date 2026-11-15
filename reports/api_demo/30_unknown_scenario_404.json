@@ -1,0 +1,34 @@
+{
+  "step": 30,
+  "name": "unknown scenario (404)",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "ward_daily",
+      "scenario": "icu_meltdown"
+    }
+  },
+  "response": {
+    "status_code": 404,
+    "expected_status": 404,
+    "elapsed_ms": 2.6,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "0.8"
+    },
+    "body": {
+      "detail": "Unknown scenario 'icu_meltdown'. See GET /api/v1/scenarios for the catalogue.",
+      "error_type": "scenario_not_found"
+    }
+  },
+  "checks": [
+    {
+      "check": "scenario_not_found",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,883 @@
+{
+  "step": 55,
+  "name": "scenario weekend_discharges",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "patient_stays",
+      "num_rows": 100,
+      "scenario": "weekend_discharges",
+      "seed": 164,
+      "evaluate": true
+    }
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 2606.9,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "2603.9"
+    },
+    "body": {
+      "dataset_id": "ds-b097bcb39fda",
+      "persisted": true,
+      "created_at": "2026-11-15T05:37:34+00:00",
+      "table": "patient_stays",
+      "n_rows": 100,
+      "model": {
+        "id": "gc_tuned",
+        "synthesizer": "GaussianCopulaSynthesizer",
+        "sdv_version": "2.2.0",
+        "fitted_at": "2026-11-15T05:07:18+00:00"
+      },
+      "scenario": {
+        "name": "weekend_discharges",
+        "title": "Weekend discharges",
+        "description": "Stays ending on a Saturday or Sunday.",
+        "category": "patient_flow"
+      },
+      "request": {
+        "table": "patient_stays",
+        "num_rows": 100,
+        "scenario": "weekend_discharges",
+        "model_id": null,
+        "wards": null,
+        "conditions": null,
+        "filters": null,
+        "seed": 164,
+        "max_attempts": null,
+        "time_budget_seconds": 60.0,
+        "mode": "sample",
+        "start_date": null,
+        "end_date": null,
+        "include_derived": true,
+        "validate": true,
+        "evaluate": true,
+        "format": "json",
+        "persist": true
+      },
+      "generation": {
+        "table": "patient_stays",
+        "model_id": "gc_tuned",
+        "model": {
+          "id": "gc_tuned",
+          "experiment_id": "gc_tuned",
+          "synthesizer": "GaussianCopulaSynthesizer",
+          "model": "gaussian_copula",
+          "segment_by": [
+            "ward_id",
+            "admission_source"
+          ],
+          "constraint_groups": [
+            "inequality",
+            "fixed_combinations",
+            "regime_labels",
+            "structural_zeros",
+            "capacity",
+            "conditional_marginals"
+          ],
+          "sdv_version": "2.2.0",
+          "fitted_at": "2026-11-15T05:07:18+00:00"
+        },
+        "scenario": "weekend_discharges",
+        "mode": "sample",
+        "seed": 164,
+        "num_rows_requested": 100,
+        "num_rows_generated": 100,
+        "shortfall": 0,
+        "attempts": 4,
+        "max_attempts": 25,
+        "sampled_rows": 567,
+        "accepted_rows": 130,
+        "acceptance_rate": 0.229277,
+        "raw_hard_valid_rate": 0.961199,
+        "rejected_by_rule": {
+          "PS-H04": 7,
+          "PS-H08": 22
+        },
+        "rejected_by_filter": 415,
+        "first_batch_factor": 1.6,
+        "acceptance_prior": 0.9575,
+        "time_budget_seconds": 60.0,
+        "stopped_reason": null,
+        "throttled_rounds": 0,
+        "rows_per_second": 331.2,
+        "condition_allocation": [
+          {
+            "conditions": {},
+            "requested": 100,
+            "generated": 100,
+            "reference_count": null,
+            "sampled": 567,
+            "accepted": 130,
+            "feasible": true
+          }
+        ],
+        "conditions": {},
+        "filters": {
+          "discharge_day_of_week": {
+            "in": [
+              "Sat",
+              "Sun"
+            ]
+          }
+        },
+        "reference_source": "not_needed",
+        "include_derived": true,
+        "elapsed_seconds": 2.555,
+        "warnings": [],
+        "allocation_strata": {
+          "columns": [
+            "ward_id",
+            "admission_source",
+            "delay_reason"
+          ],
+          "source": "model_pilot_sample",
+          "strata_cells": 34,
+          "stratified_combinations": 1,
+          "rebalanced_rows": 0,
+          "quota_moves": 0,
+          "pilot_rows": 472
+        }
+      },
+      "validation": {
+        "n_rows": 100,
+        "n_hard_valid": 100,
+        "hard_valid_rate": 1.0,
+        "all_hard_rules_passed": true,
+        "hard_rules": {
+          "checked": 14,
+          "passed": 14,
+          "failed": 0,
+          "violations": 0
+        },
+        "soft_rules": {
+          "checked": 5,
+          "passed": 4,
+          "failed": 1,
+          "violations": 2
+        },
+        "rules": [
+          {
+            "rule_id": "PS-H01",
+            "name": "valid_categories",
+            "severity": "hard",
+            "description": "All categorical stay attributes take values from their vocabularies.",
+            "columns": [
+              "ward_id",
+              "admission_source",
+              "admission_month",
+              "admission_day_of_week",
+              "separation_type",
+              "discharge_destination",
+              "delay_reason"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H02",
+            "name": "hours_in_range",
+            "severity": "hard",
+            "description": "Admission and departure hours are whole hours between 0 and 23.",
+            "columns": [
+              "admission_hour",
+              "discharge_hour"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H03",
+            "name": "non_negative_values",
+            "severity": "hard",
+            "description": "Counts are whole and not negative, bed wait and discharge delay hours are not negative, and none is missing.",
+            "columns": [
+              "booking_lead_days",
+              "times_rescheduled",
+              "los_nights",
+              "bed_turnaround_minutes",
+              "bed_wait_hours",
+              "discharge_delay_hours"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H04",
+            "name": "positive_length_of_stay",
+            "severity": "hard",
+            "description": "Every stay lasts at least one hour.",
+            "columns": [
+              "los_hours"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H05",
+            "name": "elective_booking_lead",
+            "severity": "hard",
+            "description": "Elective admissions are booked at least one day in advance.",
+            "columns": [
+              "admission_source",
+              "booking_lead_days"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H06",
+            "name": "non_elective_unbooked",
+            "severity": "hard",
+            "description": "Emergency and transfer admissions have no booking lead time and were never rescheduled.",
+            "columns": [
+              "admission_source",
+              "booking_lead_days",
+              "times_rescheduled"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H07",
+            "name": "delay_reason_consistent",
+            "severity": "hard",
+            "description": "A delay reason is recorded exactly when the departure was delayed ('none' if and only if zero delay hours).",
+            "columns": [
+              "delay_reason",
+              "discharge_delay_hours"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H08",
+            "name": "delay_within_stay",
+            "severity": "hard",
+            "description": "The discharge delay cannot be longer than the stay itself.",
+            "columns": [
+              "discharge_delay_hours",
+              "los_hours"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H09",
+            "name": "separation_destination_consistent",
+            "severity": "hard",
+            "description": "Stays that end in an internal transfer go to another ward, and only those do.",
+            "columns": [
+              "separation_type",
+              "discharge_destination"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H10",
+            "name": "delay_reason_allowed",
+            "severity": "hard",
+            "description": "The delay reason is operationally meaningful for the discharge destination.",
+            "columns": [
+              "delay_reason",
+              "discharge_destination"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H11",
+            "name": "ward_admission_profile",
+            "severity": "hard",
+            "description": "The admission source is one the ward accepts.",
+            "columns": [
+              "ward_id",
+              "admission_source"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H12",
+            "name": "metric_ranges",
+            "severity": "hard",
+            "description": "Bed turnaround is 10-1440 min, bed wait at most 96 h, stays at most 180 nights, booking lead at most 365 days and reschedules at most 10.",
+            "columns": [
+              "bed_turnaround_minutes",
+              "bed_wait_hours",
+              "los_nights",
+              "booking_lead_days",
+              "times_rescheduled"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H13",
+            "name": "delay_threshold",
+            "severity": "hard",
+            "description": "A departure counts as delayed only when it is more than 4 hours after the patient was ready, so recorded delays are either zero or at least 4 hours.",
+            "columns": [
+              "discharge_delay_hours"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-H14",
+            "name": "rebooking_lead",
+            "severity": "hard",
+            "description": "Postponed electives are rebooked at least seven days later, so the booking lead is at least 1 + 7 x times_rescheduled days.",
+            "columns": [
+              "admission_source",
+              "booking_lead_days",
+              "times_rescheduled"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-S01",
+            "name": "elective_admission_hours",
+            "severity": "soft",
+            "description": "Elective patients are admitted between 06:00 and 14:59.",
+            "columns": [
+              "admission_source",
+              "admission_hour"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-S02",
+            "name": "daytime_departures",
+            "severity": "soft",
+            "description": "Patients leave the ward between 07:00 and 22:59.",
+            "columns": [
+              "discharge_hour"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-S03",
+            "name": "short_elective_wait",
+            "severity": "soft",
+            "description": "Elective patients wait at most four hours for their bed.",
+            "columns": [
+              "admission_source",
+              "bed_wait_hours"
+            ],
+            "violations": 2,
+            "violation_rate": 0.02,
+            "passed": false,
+            "example_rows": [
+              52,
+              92
+            ]
+          },
+          {
+            "rule_id": "PS-S04",
+            "name": "no_paediatric_transfers_out",
+            "severity": "soft",
+            "description": "Paediatric stays do not end in an internal transfer.",
+            "columns": [
+              "ward_id",
+              "separation_type"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          },
+          {
+            "rule_id": "PS-S05",
+            "name": "long_delays_for_complex_discharges",
+            "severity": "soft",
+            "description": "Discharge delays beyond 72 hours occur only for care-facility or supported-home discharges.",
+            "columns": [
+              "discharge_delay_hours",
+              "discharge_destination"
+            ],
+            "violations": 0,
+            "violation_rate": 0.0,
+            "passed": true,
+            "example_rows": []
+          }
+        ]
+      },
+      "quality": {
+        "score": 0.9688,
+        "reference": {
+          "split": "train",
+          "subset": "matching",
+          "reference_rows": 10089,
+          "rows_compared": 5000,
+          "synthetic_rows_compared": 100
+        },
+        "metrics": {
+          "name": "quick_quality",
+          "description": "Fast fidelity estimate: column shapes (1-KS / 1-TVD), Spearman pair trends and hard-rule validity.",
+          "table": "patient_stays",
+          "score": 0.968843,
+          "components": {
+            "column_shapes": 0.943295,
+            "column_pair_trends": 0.963233,
+            "validity": 1.0
+          },
+          "validity_note": null,
+          "column_scores": {
+            "admission_hour": 0.9472,
+            "booking_lead_days": 0.9718,
+            "times_rescheduled": 0.9912,
+            "bed_wait_hours": 0.9102,
+            "los_nights": 0.9442,
+            "discharge_hour": 0.94,
+            "los_hours": 0.9148,
+            "los_days": 0.9148,
+            "discharge_delay_hours": 0.9306,
+            "bed_turnaround_minutes": 0.8916,
+            "ward_id": 0.945,
+            "admission_source": 0.9868,
+            "admission_month": 0.8936,
+            "admission_day_of_week": 0.8714,
+            "discharge_day_of_week": 0.9004,
+            "separation_type": 0.9696,
+            "discharge_destination": 0.9584,
+            "delay_reason": 0.9538,
+            "is_delayed_discharge": 0.9776,
+            "discharged_before_noon": 0.9962,
+            "is_weekend_discharge": 1.0
+          },
+          "worst_columns": [
+            {
+              "column": "admission_day_of_week",
+              "score": 0.8714
+            },
+            {
+              "column": "bed_turnaround_minutes",
+              "score": 0.8916
+            },
+            {
+              "column": "admission_month",
+              "score": 0.8936
+            },
+            {
+              "column": "discharge_day_of_week",
+              "score": 0.9004
+            },
+            {
+              "column": "bed_wait_hours",
+              "score": 0.9102
+            }
+          ],
+          "worst_pairs": [
+            {
+              "columns": [
+                "discharge_hour",
+                "discharge_delay_hours"
+              ],
+              "real": 0.288601,
+              "synthetic": -0.047996,
+              "abs_diff": 0.336598
+            },
+            {
+              "columns": [
+                "los_hours",
+                "discharge_delay_hours"
+              ],
+              "real": 0.342615,
+              "synthetic": 0.134147,
+              "abs_diff": 0.208468
+            },
+            {
+              "columns": [
+                "los_days",
+                "discharge_delay_hours"
+              ],
+              "real": 0.342615,
+              "synthetic": 0.134147,
+              "abs_diff": 0.208468
+            }
+          ],
+          "excluded_columns": [],
+          "n_rows": {
+            "real": 5000,
+            "synthetic": 100
+          },
+          "metric_descriptions": {
+            "column_shapes": "Mean of 1 - KS (numeric) and 1 - TVD (categorical) over all columns.",
+            "column_pair_trends": "1 - mean |\u0394 Spearman| / 2 over numeric column pairs.",
+            "validity": "Share of synthetic rows passing every hard operational rule (bedsynth.validation)."
+          },
+          "seconds": 0.027
+        }
+      },
+      "columns": [
+        {
+          "name": "stay_id",
+          "dtype": "str",
+          "role": "key",
+          "unit": null,
+          "description": "Stay identifier, e.g. ST-0000001."
+        },
+        {
+          "name": "ward_id",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Ward code."
+        },
+        {
+          "name": "ward_type",
+          "dtype": "str",
+          "role": "derived",
+          "unit": null,
+          "description": "Ward service type."
+        },
+        {
+          "name": "admission_source",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "elective (planned), emergency (via ED) or internal transfer."
+        },
+        {
+          "name": "admission_month",
+          "dtype": "int",
+          "role": "train",
+          "unit": null,
+          "description": "Admission month 1-12."
+        },
+        {
+          "name": "admission_season",
+          "dtype": "str",
+          "role": "derived",
+          "unit": null,
+          "description": "Season of admission."
+        },
+        {
+          "name": "admission_day_of_week",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Admission day of week."
+        },
+        {
+          "name": "admission_hour",
+          "dtype": "int",
+          "role": "train",
+          "unit": "hour",
+          "description": "Admission hour 0-23."
+        },
+        {
+          "name": "booking_lead_days",
+          "dtype": "int",
+          "role": "train",
+          "unit": "days",
+          "description": "Days between booking and admission (electives, at least 1 + 7 x times_rescheduled; 0 otherwise)."
+        },
+        {
+          "name": "times_rescheduled",
+          "dtype": "int",
+          "role": "train",
+          "unit": "count",
+          "description": "Times the elective admission was postponed (0 for non-electives)."
+        },
+        {
+          "name": "bed_wait_hours",
+          "dtype": "float",
+          "role": "train",
+          "unit": "hours",
+          "description": "Hours from bed request to bed allocation."
+        },
+        {
+          "name": "los_nights",
+          "dtype": "int",
+          "role": "train",
+          "unit": "nights",
+          "description": "Number of midnights spent in the ward."
+        },
+        {
+          "name": "discharge_day_of_week",
+          "dtype": "str",
+          "role": "derived",
+          "unit": null,
+          "description": "Day of week of ward departure."
+        },
+        {
+          "name": "discharge_hour",
+          "dtype": "int",
+          "role": "train",
+          "unit": "hour",
+          "description": "Ward departure hour 0-23."
+        },
+        {
+          "name": "los_hours",
+          "dtype": "int",
+          "role": "derived",
+          "unit": "hours",
+          "description": "Hour-resolution length of stay: los_nights*24 + discharge_hour - admission_hour."
+        },
+        {
+          "name": "los_days",
+          "dtype": "float",
+          "role": "derived",
+          "unit": "days",
+          "description": "los_hours / 24."
+        },
+        {
+          "name": "separation_type",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Stay ended by hospital discharge or internal transfer out."
+        },
+        {
+          "name": "discharge_destination",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Destination after leaving the ward."
+        },
+        {
+          "name": "delay_reason",
+          "dtype": "str",
+          "role": "train",
+          "unit": null,
+          "description": "Reason the departure was delayed after the patient was ready ('none' if not delayed)."
+        },
+        {
+          "name": "discharge_delay_hours",
+          "dtype": "float",
+          "role": "train",
+          "unit": "hours",
+          "description": "Hours between ready-to-leave and actual departure; 0 unless the gap exceeded the 4 h delay threshold (so either 0 or >= 4)."
+        },
+        {
+          "name": "is_delayed_discharge",
+          "dtype": "bool",
+          "role": "derived",
+          "unit": null,
+          "description": "discharge_delay_hours > 0 (a delay of 4 h or more; see PS-H13)."
+        },
+        {
+          "name": "discharged_before_noon",
+          "dtype": "bool",
+          "role": "derived",
+          "unit": null,
+          "description": "discharge_hour < 12."
+        },
+        {
+          "name": "is_weekend_discharge",
+          "dtype": "bool",
+          "role": "derived",
+          "unit": null,
+          "description": "Departure on Saturday or Sunday."
+        },
+        {
+          "name": "bed_turnaround_minutes",
+          "dtype": "int",
+          "role": "train",
+          "unit": "minutes",
+          "description": "Minutes from departure until the bed was cleaned and ready."
+        }
+      ],
+      "warnings": [],
+      "links": {
+        "self": "/api/v1/datasets/ds-b097bcb39fda",
+        "download_csv": "/api/v1/datasets/ds-b097bcb39fda/download?format=csv",
+        "download_json": "/api/v1/datasets/ds-b097bcb39fda/download?format=json"
+      },
+      "records": [
+        {
+          "stay_id": "ST-0000001",
+          "ward_id": "AMU",
+          "ward_type": "acute",
+          "admission_source": "emergency",
+          "admission_month": 8,
+          "admission_season": "summer",
+          "admission_day_of_week": "Fri",
+          "admission_hour": 16,
+          "booking_lead_days": 0,
+          "times_rescheduled": 0,
+          "bed_wait_hours": 1.75,
+          "los_nights": 1,
+          "discharge_day_of_week": "Sat",
+          "discharge_hour": 12,
+          "los_hours": 20,
+          "los_days": 0.833,
+          "separation_type": "discharge",
+          "discharge_destination": "home",
+          "delay_reason": "none",
+          "discharge_delay_hours": 0.0,
+          "is_delayed_discharge": false,
+          "discharged_before_noon": false,
+          "is_weekend_discharge": true,
+          "bed_turnaround_minutes": 212
+        },
+        {
+          "stay_id": "ST-0000002",
+          "ward_id": "ICU",
+          "ward_type": "critical_care",
+          "admission_source": "emergency",
+          "admission_month": 12,
+          "admission_season": "winter",
+          "admission_day_of_week": "Thu",
+          "admission_hour": 8,
+          "booking_lead_days": 0,
+          "times_rescheduled": 0,
+          "bed_wait_hours": 1.88,
+          "los_nights": 3,
+          "discharge_day_of_week": "Sun",
+          "discharge_hour": 15,
+          "los_hours": 79,
+          "los_days": 3.292,
+          "separation_type": "discharge",
+          "discharge_destination": "home",
+          "delay_reason": "none",
+          "discharge_delay_hours": 0.0,
+          "is_delayed_discharge": false,
+          "discharged_before_noon": false,
+          "is_weekend_discharge": true,
+          "bed_turnaround_minutes": 360
+        },
+        {
+          "stay_id": "ST-0000003",
+          "ward_id": "AMU",
+          "ward_type": "acute",
+          "admission_source": "emergency",
+          "admission_month": 4,
+          "admission_season": "spring",
+          "admission_day_of_week": "Fri",
+          "admission_hour": 20,
+          "booking_lead_days": 0,
+          "times_rescheduled": 0,
+          "bed_wait_hours": 1.5,
+          "los_nights": 2,
+          "discharge_day_of_week": "Sun",
+          "discharge_hour": 9,
+          "los_hours": 37,
+          "los_days": 1.542,
+          "separation_type": "discharge",
+          "discharge_destination": "home_with_support",
+          "delay_reason": "none",
+          "discharge_delay_hours": 0.0,
+          "is_delayed_discharge": false,
+          "discharged_before_noon": true,
+          "is_weekend_discharge": true,
+          "bed_turnaround_minutes": 77
+        },
+        {
+          "stay_id": "ST-0000004",
+          "ward_id": "CARD",
+          "ward_type": "medical",
+          "admission_source": "emergency",
+          "admission_month": 6,
+          "admission_season": "summer",
+          "admission_day_of_week": "Fri",
+          "admission_hour": 12,
+          "booking_lead_days": 0,
+          "times_rescheduled": 0,
+          "bed_wait_hours": 0.8,
+          "los_nights": 1,
+          "discharge_day_of_week": "Sat",
+          "discharge_hour": 15,
+          "los_hours": 27,
+          "los_days": 1.125,
+          "separation_type": "discharge",
+          "discharge_destination": "home",
+          "delay_reason": "none",
+          "discharge_delay_hours": 0.0,
+          "is_delayed_discharge": false,
+          "discharged_before_noon": false,
+          "is_weekend_discharge": true,
+          "bed_turnaround_minutes": 109
+        },
+        {
+          "stay_id": "ST-0000005",
+          "ward_id": "GMED",
+          "ward_type": "medical",
+          "admission_source": "transfer",
+          "admission_month": 2,
+          "admission_season": "winter",
+          "admission_day_of_week": "Tue",
+          "admission_hour": 13,
+          "booking_lead_days": 0,
+          "times_rescheduled": 0,
+          "bed_wait_hours": 0.8,
+          "los_nights": 4,
+          "discharge_day_of_week": "Sat",
+          "discharge_hour": 18,
+          "los_hours": 101,
+          "los_days": 4.208,
+          "separation_type": "discharge",
+          "discharge_destination": "home",
+          "delay_reason": "awaiting_medication",
+          "discharge_delay_hours": 23.7,
+          "is_delayed_discharge": true,
+          "discharged_before_noon": false,
+          "is_weekend_discharge": true,
+          "bed_turnaround_minutes": 270
+        }
+      ],
+      "records_truncated": {
+        "shown": 5,
+        "total": 100
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "requested rows delivered",
+      "passed": true
+    },
+    {
+      "check": "all hard rules passed",
+      "passed": true
+    },
+    {
+      "check": "every row inside the scenario",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

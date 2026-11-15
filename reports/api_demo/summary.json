@@ -1,0 +1,1862 @@
+{
+  "generated_at": "2026-11-15T05:37:39+00:00",
+  "bedsynth_version": "1.0.0",
+  "sdv_version": "2.2.0",
+  "python": "3.13.4",
+  "rows": 300,
+  "seed": 42,
+  "models": {
+    "ward_daily": {
+      "trained": [
+        "ctgan",
+        "gc_baseline",
+        "gc_segmented",
+        "gc_tuned",
+        "tvae"
+      ],
+      "default": "gc_tuned"
+    },
+    "patient_stays": {
+      "trained": [
+        "ctgan",
+        "gc_baseline",
+        "gc_segmented",
+        "gc_tuned",
+        "tvae"
+      ],
+      "default": "gc_tuned"
+    }
+  },
+  "reference_data": {
+    "ward_daily": true,
+    "patient_stays": true
+  },
+  "total": 58,
+  "passed": 58,
+  "failed": 0,
+  "skipped": 0,
+  "highlights": [
+    "ward_daily primary: 300 rows, acceptance 95.3%, 1.259 s, all hard rules passed, quality 0.979, model gc_tuned",
+    "ward_daily calendar: 62 rows, acceptance 94.1%, 0.569 s, all hard rules passed, model gc_tuned",
+    "patient_stays primary: 300 rows, acceptance 88.8%, 2.724 s, all hard rules passed, quality 0.972, model gc_tuned"
+  ],
+  "steps": [
+    {
+      "index": 1,
+      "name": "service info",
+      "method": "GET",
+      "path": "/",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 105.3,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "links to /docs and /ui",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "01_service_info.json"
+    },
+    {
+      "index": 2,
+      "name": "health",
+      "method": "GET",
+      "path": "/health",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 32.3,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "at least one trained table",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "02_health.json"
+    },
+    {
+      "index": 3,
+      "name": "demo UI",
+      "method": "GET",
+      "path": "/ui",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 3.7,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "HTML page",
+          "passed": true
+        },
+        {
+          "check": "no external assets",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "03_demo_ui.json"
+    },
+    {
+      "index": 4,
+      "name": "openapi schema",
+      "method": "GET",
+      "path": "/openapi.json",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "generate has >= 5 examples",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "04_openapi_schema.json"
+    },
+    {
+      "index": 5,
+      "name": "list tables",
+      "method": "GET",
+      "path": "/api/v1/tables",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 30.1,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "two tables",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "05_list_tables.json"
+    },
+    {
+      "index": 6,
+      "name": "schema ward_daily",
+      "method": "GET",
+      "path": "/api/v1/tables/ward_daily/schema",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 3.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "22 training columns",
+          "passed": true
+        },
+        {
+          "check": "rule catalogue served",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "06_schema_ward_daily.json"
+    },
+    {
+      "index": 7,
+      "name": "schema patient_stays",
+      "method": "GET",
+      "path": "/api/v1/tables/patient_stays/schema",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2.8,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "15 training columns",
+          "passed": true
+        },
+        {
+          "check": "rule catalogue served",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "07_schema_patient_stays.json"
+    },
+    {
+      "index": 8,
+      "name": "scenario catalogue (with reference support)",
+      "method": "GET",
+      "path": "/api/v1/scenarios",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 199.8,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "26 scenarios",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "08_scenario_catalogue_with_reference_support.json"
+    },
+    {
+      "index": 9,
+      "name": "scenarios for patient_stays",
+      "method": "GET",
+      "path": "/api/v1/scenarios",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2.8,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "only patient_stays",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "09_scenarios_for_patient_stays.json"
+    },
+    {
+      "index": 10,
+      "name": "scenario high_occupancy",
+      "method": "GET",
+      "path": "/api/v1/scenarios/high_occupancy",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 3.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "conditions on occupancy_level",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "10_scenario_high_occupancy.json"
+    },
+    {
+      "index": 11,
+      "name": "trained models",
+      "method": "GET",
+      "path": "/api/v1/models",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 84.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "default model per trained table",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "11_trained_models.json"
+    },
+    {
+      "index": 12,
+      "name": "generate ward_daily baseline (json, evaluate)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1368.2,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "rows generated",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "quality score in [0, 1]",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "12_generate_ward_daily_baseline_json_evaluate.json"
+    },
+    {
+      "index": 13,
+      "name": "generate ward_daily high_occupancy (evaluate)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1523.1,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "rows generated",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "only high/critical occupancy",
+          "passed": true
+        },
+        {
+          "check": "quality score in [0, 1]",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "13_generate_ward_daily_high_occupancy_evaluate.json"
+    },
+    {
+      "index": 14,
+      "name": "generate ward_daily emergency_pressure (csv)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 4649.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "text/csv response",
+          "passed": true
+        },
+        {
+          "check": "X-BedSynth headers present",
+          "passed": true
+        },
+        {
+          "check": "rows header matches body",
+          "passed": true
+        },
+        {
+          "check": "every row has emergency boarders",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "14_generate_ward_daily_emergency_pressure_csv.json"
+    },
+    {
+      "index": 15,
+      "name": "generate ward_daily calendar January (AMU, ICU)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 590.2,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "one row per ward per day",
+          "passed": true
+        },
+        {
+          "check": "dates cover the period",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "15_generate_ward_daily_calendar_january_amu_icu.json"
+    },
+    {
+      "index": 16,
+      "name": "generate patient_stays delayed_discharge_stays (evaluate)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2781.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "rows generated",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every stay is delayed",
+          "passed": true
+        },
+        {
+          "check": "quality score in [0, 1]",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "16_generate_patient_stays_delayed_discharge_stays_evaluate.json"
+    },
+    {
+      "index": 17,
+      "name": "generate patient_stays long_bed_waits",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1240.0,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "rows generated",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "emergency admissions waiting 4+ h",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "17_generate_patient_stays_long_bed_waits.json"
+    },
+    {
+      "index": 18,
+      "name": "reproducibility run A (seed fixed)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1071.6,
+      "outcome": "ok",
+      "checks": [],
+      "note": "",
+      "evidence": "18_reproducibility_run_a_seed_fixed.json"
+    },
+    {
+      "index": 19,
+      "name": "reproducibility run B (same seed)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1055.3,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "identical records for the same seed",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "19_reproducibility_run_b_same_seed.json"
+    },
+    {
+      "index": 20,
+      "name": "validate records (+1 corrupted)",
+      "method": "POST",
+      "path": "/api/v1/validate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 46.9,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "exactly the corrupted row is invalid",
+          "passed": true
+        },
+        {
+          "check": "ward alias normalised",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "20_validate_records_1_corrupted.json"
+    },
+    {
+      "index": 21,
+      "name": "evaluate stored dataset",
+      "method": "POST",
+      "path": "/api/v1/evaluate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 87.7,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "quality score in [0, 1]",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "21_evaluate_stored_dataset.json"
+    },
+    {
+      "index": 22,
+      "name": "evaluate client records",
+      "method": "POST",
+      "path": "/api/v1/evaluate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 88.1,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "quality score in [0, 1]",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "22_evaluate_client_records.json"
+    },
+    {
+      "index": 23,
+      "name": "list datasets",
+      "method": "GET",
+      "path": "/api/v1/datasets",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 105.8,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "datasets were persisted",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "23_list_datasets.json"
+    },
+    {
+      "index": 24,
+      "name": "dataset metadata",
+      "method": "GET",
+      "path": "/api/v1/datasets/ds-dbd35a8375b2",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 7.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "same row count",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "24_dataset_metadata.json"
+    },
+    {
+      "index": 25,
+      "name": "download dataset (csv)",
+      "method": "GET",
+      "path": "/api/v1/datasets/ds-dbd35a8375b2/download",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 4.8,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "all rows downloaded",
+          "passed": true
+        },
+        {
+          "check": "X-BedSynth-Dataset-Id header",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "25_download_dataset_csv.json"
+    },
+    {
+      "index": 26,
+      "name": "download dataset (json)",
+      "method": "GET",
+      "path": "/api/v1/datasets/ds-dbd35a8375b2/download",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 20.0,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "records match the generation",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "26_download_dataset_json.json"
+    },
+    {
+      "index": 27,
+      "name": "delete dataset",
+      "method": "DELETE",
+      "path": "/api/v1/datasets/ds-dbd35a8375b2",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 5.0,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "deleted",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "27_delete_dataset.json"
+    },
+    {
+      "index": 28,
+      "name": "deleted dataset is gone (404)",
+      "method": "GET",
+      "path": "/api/v1/datasets/ds-dbd35a8375b2",
+      "status_code": 404,
+      "expected_status": 404,
+      "elapsed_ms": 2.9,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "dataset_not_found error",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "28_deleted_dataset_is_gone_404.json"
+    },
+    {
+      "index": 29,
+      "name": "invalid request (422)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 422,
+      "expected_status": 422,
+      "elapsed_ms": 2.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "uniform error body",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "29_invalid_request_422.json"
+    },
+    {
+      "index": 30,
+      "name": "unknown scenario (404)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 404,
+      "expected_status": 404,
+      "elapsed_ms": 2.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "scenario_not_found",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "30_unknown_scenario_404.json"
+    },
+    {
+      "index": 31,
+      "name": "scenario of another table (400)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 400,
+      "expected_status": 400,
+      "elapsed_ms": 2.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "scenario_table_mismatch",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "31_scenario_of_another_table_400.json"
+    },
+    {
+      "index": 32,
+      "name": "impossible filter (400)",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 400,
+      "expected_status": 400,
+      "elapsed_ms": 2.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "invalid_filters",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "32_impossible_filter_400.json"
+    },
+    {
+      "index": 33,
+      "name": "scenario baseline",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1301.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "33_scenario_baseline.json"
+    },
+    {
+      "index": 34,
+      "name": "scenario normal_occupancy",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1090.3,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "34_scenario_normal_occupancy.json"
+    },
+    {
+      "index": 35,
+      "name": "scenario high_occupancy",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1439.3,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "35_scenario_high_occupancy.json"
+    },
+    {
+      "index": 36,
+      "name": "scenario low_occupancy",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1067.7,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "36_scenario_low_occupancy.json"
+    },
+    {
+      "index": 37,
+      "name": "scenario winter_demand",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2447.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "37_scenario_winter_demand.json"
+    },
+    {
+      "index": 38,
+      "name": "scenario summer_demand",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2071.7,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "38_scenario_summer_demand.json"
+    },
+    {
+      "index": 39,
+      "name": "scenario emergency_pressure",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 4371.9,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "39_scenario_emergency_pressure.json"
+    },
+    {
+      "index": 40,
+      "name": "scenario escalation_capacity",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 3283.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "40_scenario_escalation_capacity.json"
+    },
+    {
+      "index": 41,
+      "name": "scenario reduced_capacity",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 4791.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "41_scenario_reduced_capacity.json"
+    },
+    {
+      "index": 42,
+      "name": "scenario scheduled_procedures",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1487.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "42_scenario_scheduled_procedures.json"
+    },
+    {
+      "index": 43,
+      "name": "scenario elective_cancellations",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 4044.1,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "43_scenario_elective_cancellations.json"
+    },
+    {
+      "index": 44,
+      "name": "scenario high_turnover",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 3518.0,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "44_scenario_high_turnover.json"
+    },
+    {
+      "index": 45,
+      "name": "scenario delayed_discharge_pressure",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 4435.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "45_scenario_delayed_discharge_pressure.json"
+    },
+    {
+      "index": 46,
+      "name": "scenario staffing_shortage",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1649.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "46_scenario_staffing_shortage.json"
+    },
+    {
+      "index": 47,
+      "name": "scenario staffing_surplus",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1337.4,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "47_scenario_staffing_surplus.json"
+    },
+    {
+      "index": 48,
+      "name": "scenario weekend_operations",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1915.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "48_scenario_weekend_operations.json"
+    },
+    {
+      "index": 49,
+      "name": "scenario stays_baseline",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1347.0,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "49_scenario_stays_baseline.json"
+    },
+    {
+      "index": 50,
+      "name": "scenario emergency_admissions",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 759.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "50_scenario_emergency_admissions.json"
+    },
+    {
+      "index": 51,
+      "name": "scenario elective_admissions",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 552.7,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "51_scenario_elective_admissions.json"
+    },
+    {
+      "index": 52,
+      "name": "scenario rescheduled_electives",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 831.9,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "52_scenario_rescheduled_electives.json"
+    },
+    {
+      "index": 53,
+      "name": "scenario delayed_discharge_stays",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1946.6,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "53_scenario_delayed_discharge_stays.json"
+    },
+    {
+      "index": 54,
+      "name": "scenario long_stay_patients",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2593.9,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "54_scenario_long_stay_patients.json"
+    },
+    {
+      "index": 55,
+      "name": "scenario weekend_discharges",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2606.9,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "55_scenario_weekend_discharges.json"
+    },
+    {
+      "index": 56,
+      "name": "scenario winter_admissions",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 930.5,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "56_scenario_winter_admissions.json"
+    },
+    {
+      "index": 57,
+      "name": "scenario slow_bed_turnaround",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 2300.2,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "57_scenario_slow_bed_turnaround.json"
+    },
+    {
+      "index": 58,
+      "name": "scenario long_bed_waits",
+      "method": "POST",
+      "path": "/api/v1/generate",
+      "status_code": 200,
+      "expected_status": 200,
+      "elapsed_ms": 1441.2,
+      "outcome": "ok",
+      "checks": [
+        {
+          "check": "requested rows delivered",
+          "passed": true
+        },
+        {
+          "check": "all hard rules passed",
+          "passed": true
+        },
+        {
+          "check": "every row inside the scenario",
+          "passed": true
+        }
+      ],
+      "note": "",
+      "evidence": "58_scenario_long_bed_waits.json"
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario": "baseline",
+      "table": "ward_daily",
+      "category": "baseline",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-dc8e9f37d3f6",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 142,
+      "acceptance_rate": 0.947059,
+      "elapsed_seconds": 1.242,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9706,
+      "outcome": "ok",
+      "evidence": "33_scenario_baseline.json"
+    },
+    {
+      "scenario": "normal_occupancy",
+      "table": "ward_daily",
+      "category": "occupancy",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-b98194437b9d",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 143,
+      "acceptance_rate": 0.987261,
+      "elapsed_seconds": 1.038,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9694,
+      "outcome": "ok",
+      "evidence": "34_scenario_normal_occupancy.json"
+    },
+    {
+      "scenario": "high_occupancy",
+      "table": "ward_daily",
+      "category": "occupancy",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-42c61363bab8",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 144,
+      "acceptance_rate": 0.865031,
+      "elapsed_seconds": 1.381,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9673,
+      "outcome": "ok",
+      "evidence": "35_scenario_high_occupancy.json"
+    },
+    {
+      "scenario": "low_occupancy",
+      "table": "ward_daily",
+      "category": "occupancy",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-43a0a2d3e834",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 145,
+      "acceptance_rate": 1.0,
+      "elapsed_seconds": 1.018,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9657,
+      "outcome": "ok",
+      "evidence": "36_scenario_low_occupancy.json"
+    },
+    {
+      "scenario": "winter_demand",
+      "table": "ward_daily",
+      "category": "seasonal",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-6771654a6af5",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 146,
+      "acceptance_rate": 0.88601,
+      "elapsed_seconds": 2.397,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9705,
+      "outcome": "ok",
+      "evidence": "37_scenario_winter_demand.json"
+    },
+    {
+      "scenario": "summer_demand",
+      "table": "ward_daily",
+      "category": "seasonal",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-c314554720d1",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 147,
+      "acceptance_rate": 0.989474,
+      "elapsed_seconds": 2.018,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9715,
+      "outcome": "ok",
+      "evidence": "38_scenario_summer_demand.json"
+    },
+    {
+      "scenario": "emergency_pressure",
+      "table": "ward_daily",
+      "category": "emergency",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-11be79af12c9",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 148,
+      "acceptance_rate": 0.081746,
+      "elapsed_seconds": 4.323,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9248,
+      "outcome": "ok",
+      "evidence": "39_scenario_emergency_pressure.json"
+    },
+    {
+      "scenario": "escalation_capacity",
+      "table": "ward_daily",
+      "category": "utilization",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-32d6b158943d",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 149,
+      "acceptance_rate": 0.493506,
+      "elapsed_seconds": 3.231,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9587,
+      "outcome": "ok",
+      "evidence": "40_scenario_escalation_capacity.json"
+    },
+    {
+      "scenario": "reduced_capacity",
+      "table": "ward_daily",
+      "category": "utilization",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-08b234a568b0",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 150,
+      "acceptance_rate": 0.071046,
+      "elapsed_seconds": 4.743,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9577,
+      "outcome": "ok",
+      "evidence": "41_scenario_reduced_capacity.json"
+    },
+    {
+      "scenario": "scheduled_procedures",
+      "table": "ward_daily",
+      "category": "scheduling",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-d35d2686155d",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 151,
+      "acceptance_rate": 0.760976,
+      "elapsed_seconds": 1.433,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9582,
+      "outcome": "ok",
+      "evidence": "42_scenario_scheduled_procedures.json"
+    },
+    {
+      "scenario": "elective_cancellations",
+      "table": "ward_daily",
+      "category": "scheduling",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-a17cb83ecdb8",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 152,
+      "acceptance_rate": 0.064235,
+      "elapsed_seconds": 3.993,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9368,
+      "outcome": "ok",
+      "evidence": "43_scenario_elective_cancellations.json"
+    },
+    {
+      "scenario": "high_turnover",
+      "table": "ward_daily",
+      "category": "turnover",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-284af7ca3936",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 153,
+      "acceptance_rate": 0.071925,
+      "elapsed_seconds": 3.466,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9199,
+      "outcome": "ok",
+      "evidence": "44_scenario_high_turnover.json"
+    },
+    {
+      "scenario": "delayed_discharge_pressure",
+      "table": "ward_daily",
+      "category": "delayed_discharge",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-732f9fed47b0",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 154,
+      "acceptance_rate": 0.154118,
+      "elapsed_seconds": 4.385,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9642,
+      "outcome": "ok",
+      "evidence": "45_scenario_delayed_discharge_pressure.json"
+    },
+    {
+      "scenario": "staffing_shortage",
+      "table": "ward_daily",
+      "category": "staffing",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-d24532bf1c02",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 155,
+      "acceptance_rate": 0.837989,
+      "elapsed_seconds": 1.597,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9639,
+      "outcome": "ok",
+      "evidence": "46_scenario_staffing_shortage.json"
+    },
+    {
+      "scenario": "staffing_surplus",
+      "table": "ward_daily",
+      "category": "staffing",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-f3ea90f07ab4",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 156,
+      "acceptance_rate": 0.964706,
+      "elapsed_seconds": 1.287,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9707,
+      "outcome": "ok",
+      "evidence": "47_scenario_staffing_surplus.json"
+    },
+    {
+      "scenario": "weekend_operations",
+      "table": "ward_daily",
+      "category": "patient_flow",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-af7d27070015",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 157,
+      "acceptance_rate": 0.934066,
+      "elapsed_seconds": 1.861,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9732,
+      "outcome": "ok",
+      "evidence": "48_scenario_weekend_operations.json"
+    },
+    {
+      "scenario": "stays_baseline",
+      "table": "patient_stays",
+      "category": "baseline",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-042ba72ab2bf",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 158,
+      "acceptance_rate": 0.960452,
+      "elapsed_seconds": 1.29,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9679,
+      "outcome": "ok",
+      "evidence": "49_scenario_stays_baseline.json"
+    },
+    {
+      "scenario": "emergency_admissions",
+      "table": "patient_stays",
+      "category": "patient_flow",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-7c4b5dcad70e",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 159,
+      "acceptance_rate": 0.922619,
+      "elapsed_seconds": 0.692,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.963,
+      "outcome": "ok",
+      "evidence": "50_scenario_emergency_admissions.json"
+    },
+    {
+      "scenario": "elective_admissions",
+      "table": "patient_stays",
+      "category": "scheduling",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-e18368273d4b",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 160,
+      "acceptance_rate": 0.97561,
+      "elapsed_seconds": 0.499,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9664,
+      "outcome": "ok",
+      "evidence": "51_scenario_elective_admissions.json"
+    },
+    {
+      "scenario": "rescheduled_electives",
+      "table": "patient_stays",
+      "category": "scheduling",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-71c8d26f99f9",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 161,
+      "acceptance_rate": 0.129524,
+      "elapsed_seconds": 0.789,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9565,
+      "outcome": "ok",
+      "evidence": "52_scenario_rescheduled_electives.json"
+    },
+    {
+      "scenario": "delayed_discharge_stays",
+      "table": "patient_stays",
+      "category": "delayed_discharge",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-28e42f678d13",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 162,
+      "acceptance_rate": 0.913295,
+      "elapsed_seconds": 1.893,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.965,
+      "outcome": "ok",
+      "evidence": "53_scenario_delayed_discharge_stays.json"
+    },
+    {
+      "scenario": "long_stay_patients",
+      "table": "patient_stays",
+      "category": "utilization",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-c0fa6e536439",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 163,
+      "acceptance_rate": 0.236328,
+      "elapsed_seconds": 2.546,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9609,
+      "outcome": "ok",
+      "evidence": "54_scenario_long_stay_patients.json"
+    },
+    {
+      "scenario": "weekend_discharges",
+      "table": "patient_stays",
+      "category": "patient_flow",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-b097bcb39fda",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 164,
+      "acceptance_rate": 0.229277,
+      "elapsed_seconds": 2.555,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9688,
+      "outcome": "ok",
+      "evidence": "55_scenario_weekend_discharges.json"
+    },
+    {
+      "scenario": "winter_admissions",
+      "table": "patient_stays",
+      "category": "seasonal",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-e413fc95cd59",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 165,
+      "acceptance_rate": 0.948864,
+      "elapsed_seconds": 0.878,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9654,
+      "outcome": "ok",
+      "evidence": "56_scenario_winter_admissions.json"
+    },
+    {
+      "scenario": "slow_bed_turnaround",
+      "table": "patient_stays",
+      "category": "turnover",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-5082b934adda",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 166,
+      "acceptance_rate": 0.080202,
+      "elapsed_seconds": 2.251,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9678,
+      "outcome": "ok",
+      "evidence": "57_scenario_slow_bed_turnaround.json"
+    },
+    {
+      "scenario": "long_bed_waits",
+      "table": "patient_stays",
+      "category": "emergency",
+      "requested_rows": 100,
+      "n_rows": 100,
+      "dataset_id": "ds-29fd764f5bff",
+      "persisted": true,
+      "model": "gc_tuned",
+      "seed": 167,
+      "acceptance_rate": 0.132911,
+      "elapsed_seconds": 1.389,
+      "all_hard_rules_passed": true,
+      "quality_score": 0.9636,
+      "outcome": "ok",
+      "evidence": "58_scenario_long_bed_waits.json"
+    }
+  ],
+  "scenario_rows": 100,
+  "datasets_dir": "data/synthetic/api_demo",
+  "test_runs": [
+    {
+      "suite": "fast",
+      "command": "python -m pytest -q -m \"not slow\" --junitxml=reports/results/pytest_junit.xml",
+      "exit_code": 0,
+      "ok": true,
+      "junit_xml": "reports/results/pytest_junit.xml",
+      "hostname_removed": true,
+      "identifiers_redacted": 0,
+      "totals": {
+        "tests": 633,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 633,
+        "seconds": 161.9
+      },
+      "seconds": 164.7,
+      "finished_at": "2026-11-15T05:33:59+00:00"
+    },
+    {
+      "suite": "slow",
+      "command": "python -m pytest -q -m \"slow\" --junitxml=reports/results/pytest_junit_slow.xml",
+      "exit_code": 0,
+      "ok": true,
+      "junit_xml": "reports/results/pytest_junit_slow.xml",
+      "hostname_removed": true,
+      "identifiers_redacted": 0,
+      "totals": {
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 7,
+        "seconds": 145.8
+      },
+      "seconds": 149.3,
+      "finished_at": "2026-11-15T05:36:28+00:00"
+    }
+  ]
+}

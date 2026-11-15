@@ -1,0 +1,48 @@
+{
+  "step": 10,
+  "name": "scenario high_occupancy",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/scenarios/high_occupancy",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 3.6,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "2.0"
+    },
+    "body": {
+      "name": "high_occupancy",
+      "table": "ward_daily",
+      "title": "High occupancy",
+      "category": "occupancy",
+      "category_description": "Normal, high and low bed occupancy",
+      "description": "Ward-days at or above 90% midnight occupancy (high or critical band).",
+      "conditions": {
+        "occupancy_level": [
+          "high",
+          "critical"
+        ]
+      },
+      "filters": {},
+      "support": {
+        "split": "train",
+        "reference_rows": 7016,
+        "matching_rows": 3296,
+        "share": 0.4698
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "conditions on occupancy_level",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

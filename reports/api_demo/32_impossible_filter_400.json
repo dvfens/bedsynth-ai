@@ -1,0 +1,38 @@
+{
+  "step": 32,
+  "name": "impossible filter (400)",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "ward_daily",
+      "filters": {
+        "occupancy_rate": {
+          "min": 1.5
+        }
+      }
+    }
+  },
+  "response": {
+    "status_code": 400,
+    "expected_status": 400,
+    "elapsed_ms": 2.4,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "0.8"
+    },
+    "body": {
+      "detail": "Filter 'occupancy_rate.min' (1.5) is above the largest possible value (1); no row can match.",
+      "error_type": "invalid_filters"
+    }
+  },
+  "checks": [
+    {
+      "check": "invalid_filters",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

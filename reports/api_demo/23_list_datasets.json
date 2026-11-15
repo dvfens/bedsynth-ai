@@ -1,0 +1,141 @@
+{
+  "step": 23,
+  "name": "list datasets",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/datasets",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 105.8,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "102.1"
+    },
+    "body": {
+      "total": 6,
+      "count": 6,
+      "datasets": [
+        {
+          "dataset_id": "ds-b2aafd626bed",
+          "created_at": "2026-11-15T05:36:41+00:00",
+          "table": "patient_stays",
+          "scenario": "long_bed_waits",
+          "model_id": "gc_tuned",
+          "mode": "sample",
+          "n_rows": 200,
+          "seed": 47,
+          "all_hard_rules_passed": true,
+          "quality_score": null,
+          "size_bytes": 26287,
+          "links": {
+            "self": "/api/v1/datasets/ds-b2aafd626bed",
+            "download_csv": "/api/v1/datasets/ds-b2aafd626bed/download?format=csv",
+            "download_json": "/api/v1/datasets/ds-b2aafd626bed/download?format=json"
+          }
+        },
+        {
+          "dataset_id": "ds-96ecbcd24747",
+          "created_at": "2026-11-15T05:36:40+00:00",
+          "table": "patient_stays",
+          "scenario": "delayed_discharge_stays",
+          "model_id": "gc_tuned",
+          "mode": "sample",
+          "n_rows": 300,
+          "seed": 46,
+          "all_hard_rules_passed": true,
+          "quality_score": 0.9721,
+          "size_bytes": 43795,
+          "links": {
+            "self": "/api/v1/datasets/ds-96ecbcd24747",
+            "download_csv": "/api/v1/datasets/ds-96ecbcd24747/download?format=csv",
+            "download_json": "/api/v1/datasets/ds-96ecbcd24747/download?format=json"
+          }
+        },
+        {
+          "dataset_id": "ds-9fd5e8975bd9",
+          "created_at": "2026-11-15T05:36:37+00:00",
+          "table": "ward_daily",
+          "scenario": null,
+          "model_id": "gc_tuned",
+          "mode": "calendar",
+          "n_rows": 62,
+          "seed": 45,
+          "all_hard_rules_passed": true,
+          "quality_score": null,
+          "size_bytes": 9932,
+          "links": {
+            "self": "/api/v1/datasets/ds-9fd5e8975bd9",
+            "download_csv": "/api/v1/datasets/ds-9fd5e8975bd9/download?format=csv",
+            "download_json": "/api/v1/datasets/ds-9fd5e8975bd9/download?format=json"
+          }
+        },
+        {
+          "dataset_id": "ds-14f9eb6bd922",
+          "created_at": "2026-11-15T05:36:36+00:00",
+          "table": "ward_daily",
+          "scenario": "emergency_pressure",
+          "model_id": "gc_tuned",
+          "mode": "sample",
+          "n_rows": 150,
+          "seed": 44,
+          "all_hard_rules_passed": true,
+          "quality_score": null,
+          "size_bytes": 21360,
+          "links": {
+            "self": "/api/v1/datasets/ds-14f9eb6bd922",
+            "download_csv": "/api/v1/datasets/ds-14f9eb6bd922/download?format=csv",
+            "download_json": "/api/v1/datasets/ds-14f9eb6bd922/download?format=json"
+          }
+        },
+        {
+          "dataset_id": "ds-69ac395bc9d7",
+          "created_at": "2026-11-15T05:36:32+00:00",
+          "table": "ward_daily",
+          "scenario": "high_occupancy",
+          "model_id": "gc_tuned",
+          "mode": "sample",
+          "n_rows": 300,
+          "seed": 43,
+          "all_hard_rules_passed": true,
+          "quality_score": 0.9764,
+          "size_bytes": 42345,
+          "links": {
+            "self": "/api/v1/datasets/ds-69ac395bc9d7",
+            "download_csv": "/api/v1/datasets/ds-69ac395bc9d7/download?format=csv",
+            "download_json": "/api/v1/datasets/ds-69ac395bc9d7/download?format=json"
+          }
+        },
+        {
+          "dataset_id": "ds-dbd35a8375b2",
+          "created_at": "2026-11-15T05:36:30+00:00",
+          "table": "ward_daily",
+          "scenario": "baseline",
+          "model_id": "gc_tuned",
+          "mode": "sample",
+          "n_rows": 300,
+          "seed": 42,
+          "all_hard_rules_passed": true,
+          "quality_score": 0.9793,
+          "size_bytes": 42467,
+          "links": {
+            "self": "/api/v1/datasets/ds-dbd35a8375b2",
+            "download_csv": "/api/v1/datasets/ds-dbd35a8375b2/download?format=csv",
+            "download_json": "/api/v1/datasets/ds-dbd35a8375b2/download?format=json"
+          }
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "datasets were persisted",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

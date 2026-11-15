@@ -1,0 +1,618 @@
+{
+  "step": 8,
+  "name": "scenario catalogue (with reference support)",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/scenarios",
+    "params": {
+      "include_support": "true"
+    },
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 199.8,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "197.7"
+    },
+    "body": {
+      "count": 26,
+      "categories": {
+        "baseline": "Representative mix of everyday operating conditions",
+        "occupancy": "Normal, high and low bed occupancy",
+        "seasonal": "Seasonal demand",
+        "patient_flow": "Admission and discharge patterns",
+        "emergency": "Emergency bed requirements",
+        "utilization": "Ward utilisation and capacity",
+        "scheduling": "Scheduled procedures and elective scheduling conditions",
+        "turnover": "Bed turnover",
+        "delayed_discharge": "Delayed discharge",
+        "staffing": "Varying staffing conditions"
+      },
+      "scenarios": [
+        {
+          "name": "baseline",
+          "table": "ward_daily",
+          "title": "Baseline operations",
+          "category": "baseline",
+          "category_description": "Representative mix of everyday operating conditions",
+          "description": "Unconditional sample reproducing the real mix of wards, seasons and pressures.",
+          "conditions": {},
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 7016,
+            "share": 1.0
+          }
+        },
+        {
+          "name": "normal_occupancy",
+          "table": "ward_daily",
+          "title": "Normal occupancy",
+          "category": "occupancy",
+          "category_description": "Normal, high and low bed occupancy",
+          "description": "Ward-days running at 75-90% midnight occupancy.",
+          "conditions": {
+            "occupancy_level": [
+              "normal"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 2285,
+            "share": 0.3257
+          }
+        },
+        {
+          "name": "high_occupancy",
+          "table": "ward_daily",
+          "title": "High occupancy",
+          "category": "occupancy",
+          "category_description": "Normal, high and low bed occupancy",
+          "description": "Ward-days at or above 90% midnight occupancy (high or critical band).",
+          "conditions": {
+            "occupancy_level": [
+              "high",
+              "critical"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 3296,
+            "share": 0.4698
+          }
+        },
+        {
+          "name": "low_occupancy",
+          "table": "ward_daily",
+          "title": "Low occupancy",
+          "category": "occupancy",
+          "category_description": "Normal, high and low bed occupancy",
+          "description": "Ward-days below 75% midnight occupancy.",
+          "conditions": {
+            "occupancy_level": [
+              "low"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 1435,
+            "share": 0.2045
+          }
+        },
+        {
+          "name": "winter_demand",
+          "table": "ward_daily",
+          "title": "Winter seasonal demand",
+          "category": "seasonal",
+          "category_description": "Seasonal demand",
+          "description": "December-February operations (respiratory season, emergency surge).",
+          "conditions": {
+            "month": [
+              12,
+              1,
+              2
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 1746,
+            "share": 0.2489
+          }
+        },
+        {
+          "name": "summer_demand",
+          "table": "ward_daily",
+          "title": "Summer seasonal demand",
+          "category": "seasonal",
+          "category_description": "Seasonal demand",
+          "description": "June-August operations (lower emergency demand, reduced August electives).",
+          "conditions": {
+            "month": [
+              6,
+              7,
+              8
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 1771,
+            "share": 0.2524
+          }
+        },
+        {
+          "name": "emergency_pressure",
+          "table": "ward_daily",
+          "title": "Emergency bed pressure",
+          "category": "emergency",
+          "category_description": "Emergency bed requirements",
+          "description": "High-occupancy days with emergency patients still waiting for a bed at midnight.",
+          "conditions": {
+            "occupancy_level": [
+              "high",
+              "critical"
+            ]
+          },
+          "filters": {
+            "emergency_boarders": {
+              "min": 1
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 649,
+            "share": 0.0925
+          }
+        },
+        {
+          "name": "escalation_capacity",
+          "table": "ward_daily",
+          "title": "Escalation beds open under pressure",
+          "category": "utilization",
+          "category_description": "Ward utilisation and capacity",
+          "description": "High- or critical-occupancy days on which temporary surge (escalation) beds were open (escalation is decided hospital-wide, so on its own it would mostly select winter hub-ward days).",
+          "conditions": {
+            "occupancy_level": [
+              "high",
+              "critical"
+            ]
+          },
+          "filters": {
+            "escalation_beds_open": {
+              "min": 1
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 1595,
+            "share": 0.2273
+          }
+        },
+        {
+          "name": "reduced_capacity",
+          "table": "ward_daily",
+          "title": "Reduced bed capacity",
+          "category": "utilization",
+          "category_description": "Ward utilisation and capacity",
+          "description": "Days with beds closed (staffing, infection control or maintenance).",
+          "conditions": {},
+          "filters": {
+            "beds_closed": {
+              "min": 1
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 599,
+            "share": 0.0854
+          }
+        },
+        {
+          "name": "scheduled_procedures",
+          "table": "ward_daily",
+          "title": "Scheduled procedure days",
+          "category": "scheduling",
+          "category_description": "Scheduled procedures and elective scheduling conditions",
+          "description": "Weekday elective lists on surgical and cardiology wards (2+ bookings).",
+          "conditions": {
+            "ward_id": [
+              "GSUR",
+              "ORTH",
+              "CARD"
+            ],
+            "day_of_week": [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri"
+            ]
+          },
+          "filters": {
+            "elective_scheduled": {
+              "min": 2
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 1518,
+            "share": 0.2164
+          }
+        },
+        {
+          "name": "elective_cancellations",
+          "table": "ward_daily",
+          "title": "Elective cancellations",
+          "category": "scheduling",
+          "category_description": "Scheduled procedures and elective scheduling conditions",
+          "description": "Days on which at least one booked elective admission was cancelled.",
+          "conditions": {},
+          "filters": {
+            "elective_cancelled": {
+              "min": 1
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 394,
+            "share": 0.0562
+          }
+        },
+        {
+          "name": "high_turnover",
+          "table": "ward_daily",
+          "title": "High bed turnover (inpatient wards)",
+          "category": "turnover",
+          "category_description": "Bed turnover",
+          "description": "Inpatient-ward days on which at least 30% of available beds were vacated (discharges + transfers out). The acute assessment and children's wards, where rapid turnover is the norm every day, are excluded so the scenario selects busy days rather than ward types.",
+          "conditions": {
+            "ward_id": [
+              "GMED",
+              "ELDC",
+              "CARD",
+              "GSUR",
+              "ORTH",
+              "ICU"
+            ]
+          },
+          "filters": {
+            "bed_turnover_rate": {
+              "min": 0.3
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 803,
+            "share": 0.1145
+          }
+        },
+        {
+          "name": "delayed_discharge_pressure",
+          "table": "ward_daily",
+          "title": "Delayed discharge pressure",
+          "category": "delayed_discharge",
+          "category_description": "Delayed discharge",
+          "description": "Days on which 15%+ of inpatients at midnight were medically fit but awaiting discharge.",
+          "conditions": {},
+          "filters": {
+            "delayed_discharge_rate": {
+              "min": 0.15
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 842,
+            "share": 0.12
+          }
+        },
+        {
+          "name": "staffing_shortage",
+          "table": "ward_daily",
+          "title": "Staffing shortage",
+          "category": "staffing",
+          "category_description": "Varying staffing conditions",
+          "description": "Days with nurse staffing below the ward requirement.",
+          "conditions": {
+            "staffing_level": [
+              "short"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 867,
+            "share": 0.1236
+          }
+        },
+        {
+          "name": "staffing_surplus",
+          "table": "ward_daily",
+          "title": "Staffing surplus",
+          "category": "staffing",
+          "category_description": "Varying staffing conditions",
+          "description": "Days with more day-shift nurses than the requirement plus its slack (extra bank or agency cover), the opposite end of the staffing range to staffing_shortage.",
+          "conditions": {
+            "staffing_level": [
+              "surplus"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 472,
+            "share": 0.0673
+          }
+        },
+        {
+          "name": "weekend_operations",
+          "table": "ward_daily",
+          "title": "Weekend operations",
+          "category": "patient_flow",
+          "category_description": "Admission and discharge patterns",
+          "description": "Saturday/Sunday operations (few electives, reduced discharges).",
+          "conditions": {
+            "day_of_week": [
+              "Sat",
+              "Sun"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 7016,
+            "matching_rows": 2009,
+            "share": 0.2863
+          }
+        },
+        {
+          "name": "stays_baseline",
+          "table": "patient_stays",
+          "title": "Baseline stays",
+          "category": "baseline",
+          "category_description": "Representative mix of everyday operating conditions",
+          "description": "Unconditional sample of ward stays reproducing the real admission mix.",
+          "conditions": {},
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 45002,
+            "share": 1.0
+          }
+        },
+        {
+          "name": "emergency_admissions",
+          "table": "patient_stays",
+          "title": "Emergency admissions",
+          "category": "patient_flow",
+          "category_description": "Admission and discharge patterns",
+          "description": "Stays admitted through the emergency department.",
+          "conditions": {
+            "admission_source": [
+              "emergency"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 29049,
+            "share": 0.6455
+          }
+        },
+        {
+          "name": "elective_admissions",
+          "table": "patient_stays",
+          "title": "Elective (scheduled) admissions",
+          "category": "scheduling",
+          "category_description": "Scheduled procedures and elective scheduling conditions",
+          "description": "Planned admissions for scheduled procedures.",
+          "conditions": {
+            "admission_source": [
+              "elective"
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 6201,
+            "share": 0.1378
+          }
+        },
+        {
+          "name": "rescheduled_electives",
+          "table": "patient_stays",
+          "title": "Rescheduled electives",
+          "category": "scheduling",
+          "category_description": "Scheduled procedures and elective scheduling conditions",
+          "description": "Elective admissions that were postponed at least once.",
+          "conditions": {
+            "admission_source": [
+              "elective"
+            ]
+          },
+          "filters": {
+            "times_rescheduled": {
+              "min": 1
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 585,
+            "share": 0.013
+          }
+        },
+        {
+          "name": "delayed_discharge_stays",
+          "table": "patient_stays",
+          "title": "Delayed discharges",
+          "category": "delayed_discharge",
+          "category_description": "Delayed discharge",
+          "description": "Stays whose departure was delayed by 4+ hours after the patient was ready to leave.",
+          "conditions": {
+            "delay_reason": [
+              "awaiting_transport",
+              "awaiting_medication",
+              "awaiting_documentation",
+              "awaiting_care_package",
+              "awaiting_care_facility_bed",
+              "awaiting_downstream_bed"
+            ]
+          },
+          "filters": {
+            "discharge_delay_hours": {
+              "min": 4.0
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 9800,
+            "share": 0.2178
+          }
+        },
+        {
+          "name": "long_stay_patients",
+          "table": "patient_stays",
+          "title": "Long-stay patients",
+          "category": "utilization",
+          "category_description": "Ward utilisation and capacity",
+          "description": "Stays of 7 or more nights ('stranded' patients).",
+          "conditions": {},
+          "filters": {
+            "los_nights": {
+              "min": 7
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 5381,
+            "share": 0.1196
+          }
+        },
+        {
+          "name": "weekend_discharges",
+          "table": "patient_stays",
+          "title": "Weekend discharges",
+          "category": "patient_flow",
+          "category_description": "Admission and discharge patterns",
+          "description": "Stays ending on a Saturday or Sunday.",
+          "conditions": {},
+          "filters": {
+            "discharge_day_of_week": {
+              "in": [
+                "Sat",
+                "Sun"
+              ]
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 10089,
+            "share": 0.2242
+          }
+        },
+        {
+          "name": "winter_admissions",
+          "table": "patient_stays",
+          "title": "Winter admissions",
+          "category": "seasonal",
+          "category_description": "Seasonal demand",
+          "description": "Stays admitted December-February.",
+          "conditions": {
+            "admission_month": [
+              12,
+              1,
+              2
+            ]
+          },
+          "filters": {},
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 12354,
+            "share": 0.2745
+          }
+        },
+        {
+          "name": "slow_bed_turnaround",
+          "table": "patient_stays",
+          "title": "Slow bed turnaround",
+          "category": "turnover",
+          "category_description": "Bed turnover",
+          "description": "Stays after which the bed took 3+ hours to be ready (deep clean, night/weekend).",
+          "conditions": {},
+          "filters": {
+            "bed_turnaround_minutes": {
+              "min": 180
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 3853,
+            "share": 0.0856
+          }
+        },
+        {
+          "name": "long_bed_waits",
+          "table": "patient_stays",
+          "title": "Long emergency bed waits",
+          "category": "emergency",
+          "category_description": "Emergency bed requirements",
+          "description": "Emergency admissions that waited 4+ hours for a bed.",
+          "conditions": {
+            "admission_source": [
+              "emergency"
+            ]
+          },
+          "filters": {
+            "bed_wait_hours": {
+              "min": 4
+            }
+          },
+          "support": {
+            "split": "train",
+            "reference_rows": 45002,
+            "matching_rows": 3860,
+            "share": 0.0858
+          }
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "26 scenarios",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

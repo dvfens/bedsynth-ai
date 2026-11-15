@@ -1,0 +1,34 @@
+{
+  "step": 31,
+  "name": "scenario of another table (400)",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/generate",
+    "params": null,
+    "json": {
+      "table": "ward_daily",
+      "scenario": "long_bed_waits"
+    }
+  },
+  "response": {
+    "status_code": 400,
+    "expected_status": 400,
+    "elapsed_ms": 2.5,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "0.8"
+    },
+    "body": {
+      "detail": "Scenario 'long_bed_waits' belongs to table 'patient_stays', not 'ward_daily'.",
+      "error_type": "scenario_table_mismatch"
+    }
+  },
+  "checks": [
+    {
+      "check": "scenario_table_mismatch",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

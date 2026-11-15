@@ -1,0 +1,74 @@
+{
+  "step": 2,
+  "name": "health",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/health",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 32.3,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "30.0"
+    },
+    "body": {
+      "status": "ok",
+      "version": "1.0.0",
+      "sdv_version": "2.2.0",
+      "engine": {
+        "available": true,
+        "loaded": true,
+        "state": "ready",
+        "detail": null
+      },
+      "models": {
+        "ward_daily": {
+          "trained": [
+            "ctgan",
+            "gc_baseline",
+            "gc_segmented",
+            "gc_tuned",
+            "tvae"
+          ],
+          "default": "gc_tuned"
+        },
+        "patient_stays": {
+          "trained": [
+            "ctgan",
+            "gc_baseline",
+            "gc_segmented",
+            "gc_tuned",
+            "tvae"
+          ],
+          "default": "gc_tuned"
+        }
+      },
+      "trained_tables": [
+        "ward_daily",
+        "patient_stays"
+      ],
+      "reference_data": {
+        "ward_daily": true,
+        "patient_stays": true
+      },
+      "datasets": {
+        "count": 0,
+        "persistence_enabled": true
+      },
+      "messages": [],
+      "checked_at": "2026-11-15T05:36:28+00:00"
+    }
+  },
+  "checks": [
+    {
+      "check": "at least one trained table",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,122 @@
+{
+  "step": 1,
+  "name": "service info",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 105.3,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "102.8"
+    },
+    "body": {
+      "name": "BedSynth AI",
+      "title": "BedSynth AI - Synthetic Hospital Operations Data Generator",
+      "version": "1.0.0",
+      "description": "Synthetic, non-clinical hospital operations data (ward-day bed occupancy and patient stays) generated on demand with SDV models, scenario conditioning and rule validation.",
+      "links": {
+        "docs": "/docs",
+        "redoc": "/redoc",
+        "openapi": "/openapi.json",
+        "ui": "/ui",
+        "health": "/health",
+        "tables": "/api/v1/tables",
+        "scenarios": "/api/v1/scenarios",
+        "models": "/api/v1/models",
+        "generate": "/api/v1/generate",
+        "datasets": "/api/v1/datasets"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/",
+          "summary": "Service information and links"
+        },
+        {
+          "method": "GET",
+          "path": "/health",
+          "summary": "Health, trained models and reference data"
+        },
+        {
+          "method": "GET",
+          "path": "/ui",
+          "summary": "Interactive demo UI"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tables",
+          "summary": "List tables"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tables/{table}/schema",
+          "summary": "Column schema and operational rules of a table"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/scenarios",
+          "summary": "Scenario catalogue"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/scenarios/{name}",
+          "summary": "One scenario (with reference-data support)"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/models",
+          "summary": "Trained models and defaults"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/generate",
+          "summary": "Generate synthetic records"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/validate",
+          "summary": "Validate client records against the operational rules"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/evaluate",
+          "summary": "Quick quality of client records or a stored dataset"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/datasets",
+          "summary": "List persisted datasets"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/datasets/{dataset_id}",
+          "summary": "Metadata of a persisted dataset"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/datasets/{dataset_id}",
+          "summary": "Delete a persisted dataset"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/datasets/{dataset_id}/download",
+          "summary": "Download a persisted dataset"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "links to /docs and /ui",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

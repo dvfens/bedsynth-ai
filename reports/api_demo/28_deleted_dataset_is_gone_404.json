@@ -1,0 +1,31 @@
+{
+  "step": 28,
+  "name": "deleted dataset is gone (404)",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/datasets/ds-dbd35a8375b2",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 404,
+    "expected_status": 404,
+    "elapsed_ms": 2.9,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "1.1"
+    },
+    "body": {
+      "detail": "Dataset 'ds-dbd35a8375b2' not found.",
+      "error_type": "dataset_not_found"
+    }
+  },
+  "checks": [
+    {
+      "check": "dataset_not_found error",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

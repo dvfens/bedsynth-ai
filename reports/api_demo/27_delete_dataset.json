@@ -1,0 +1,31 @@
+{
+  "step": 27,
+  "name": "delete dataset",
+  "note": "",
+  "request": {
+    "method": "DELETE",
+    "path": "/api/v1/datasets/ds-dbd35a8375b2",
+    "params": null,
+    "json": null
+  },
+  "response": {
+    "status_code": 200,
+    "expected_status": 200,
+    "elapsed_ms": 5.0,
+    "headers": {
+      "content-type": "application/json",
+      "x-process-time-ms": "2.9"
+    },
+    "body": {
+      "dataset_id": "ds-dbd35a8375b2",
+      "deleted": true
+    }
+  },
+  "checks": [
+    {
+      "check": "deleted",
+      "passed": true
+    }
+  ],
+  "passed": true
+}
