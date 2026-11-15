@@ -1,0 +1,341 @@
+### BedSynth AI - example requests for every endpoint
+#
+# Written for the VS Code "REST Client" extension (named requests, {{name.response.body.$.field}}).
+# Other HTTP clients: replace those references with a dataset id from a /generate response.
+# Start the API first:  python scripts/04_serve_api.py   (or: uvicorn bedsynth.api.main:app --port 8000)
+# Named requests (# @name ...) let later requests reuse response values, e.g. the dataset id.
+
+@baseUrl = http://127.0.0.1:8000
+@api = {{baseUrl}}/api/v1
+
+### Service information and links
+GET {{baseUrl}}/
+
+### Health: engine status, trained models, reference data
+GET {{baseUrl}}/health
+
+### Interactive demo UI (open in a browser)
+GET {{baseUrl}}/ui
+
+### OpenAPI schema (interactive docs at /docs and /redoc)
+GET {{baseUrl}}/openapi.json
+
+###############################################################################
+# Catalogue
+###############################################################################
+
+### Tables with column counts and default models
+GET {{api}}/tables
+
+### Column schema, ward catalogue and operational rules of ward_daily
+GET {{api}}/tables/ward_daily/schema
+
+### ... and of patient_stays
+GET {{api}}/tables/patient_stays/schema
+
+### All 26 scenarios, with how often each occurs in the reference data
+GET {{api}}/scenarios?include_support=true
+
+### Scenarios of one table
+GET {{api}}/scenarios?table=patient_stays
+
+### One scenario
+GET {{api}}/scenarios/emergency_pressure
+
+### Trained models, model cards, metrics and registry defaults
+GET {{api}}/models
+
+### Models of one table
+GET {{api}}/models?table=ward_daily
+
+###############################################################################
+# Generation
+###############################################################################
+
+### Baseline ward-days (JSON)
+# @name baseline
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 200,
+  "scenario": "baseline",
+  "seed": 42
+}
+
+### Occupancy family: high-occupancy days, with a quality score vs matching reference days
+# @name highOccupancy
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 500,
+  "scenario": "high_occupancy",
+  "seed": 7,
+  "evaluate": true
+}
+
+### Seasonal family: winter demand on the medical wards (aliases are accepted)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 300,
+  "scenario": "winter_demand",
+  "wards": ["AMU", "general medicine", "eldc"],
+  "seed": 11
+}
+
+### Emergency family: bed pressure with boarders, returned as CSV (see the X-BedSynth-* headers)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 250,
+  "scenario": "emergency_pressure",
+  "format": "csv",
+  "seed": 3
+}
+
+### Scheduling family: elective lists that had cancellations (extra filter on top of the scenario)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 300,
+  "scenario": "scheduled_procedures",
+  "filters": {"elective_cancelled": {"min": 1}},
+  "seed": 5
+}
+
+### Staffing family: short-staffed winter days, a specific model, learned columns only
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 200,
+  "scenario": "staffing_shortage",
+  "conditions": {"month": [12, 1, 2]},
+  "model_id": "gc_tuned",
+  "include_derived": false,
+  "seed": 13
+}
+
+### Calendar mode: one row per ward per day for January (rows are independent draws)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "mode": "calendar",
+  "wards": ["AMU", "ICU"],
+  "start_date": "2025-01-01",
+  "end_date": "2025-01-31",
+  "seed": 21
+}
+
+### Custom conditions and filters without a named scenario
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 150,
+  "conditions": {"ward_id": "ICU", "occupancy_level": ["high", "critical"]},
+  "filters": {"emergency_boarders": {"min": 1}},
+  "seed": 99
+}
+
+### Delayed-discharge family: stays awaiting care packages or placements
+# @name delayedStays
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "patient_stays",
+  "num_rows": 400,
+  "scenario": "delayed_discharge_stays",
+  "conditions": {"discharge_destination": ["care_facility", "home_with_support"]},
+  "seed": 9
+}
+
+### Emergency family (stays): long bed waits, evaluated against the reference subset
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "patient_stays",
+  "num_rows": 300,
+  "scenario": "long_bed_waits",
+  "evaluate": true,
+  "seed": 17
+}
+
+### Error example (422): num_rows out of range and an unknown ward
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 0,
+  "wards": ["MARS"]
+}
+
+### Error example (404): unknown scenario
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "scenario": "icu_meltdown"
+}
+
+###############################################################################
+# Validation and evaluation
+###############################################################################
+
+### Validate client records: the second record uses aliases and cancels more electives than booked
+POST {{api}}/validate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "return_records": true,
+  "records": [
+    {"ward_id": "GMED", "month": 1, "day_of_week": "Mon", "escalation_beds_open": 0, "beds_closed": 0,
+     "staffing_level": "adequate", "nurses_day_shift": 5, "nurses_night_shift": 4, "census_start": 30,
+     "elective_scheduled": 2, "elective_cancelled": 0, "admissions_emergency": 4, "transfers_in": 1,
+     "transfers_out": 1, "discharges": 6, "discharges_before_noon": 1, "delayed_discharges": 2,
+     "emergency_boarders": 0, "avg_bed_wait_hours": 2.5, "avg_bed_turnaround_min": 80.0,
+     "avg_los_days": 5.8, "occupancy_level": "high"},
+    {"ward_id": "gen med", "month": 1, "day_of_week": "monday", "escalation_beds_open": 0, "beds_closed": 0,
+     "staffing_level": "safe", "nurses_day_shift": 5, "nurses_night_shift": 4, "census_start": 30,
+     "elective_scheduled": 1, "elective_cancelled": 3, "admissions_emergency": 4, "transfers_in": 1,
+     "transfers_out": 1, "discharges": 6, "discharges_before_noon": 1, "delayed_discharges": 2,
+     "emergency_boarders": 0, "avg_bed_wait_hours": 2.5, "avg_bed_turnaround_min": 80.0,
+     "avg_los_days": 5.8, "occupancy_level": "high"}
+  ]
+}
+
+### Validate a patient stay
+POST {{api}}/validate
+Content-Type: application/json
+
+{
+  "table": "patient_stays",
+  "records": [
+    {"ward_id": "ORTH", "admission_source": "elective", "admission_month": 3, "admission_day_of_week": "Tue",
+     "admission_hour": 8, "booking_lead_days": 45, "times_rescheduled": 1, "bed_wait_hours": 0.5,
+     "los_nights": 3, "discharge_hour": 11, "separation_type": "discharge", "discharge_destination": "home",
+     "delay_reason": "none", "discharge_delay_hours": 0.0, "bed_turnaround_minutes": 75}
+  ]
+}
+
+### Evaluate a stored dataset (quick quality + validity vs the matching reference subset)
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{
+  "dataset_id": "{{highOccupancy.response.body.$.dataset_id}}",
+  "reference_split": "train"
+}
+
+### Evaluate client records (at least 20) against the holdout split
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "reference_split": "holdout",
+  "records": {{baseline.response.body.$.records}}
+}
+
+###############################################################################
+# Persisted datasets
+###############################################################################
+
+### List datasets (newest first)
+GET {{api}}/datasets?limit=20
+
+### List datasets of one table
+GET {{api}}/datasets?table=patient_stays
+
+### Dataset metadata (request, generation report, validation, quality)
+GET {{api}}/datasets/{{baseline.response.body.$.dataset_id}}
+
+### Download as CSV (with X-BedSynth-* headers)
+GET {{api}}/datasets/{{baseline.response.body.$.dataset_id}}/download?format=csv
+
+### Download as JSON
+GET {{api}}/datasets/{{delayedStays.response.body.$.dataset_id}}/download?format=json
+
+### Delete a dataset
+DELETE {{api}}/datasets/{{baseline.response.body.$.dataset_id}}
+
+### The deleted dataset is gone (404 dataset_not_found)
+GET {{api}}/datasets/{{baseline.response.body.$.dataset_id}}
+
+###############################################################################
+# Limits and guarantees
+###############################################################################
+
+### Staffing surplus with an explicit time budget and attempt limit (time_budget_seconds <= 120)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 200,
+  "scenario": "staffing_surplus",
+  "seed": 31,
+  "time_budget_seconds": 30,
+  "max_attempts": 40
+}
+
+### Impossible filter: 400 invalid_filters (occupancy_rate never exceeds 1)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 50,
+  "filters": {"occupancy_rate": {"min": 1.5}}
+}
+
+### Too many condition combinations: 400 too_many_combinations (11 x 6 x 7 x 2 x 3 = 2772 > 1000)
+POST {{api}}/generate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "num_rows": 50,
+  "conditions": {
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "day_of_week": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "ward_id": ["AMU", "GMED", "ELDC", "CARD", "GSUR", "ORTH", "ICU"],
+    "staffing_level": ["short", "adequate"],
+    "occupancy_level": ["low", "normal", "high"]
+  }
+}
+
+### Inconsistent derived value: the row fails the hard WD-D01 check (census_end breaks the flow balance)
+POST {{api}}/validate
+Content-Type: application/json
+
+{
+  "table": "ward_daily",
+  "records": [{
+    "ward_id": "GMED", "month": 1, "day_of_week": "Mon", "escalation_beds_open": 0, "beds_closed": 0,
+    "staffing_level": "adequate", "nurses_day_shift": 5, "nurses_night_shift": 4, "census_start": 30,
+    "elective_scheduled": 2, "elective_cancelled": 0, "admissions_emergency": 4, "transfers_in": 1,
+    "transfers_out": 1, "discharges": 6, "discharges_before_noon": 1, "delayed_discharges": 2,
+    "emergency_boarders": 0, "avg_bed_wait_hours": 2.5, "avg_bed_turnaround_min": 80.0,
+    "avg_los_days": 5.8, "occupancy_level": "high", "census_end": 31
+  }]
+}

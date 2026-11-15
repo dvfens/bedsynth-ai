@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BedSynth AI · Synthetic hospital operations data</title>
+<meta name="description" content="Generate validated synthetic bed-occupancy and patient-stay data for hospital scheduling scenarios.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b6e99'/%3E%3Cpath d='M6 22V10M6 18h20v4M10 14h5a2 2 0 0 1 2 2v2' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f3f5f8; --surface: #ffffff; --surface-2: #f7f9fb; --text: #18222d; --muted: #5b6878;
+    --border: #dbe2ea; --primary: #0b6e99; --primary-strong: #08577a; --primary-soft: #e2f0f7;
+    --ok: #17794a; --ok-soft: #e1f3e8; --warn: #8f5600; --warn-soft: #fcf0d9; --bad: #b42318; --bad-soft: #fde9e7;
+    --radius: 12px; --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 2px 6px rgba(16, 24, 40, .06);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e151c; --surface: #151f29; --surface-2: #1a2632; --text: #e4ebf2; --muted: #98a6b5;
+      --border: #2a3846; --primary: #3aa5d4; --primary-strong: #63b9df; --primary-soft: #16364a;
+      --ok: #4cc38a; --ok-soft: #12352a; --warn: #f0b75b; --warn-soft: #3b2c12; --bad: #f2796f; --bad-soft: #3f1d1b;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3);
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }  /* component display rules must not override the hidden attribute */
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text); line-height: 1.45; font-size: 14.5px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  a { color: var(--primary); }
+  h1, h2, h3 { margin: 0; line-height: 1.2; }
+  h2 { font-size: 1.08rem; }
+  h3 { font-size: .95rem; margin: 18px 0 8px; }
+  code, pre, .mono { font-family: var(--mono); }
+  :focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 14px 24px; background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand svg { flex: none; }
+  .brand h1 { font-size: 1.25rem; letter-spacing: -.01em; }
+  .brand p { margin: 2px 0 0; color: var(--muted); font-size: .88rem; }
+  .topbar nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .topbar nav a { text-decoration: none; font-weight: 500; font-size: .9rem; }
+  .topbar nav a:hover { text-decoration: underline; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px;
+    font-size: .82rem; font-weight: 600; background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+  }
+  .pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .pill.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+  .pill.bad { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
+
+  /* ---------- layout ---------- */
+  .layout {
+    display: grid; gap: 18px; padding: 18px 24px 8px; max-width: 1560px; margin: 0 auto;
+    grid-template-columns: minmax(300px, 370px) minmax(0, 1fr);
+    grid-template-areas: "form results" "datasets datasets";
+  }
+  .form-card { grid-area: form; align-self: start; }
+  .results-card { grid-area: results; min-width: 0; }
+  .datasets-card { grid-area: datasets; min-width: 0; }
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "form" "results" "datasets"; padding: 12px; }
+    .topbar { padding: 12px; }
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 18px 20px;
+  }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+
+  /* ---------- form ---------- */
+  label, legend { display: block; font-weight: 600; font-size: .85rem; margin: 14px 0 5px; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  select, input[type=number], input[type=date] {
+    width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); font: inherit;
+  }
+  select:disabled, input:disabled { opacity: .55; }
+  .hint { color: var(--muted); font-size: .82rem; margin: 5px 0 0; font-weight: 400; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .input-with-btn { display: flex; gap: 6px; }
+  .segmented { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .segmented label { margin: 0; font-weight: 500; }
+  .segmented input { position: absolute; opacity: 0; pointer-events: none; }
+  .segmented span { display: block; padding: 6px 14px; cursor: pointer; font-size: .86rem; }
+  .segmented input:checked + span { background: var(--primary); color: #fff; }
+  .segmented input:disabled + span { opacity: .45; cursor: not-allowed; }
+  .segmented input:focus-visible + span { outline: 3px solid var(--primary); outline-offset: -3px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { margin: 0; font-weight: 500; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span {
+    display: inline-block; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px;
+    cursor: pointer; font-size: .82rem; user-select: none;
+  }
+  .chip input:checked + span { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-strong); font-weight: 600; }
+  .chip input:focus-visible + span { outline: 3px solid var(--primary); outline-offset: 1px; }
+  .check { display: flex; align-items: center; gap: 8px; font-weight: 500; margin: 7px 0; }
+  .check input { width: 16px; height: 16px; accent-color: var(--primary); }
+  .scenario-info {
+    margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: var(--surface-2);
+    border: 1px solid var(--border); font-size: .86rem;
+  }
+  .scenario-info:empty { display: none; }
+  .scenario-info p { margin: 4px 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .tag {
+    font-family: var(--mono); font-size: .75rem; padding: 2px 7px; border-radius: 6px;
+    background: var(--primary-soft); color: var(--primary-strong);
+  }
+  .tag.filter { background: var(--warn-soft); color: var(--warn); }
+  .badge {
+    display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 6px; background: var(--primary-soft); color: var(--primary-strong);
+  }
+  .badge.ok { background: var(--ok-soft); color: var(--ok); }
+  .badge.bad { background: var(--bad-soft); color: var(--bad); }
+  .badge.warn { background: var(--warn-soft); color: var(--warn); }
+  .badge.muted { background: var(--surface-2); color: var(--muted); }
+
+  button { font: inherit; cursor: pointer; }
+  button:disabled { cursor: not-allowed; opacity: .55; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+  .btn-primary, .btn-secondary, .btn-ghost {
+    border-radius: 8px; padding: 9px 14px; font-weight: 600; border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: var(--primary-strong); }
+  .btn-secondary { background: var(--surface); color: var(--primary); border-color: var(--primary); }
+  .btn-secondary:hover:not(:disabled) { background: var(--primary-soft); }
+  .btn-ghost { background: transparent; color: var(--primary); border-color: var(--border); padding: 6px 10px; font-weight: 500; }
+  .btn-ghost:hover:not(:disabled) { background: var(--primary-soft); }
+  .btn-ghost.danger { color: var(--bad); }
+  .btn-ghost.danger:hover:not(:disabled) { background: var(--bad-soft); }
+  .small { font-size: .8rem; padding: 4px 8px; }
+  .spinner {
+    display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255, 255, 255, .45);
+    border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -2px; margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
+  details.request-preview { margin-top: 14px; }
+  .copy-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .copy-actions .hint { margin: 0; }
+  details summary { cursor: pointer; color: var(--muted); font-size: .85rem; }
+  pre {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+    font-size: .78rem; overflow: auto; max-height: 360px; margin: 8px 0;
+  }
+
+  /* ---------- results ---------- */
+  .banner { border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: .9rem; }
+  .banner-error { background: var(--bad-soft); color: var(--bad); border: 1px solid transparent; }
+  .banner strong { display: block; margin-bottom: 2px; }
+  .empty { text-align: center; color: var(--muted); padding: 48px 12px; }
+  .empty svg { opacity: .55; margin-bottom: 10px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 10px; }
+  .stat { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--surface-2); min-width: 0; }
+  .stat .label { color: var(--muted); font-size: .76rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .stat .value { font-size: 1.32rem; font-weight: 700; margin-top: 2px; overflow-wrap: anywhere; }
+  .stat .sub { color: var(--muted); font-size: .78rem; margin-top: 1px; overflow-wrap: anywhere; }
+  .stat.ok .value { color: var(--ok); }
+  .stat.bad .value { color: var(--bad); }
+  .stat.warn .value { color: var(--warn); }
+  .warnings { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+  .warnings li { background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 7px 11px; font-size: .85rem; }
+  .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin: 18px 0 12px; overflow-x: auto; }
+  .tabs button {
+    background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 14px; color: var(--muted);
+    font-weight: 600; white-space: nowrap;
+  }
+  .tabs button[aria-selected=true] { color: var(--primary); border-bottom-color: var(--primary); }
+  .tabs .count { font-weight: 500; font-size: .78rem; margin-left: 4px; }
+  .table-wrap { overflow: auto; max-height: 470px; border: 1px solid var(--border); border-radius: 10px; }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: .8rem; }
+  th, td { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  thead th {
+    position: sticky; top: 0; z-index: 1; background: var(--surface-2); font-weight: 650; color: var(--text);
+  }
+  thead th.derived { color: var(--primary-strong); }
+  tbody tr:hover td { background: var(--primary-soft); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: .76rem; }
+  td.wrap { white-space: normal; min-width: 220px; width: 100%; }
+  td.wrap .hint { margin-top: 1px; }
+  td.null { color: var(--muted); }
+  .summary-line { margin: 0 0 10px; font-size: .9rem; }
+  .legend { color: var(--muted); font-size: .78rem; margin: 6px 0 0; }
+
+  .quality { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 22px; align-items: center; }
+  @media (max-width: 640px) { .quality { grid-template-columns: 1fr; } }
+  .gauge {
+    --value: 0; width: 140px; height: 140px; border-radius: 50%; display: grid; place-items: center;
+    background: conic-gradient(var(--primary) calc(var(--value) * 1turn), var(--border) 0);
+  }
+  .gauge div {
+    width: 108px; height: 108px; border-radius: 50%; background: var(--surface); display: grid; place-items: center;
+    text-align: center;
+  }
+  .gauge strong { font-size: 1.7rem; display: block; }
+  .gauge span { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .bars { display: grid; gap: 10px; }
+  .bar-row { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) 56px; gap: 10px; align-items: center; font-size: .85rem; }
+  .bar { height: 9px; background: var(--border); border-radius: 6px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; background: var(--primary); border-radius: 6px; }
+  .bar.warn > span { background: var(--warn); }
+  .bar-row .num { text-align: right; font-family: var(--mono); font-size: .8rem; }
+
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 18px 12px 28px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg width="38" height="38" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="8" fill="#0b6e99"/>
+      <path d="M6 23V9M6 18.5h20V23M10 14.5h5.5a2 2 0 0 1 2 2v2" stroke="#fff" stroke-width="2.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="11.5" cy="12.5" r="1.9" fill="#fff"/>
+    </svg>
+    <div>
+      <h1>BedSynth AI</h1>
+      <p>Synthetic bed-occupancy &amp; scheduling data for hospital operations</p>
+    </div>
+  </div>
+  <nav aria-label="Service">
+    <span id="health-pill" class="pill" role="status" title="Service status">Checking service&hellip;</span>
+    <a href="/docs" target="_blank" rel="noopener">API docs</a>
+    <a href="/redoc" target="_blank" rel="noopener">ReDoc</a>
+    <a href="/openapi.json" target="_blank" rel="noopener">OpenAPI</a>
+  </nav>
+</header>
+
+<main class="layout">
+  <!-- ======================= generation form ======================= -->
+  <section class="card form-card" aria-labelledby="form-title">
+    <div class="card-head"><h2 id="form-title">Generate a dataset</h2></div>
+    <form id="gen-form" novalidate>
+      <label for="table">Table</label>
+      <select id="table" name="table"></select>
+      <p class="hint" id="table-desc"></p>
+
+      <label for="scenario">Scenario</label>
+      <select id="scenario" name="scenario"></select>
+      <div id="scenario-info" class="scenario-info" aria-live="polite"></div>
+
+      <fieldset>
+        <legend>Mode</legend>
+        <div class="segmented" role="radiogroup" aria-label="Generation mode">
+          <label><input type="radio" name="mode" value="sample" checked><span>Sample rows</span></label>
+          <label><input type="radio" name="mode" value="calendar"><span>Calendar</span></label>
+        </div>
+        <p class="hint" id="mode-hint">Draw the requested number of rows.</p>
+      </fieldset>
+
+      <div id="calendar-fields" class="row-2" hidden>
+        <div><label for="start-date">Start date</label><input id="start-date" type="date" value="2025-01-01"></div>
+        <div><label for="end-date">End date</label><input id="end-date" type="date" value="2025-01-31"></div>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label for="rows">Rows</label>
+          <input id="rows" type="number" min="1" max="10000" step="1" value="200" inputmode="numeric">
+        </div>
+        <div>
+          <label for="seed">Seed</label>
+          <div class="input-with-btn">
+            <input id="seed" type="number" min="0" step="1" placeholder="random" inputmode="numeric">
+            <button type="button" id="seed-random" class="btn-ghost" title="Pick a random seed" aria-label="Pick a random seed">&#8635;</button>
+          </div>
+        </div>
+      </div>
+
+      <label for="model">Model</label>
+      <select id="model" name="model"><option value="">Loading trained models&hellip;</option></select>
+      <p class="hint" id="model-hint"></p>
+
+      <fieldset>
+        <legend>Wards <span class="hint">&mdash; none selected means all wards</span></legend>
+        <div id="ward-chips" class="chips"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Options</legend>
+        <label class="check"><input type="checkbox" id="opt-evaluate"> Evaluate quality against reference data</label>
+        <label class="check"><input type="checkbox" id="opt-validate" checked> Validate operational rules</label>
+        <label class="check"><input type="checkbox" id="opt-derived" checked> Include derived columns</label>
+        <label class="check"><input type="checkbox" id="opt-persist" checked> Save the dataset on the server</label>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" id="generate-btn" class="btn-primary">Generate</button>
+        <button type="button" id="download-btn" class="btn-secondary" disabled>Download CSV</button>
+      </div>
+      <p class="hint">Tip: press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to generate.</p>
+
+      <details class="request-preview">
+        <summary>Request body (POST /api/v1/generate)</summary>
+        <pre id="request-preview"></pre>
+        <div class="copy-actions">
+          <button type="button" id="copy-curl" class="btn-ghost small" title="curl command for bash (Git Bash, Linux, macOS)">Copy as curl (bash)</button>
+          <button type="button" id="copy-powershell" class="btn-ghost small" title="Invoke-RestMethod command for Windows PowerShell 5.1 and PowerShell 7">Copy for PowerShell</button>
+          <span id="copy-status" class="hint" role="status"></span>
+        </div>
+        <pre id="copy-fallback" hidden></pre>
+      </details>
+    </form>
+  </section>
+
+  <!-- ======================= results ======================= -->
+  <section class="card results-card" aria-labelledby="results-title">
+    <div class="card-head">
+      <h2 id="results-title">Results</h2>
+      <span id="result-badge"></span>
+    </div>
+    <div id="error-banner" class="banner banner-error" role="alert" hidden></div>
+    <div id="empty-state" class="empty">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M3 18V7M3 15h18v3M7 11h5a2 2 0 0 1 2 2v2"/><circle cx="7.5" cy="9.5" r="1.4"/>
+      </svg>
+      <p><strong>Pick a scenario and press Generate.</strong></p>
+      <p>Records, rule validation and quality scores will appear here.</p>
+    </div>
+    <div id="results" hidden>
+      <div class="stats" id="stats"></div>
+      <ul id="warnings" class="warnings" hidden></ul>
+      <div class="tabs" role="tablist" aria-label="Result views">
+        <button type="button" role="tab" id="tab-btn-records" aria-controls="tab-records" aria-selected="true" data-tab="records">Records</button>
+        <button type="button" role="tab" id="tab-btn-validation" aria-controls="tab-validation" aria-selected="false" data-tab="validation">Validation</button>
+        <button type="button" role="tab" id="tab-btn-quality" aria-controls="tab-quality" aria-selected="false" data-tab="quality">Quality</button>
+        <button type="button" role="tab" id="tab-btn-report" aria-controls="tab-report" aria-selected="false" data-tab="report">Report</button>
+      </div>
+      <div class="tab-panel" id="tab-records" role="tabpanel" aria-labelledby="tab-btn-records">
+        <p class="summary-line" id="records-note"></p>
+        <div class="table-wrap" tabindex="0"><table id="records-table"></table></div>
+        <p class="legend">Blue column headers are derived columns (recomputed from the learned columns). Hover a header for its definition.</p>
+      </div>
+      <div class="tab-panel" id="tab-validation" role="tabpanel" aria-labelledby="tab-btn-validation" hidden></div>
+      <div class="tab-panel" id="tab-quality" role="tabpanel" aria-labelledby="tab-btn-quality" hidden></div>
+      <div class="tab-panel" id="tab-report" role="tabpanel" aria-labelledby="tab-btn-report" hidden></div>
+    </div>
+  </section>
+
+  <!-- ======================= persisted datasets ======================= -->
+  <section class="card datasets-card" aria-labelledby="datasets-title">
+    <div class="card-head">
+      <h2 id="datasets-title">Saved datasets <span class="hint" id="datasets-count"></span></h2>
+      <button type="button" id="datasets-refresh" class="btn-ghost">Refresh</button>
+    </div>
+    <div class="table-wrap" id="datasets-wrap" hidden><table id="datasets-table"></table></div>
+    <p id="datasets-empty" class="hint">No saved datasets yet &mdash; generate one with &ldquo;Save the dataset on the server&rdquo; ticked.</p>
+  </section>
+</main>
+
+<footer>
+  BedSynth AI &middot; all records are synthetic and non-clinical (no diagnoses, procedures or personal identifiers)
+  &middot; <a href="/docs">API documentation</a>
+</footer>
+
+<script>
+"use strict";
+(() => {
+  const API = "/api/v1";
+  const PREVIEW_ROWS = 100;
+  const state = {
+    tables: {},          // name -> table info (from /tables)
+    tableOrder: [],
+    scenarios: [],       // scenario catalogue (with reference support)
+    categories: {},
+    wards: [],           // ward catalogue (from a table schema)
+    models: null,        // /models payload, or null while loading / unavailable
+    modelsError: null,
+    current: null,       // the dataset shown in the results panel
+  };
+
+  // ------------------------------------------------------------ helpers
+  const $ = (selector) => document.querySelector(selector);
+
+  function el(tag, attrs = {}, ...children) {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (value === null || value === undefined || value === false) continue;
+      if (key === "class") node.className = value;
+      else if (key === "text") node.textContent = value;
+      else if (key === "style") node.setAttribute("style", value);
+      else if (key.startsWith("on") && typeof value === "function") node.addEventListener(key.slice(2), value);
+      else node.setAttribute(key, value === true ? "" : String(value));
+    }
+    for (const child of children.flat(Infinity)) {
+      if (child === null || child === undefined || child === false) continue;
+      node.append(child instanceof Node ? child : document.createTextNode(String(child)));
+    }
+    return node;
+  }
+
+  /** Replace a node's children, skipping null/undefined/false (replaceChildren would print "null"). */
+  function fill(node, ...children) {
+    node.replaceChildren(...children.flat(Infinity).filter((child) => child !== null && child !== undefined && child !== false));
+    return node;
+  }
+
+  const isNum = (value) => typeof value === "number" && Number.isFinite(value);
+  const fmtInt = (value) => (isNum(value) ? Math.round(value).toLocaleString() : "–");
+  const fmtPct = (value, digits = 1) => (isNum(value) ? `${(value * 100).toFixed(digits)}%` : "–");
+  const fmtScore = (value) => (isNum(value) ? value.toFixed(3) : "–");
+  const fmtSeconds = (value) => (!isNum(value) ? "–" : value < 1 ? `${Math.round(value * 1000)} ms` : `${value.toFixed(2)} s`);
+  const fmtBytes = (value) => (!isNum(value) ? "–" : value < 1024 ? `${value} B` : value < 1048576 ? `${(value / 1024).toFixed(1)} KB` : `${(value / 1048576).toFixed(1)} MB`);
+  const fmtDate = (iso) => { const date = iso ? new Date(iso) : null; return date && !isNaN(date) ? date.toLocaleString() : (iso || "–"); };
+  const humanise = (text) => String(text).replace(/_/g, " ");
+  /** Short synthesizer label: "GaussianCopulaSynthesizer" -> "GaussianCopula", "gaussian_copula" -> "gaussian copula". */
+  const shortSynth = (name) => humanise(String(name).replace(/Synthesizer$/, ""));
+
+  class ApiError extends Error {
+    constructor(status, body) {
+      super((body && body.detail) || `HTTP ${status}`);
+      this.status = status;
+      this.errorType = (body && body.error_type) || "http_error";
+    }
+  }
+
+  // Every request is aborted after a timeout: generations are bounded by their server-side time
+  // budget (default 60 s, at most 120 s) plus a possible wait for a busy engine. /api/v1/models and
+  // /api/v1/tables wait for the engine while it loads after a server start, so they get longer.
+  const REQUEST_TIMEOUT_MS = 30000;
+  const GENERATE_TIMEOUT_MS = 240000;
+  const ENGINE_TIMEOUT_MS = 120000;
+
+  async function api(path, { json, method, signal, timeoutMs } = {}) {
+    const controller = new AbortController();
+    const limit = timeoutMs || REQUEST_TIMEOUT_MS;
+    const timer = setTimeout(() => controller.abort(), limit);
+    if (signal) signal.addEventListener("abort", () => controller.abort(), { once: true });
+    const init = { method: method || (json === undefined ? "GET" : "POST"), headers: { Accept: "application/json" }, signal: controller.signal };
+    if (json !== undefined) {
+      init.headers["Content-Type"] = "application/json";
+      init.body = JSON.stringify(json);
+    }
+    let response;
+    let text;
+    try {
+      response = await fetch(path, init);
+      text = await response.text();
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new ApiError(0, { detail: `No response after ${Math.round(limit / 1000)} s; the request was cancelled.`, error_type: "timeout" });
+      }
+      throw new ApiError(0, { detail: "The API is unreachable. Is the server running?", error_type: "network_error" });
+    } finally {
+      clearTimeout(timer);
+    }
+    let body = null;
+    try { body = text ? JSON.parse(text) : null; } catch (error) { body = { detail: text.slice(0, 300) }; }
+    if (!response.ok) throw new ApiError(response.status, body);
+    return body;
+  }
+
+  function showError(error, context) {
+    const banner = $("#error-banner");
+    banner.replaceChildren(
+      el("strong", { text: context || (error.status ? `Request failed (${error.status} · ${error.errorType})` : "Request failed") }),
+      el("span", { text: error.message || String(error) }),
+    );
+    banner.hidden = false;
+  }
+  const hideError = () => { $("#error-banner").hidden = true; };
+
+  // ------------------------------------------------------------ service status
+  // /health answers at once: it never waits for the generation engine. While the engine is still
+  // loading after a server start (engine.state "loading") it is polled until the engine is ready;
+  // when the API cannot be reached the check is retried with a growing delay, so the page recovers
+  // on its own once the server is up.
+  const HEALTH_TIMEOUT_MS = 10000;
+  const HEALTH_LOADING_POLL_MS = 1500;
+  const HEALTH_RETRY_MS = [2000, 5000, 10000, 20000, 30000];
+  let healthTimer = null;
+  let healthFailures = 0;
+  let engineWasLoading = false;
+
+  function scheduleHealth(delayMs) {
+    clearTimeout(healthTimer);
+    healthTimer = setTimeout(loadHealth, delayMs);
+  }
+
+  async function loadHealth() {
+    clearTimeout(healthTimer);
+    const pill = $("#health-pill");
+    let health;
+    try {
+      health = await api("/health", { timeoutMs: HEALTH_TIMEOUT_MS });
+    } catch (error) {
+      const delay = HEALTH_RETRY_MS[Math.min(healthFailures, HEALTH_RETRY_MS.length - 1)];
+      healthFailures += 1;
+      pill.className = "pill bad";
+      pill.textContent = error.errorType === "network_error" ? "API unreachable · retrying"
+        : error.errorType === "timeout" ? "No response · retrying" : `Health check failed (${error.status}) · retrying`;
+      pill.title = `${error.message}\nNext check in ${Math.round(delay / 1000)} s.`;
+      scheduleHealth(delay);
+      return;
+    }
+    healthFailures = 0;
+    const engine = health.engine || {};
+    const engineState = engine.state || (engine.available ? "ready" : "failed");  // older servers have no engine.state
+    const trained = health.trained_tables.length;
+    const total = Object.keys(health.models).length;
+    if (engineState === "loading") {
+      pill.className = "pill"; pill.textContent = "Starting · loading the engine…";
+      scheduleHealth(HEALTH_LOADING_POLL_MS);
+    } else if (!engine.available) {
+      pill.className = "pill bad"; pill.textContent = "Engine unavailable";
+    } else if (health.status === "ok") {
+      pill.className = "pill ok"; pill.textContent = `Ready · ${trained}/${total} tables trained`;
+    } else {
+      pill.className = "pill warn"; pill.textContent = `Degraded · ${trained}/${total} tables trained`;
+    }
+    const notes = [`Version ${health.version} · SDV ${health.sdv_version || "?"}`, engine.detail, ...health.messages];
+    pill.title = [...new Set(notes.filter(Boolean))].join("\n");
+    if (engineState === "loading") {
+      engineWasLoading = true;
+    } else if (engineWasLoading) {
+      // the engine has just finished loading: fetch what could not be listed while it loaded
+      engineWasLoading = false;
+      if (!state.models) loadModels();
+      if (!Object.keys(state.tables).length) loadTables();
+    }
+  }
+
+  // ------------------------------------------------------------ catalogue
+  async function loadCatalogue() {
+    const [scenarios, wardSchema] = await Promise.all([
+      api(`${API}/scenarios?include_support=true`),
+      api(`${API}/tables/ward_daily/schema`),
+    ]);
+    state.scenarios = scenarios.scenarios;
+    state.categories = scenarios.categories;
+    state.wards = wardSchema.wards;
+    state.tableOrder = [...new Set(state.scenarios.map((s) => s.table))];
+    renderTableOptions();
+    renderWardChips();
+    onTableChange();
+  }
+
+  // /tables and /models wait for the engine while it loads, so at most one request of each runs.
+  let tablesRequest = null;
+  let modelsRequest = null;
+
+  function loadTables() {
+    if (tablesRequest) return tablesRequest;
+    tablesRequest = (async () => {
+      try {
+        const payload = await api(`${API}/tables`, { timeoutMs: ENGINE_TIMEOUT_MS });
+        for (const table of payload.tables) state.tables[table.name] = table;
+        renderTableOptions();
+        updateTableDescription();
+      } catch (error) { /* descriptions are optional */ } finally {
+        tablesRequest = null;
+      }
+    })();
+    return tablesRequest;
+  }
+
+  function loadModels() {
+    if (modelsRequest) return modelsRequest;
+    if (state.modelsError) {
+      state.modelsError = null;
+      renderModelOptions();
+    }
+    modelsRequest = (async () => {
+      try {
+        state.models = await api(`${API}/models`, { timeoutMs: ENGINE_TIMEOUT_MS });
+        state.modelsError = null;
+      } catch (error) {
+        state.models = null;
+        state.modelsError = error;
+      } finally {
+        modelsRequest = null;
+      }
+      renderModelOptions();
+    })();
+    return modelsRequest;
+  }
+
+  function renderTableOptions() {
+    const select = $("#table");
+    const selected = select.value || state.tableOrder[0];
+    select.replaceChildren(...state.tableOrder.map((name) => {
+      const info = state.tables[name];
+      return el("option", { value: name, selected: name === selected }, info ? `${info.title} (${name})` : name);
+    }));
+  }
+
+  function updateTableDescription() {
+    const info = state.tables[$("#table").value];
+    $("#table-desc").textContent = info ? `${info.grain}. ${info.n_training_columns} learned + ${info.n_derived_columns} derived columns, ${info.n_scenarios} scenarios.` : "";
+  }
+
+  function renderScenarioOptions() {
+    const table = $("#table").value;
+    const select = $("#scenario");
+    const groups = new Map();
+    for (const scenario of state.scenarios.filter((s) => s.table === table)) {
+      if (!groups.has(scenario.category)) groups.set(scenario.category, []);
+      groups.get(scenario.category).push(scenario);
+    }
+    const baseline = table === "ward_daily" ? "baseline" : "stays_baseline";
+    const options = [el("option", { value: "" }, "No scenario (custom / unconditional)")];
+    for (const [category, items] of groups) {
+      options.push(el("optgroup", { label: state.categories[category] || humanise(category) },
+        items.map((s) => el("option", { value: s.name, selected: s.name === baseline }, s.title))));
+    }
+    select.replaceChildren(...options);
+    renderScenarioInfo();
+  }
+
+  function describeFilter(column, spec) {
+    const parts = [];
+    if (spec.min !== undefined) parts.push(`${column} ≥ ${spec.min}`);
+    if (spec.max !== undefined) parts.push(`${column} ≤ ${spec.max}`);
+    if (spec.in !== undefined) parts.push(`${column} ∈ {${spec.in.join(", ")}}`);
+    if (spec.not_in !== undefined) parts.push(`${column} ∉ {${spec.not_in.join(", ")}}`);
+    return parts;
+  }
+
+  function renderScenarioInfo() {
+    const box = $("#scenario-info");
+    const scenario = state.scenarios.find((s) => s.name === $("#scenario").value);
+    if (!scenario) {
+      fill(box, el("p", { class: "hint", text: "Unconditional sample from the trained model (add wards to restrict it)." }));
+      return;
+    }
+    const tags = [
+      ...Object.entries(scenario.conditions).map(([column, values]) => el("span", { class: "tag", title: "SDV condition" }, `${column} = ${values.join(" | ")}`)),
+      ...Object.entries(scenario.filters).flatMap(([column, spec]) => describeFilter(column, spec).map((text) => el("span", { class: "tag filter", title: "Rejection filter" }, text))),
+    ];
+    const support = tags.length ? scenario.support : null;  // unconditional scenarios trivially match 100%
+    const unit = scenario.table === "ward_daily" ? "ward-days" : "stays";
+    fill(box,
+      el("div", {}, el("span", { class: "badge" }, humanise(scenario.category)), " ", el("strong", { text: scenario.title })),
+      el("p", { text: scenario.description }),
+      tags.length ? el("div", { class: "tags" }, tags) : null,
+      support ? el("p", { class: "hint" }, `Matches ${fmtPct(support.share)} of reference ${unit} (${fmtInt(support.matching_rows)} of ${fmtInt(support.reference_rows)}).`) : null,
+    );
+  }
+
+  function renderModelOptions() {
+    const table = $("#table").value;
+    const select = $("#model");
+    const hint = $("#model-hint");
+    if (!state.models) {
+      select.replaceChildren(el("option", { value: "" }, state.modelsError ? "No trained models available" : "Loading trained models…"));
+      select.disabled = Boolean(state.modelsError);
+      hint.textContent = state.modelsError ? state.modelsError.message : "";
+      return;
+    }
+    const info = state.models.tables[table] || { models: [], default_model: null };
+    select.disabled = info.models.length === 0;
+    if (info.models.length === 0) {
+      select.replaceChildren(el("option", { value: "" }, "No trained model for this table"));
+      hint.textContent = "Train one with python scripts/02_train_synthesizers.py.";
+      return;
+    }
+    // metrics (written by scripts/03_evaluate.py) are null until a model has been evaluated
+    const composite = (m) => (m && m.metrics && isNum(m.metrics.composite) ? `composite ${fmtScore(m.metrics.composite)}` : null);
+    const label = (m) => [m.model_id, m.synthesizer ? shortSynth(m.synthesizer) : null, composite(m)].filter(Boolean).join(" · ");
+    const details = (m) => {
+      const metrics = m.metrics || {};
+      const rank = !isNum(metrics.rank) ? null : metrics.comparable === false
+        ? `Not comparable with the other ${m.table} models (rank ${metrics.rank})`
+        : `Rank ${metrics.rank} of the comparable ${m.table} models`;
+      return [
+        rank,
+        isNum(metrics.raw_hard_valid_rate) ? `Raw hard-rule validity ${fmtPct(metrics.raw_hard_valid_rate)}` : null,
+        metrics.evaluated_at ? `Evaluated ${fmtDate(metrics.evaluated_at)}${metrics.run_quick ? " (quick run)" : ""}` : "No evaluation metrics recorded",
+      ].filter(Boolean).join("\n");
+    };
+    const fallback = info.models.find((m) => m.model_id === info.default_model);
+    select.replaceChildren(
+      el("option", { value: "" }, `Registry default (${[info.default_model || "auto", composite(fallback)].filter(Boolean).join(" · ")})`),
+      ...info.models.map((m) => el("option", { value: m.model_id, title: details(m) }, label(m))),
+    );
+    hint.textContent = info.default_reason || "";
+  }
+
+  function renderWardChips() {
+    $("#ward-chips").replaceChildren(...state.wards.map((ward) => el("label", { class: "chip", title: `${ward.name} · ${ward.bed_capacity} beds · ${humanise(ward.ward_type)}` },
+      el("input", { type: "checkbox", value: ward.ward_id, name: "ward" }),
+      el("span", { text: ward.ward_id }))));
+  }
+
+  const selectedWards = () => [...document.querySelectorAll("#ward-chips input:checked")].map((input) => input.value);
+  const currentMode = () => document.querySelector("input[name=mode]:checked").value;
+
+  function onTableChange() {
+    const isWardDaily = $("#table").value === "ward_daily";
+    const calendar = document.querySelector("input[name=mode][value=calendar]");
+    calendar.disabled = !isWardDaily;
+    if (!isWardDaily && calendar.checked) document.querySelector("input[name=mode][value=sample]").checked = true;
+    updateTableDescription();
+    renderScenarioOptions();
+    renderModelOptions();
+    onModeChange();
+  }
+
+  function calendarDays() {
+    const start = new Date($("#start-date").value);
+    const end = new Date($("#end-date").value);
+    if (isNaN(start) || isNaN(end) || end < start) return 0;
+    return Math.round((end - start) / 86400000) + 1;
+  }
+
+  function onModeChange() {
+    const calendar = currentMode() === "calendar";
+    $("#calendar-fields").hidden = !calendar;
+    $("#rows").disabled = calendar;
+    if (calendar) {
+      const days = calendarDays();
+      const wards = selectedWards().length || state.wards.length;
+      $("#mode-hint").textContent = days ? `One row per ward per day: ${wards} wards × ${days} days = ${fmtInt(wards * days)} rows.` : "Choose a valid date range.";
+    } else {
+      $("#mode-hint").textContent = "Draw the requested number of rows.";
+    }
+    updatePreview();
+  }
+
+  // ------------------------------------------------------------ request
+  function buildRequest() {
+    const body = { table: $("#table").value };
+    const scenario = $("#scenario").value;
+    if (scenario) body.scenario = scenario;
+    if (currentMode() === "calendar") {
+      body.mode = "calendar";
+      body.start_date = $("#start-date").value;
+      body.end_date = $("#end-date").value;
+    } else {
+      body.num_rows = Number.parseInt($("#rows").value, 10) || 100;
+    }
+    const wards = selectedWards();
+    if (wards.length) body.wards = wards;
+    const seed = $("#seed").value.trim();
+    if (seed !== "") body.seed = Number.parseInt(seed, 10);
+    const model = $("#model").value;
+    if (model) body.model_id = model;
+    body.evaluate = $("#opt-evaluate").checked;
+    body.validate = $("#opt-validate").checked;
+    body.include_derived = $("#opt-derived").checked;
+    body.persist = $("#opt-persist").checked;
+    return body;
+  }
+
+  function updatePreview() {
+    $("#request-preview").textContent = JSON.stringify(buildRequest(), null, 2);
+  }
+
+  function setBusy(busy) {
+    const button = $("#generate-btn");
+    button.disabled = busy;
+    button.replaceChildren(...(busy ? [el("span", { class: "spinner", "aria-hidden": "true" }), "Generating…"] : ["Generate"]));
+  }
+
+  async function generate(event) {
+    if (event) event.preventDefault();
+    hideError();
+    setBusy(true);
+    const started = performance.now();
+    try {
+      const result = await api(`${API}/generate`, { json: buildRequest(), timeoutMs: GENERATE_TIMEOUT_MS });
+      showResult(result, { origin: "generated", roundTripMs: performance.now() - started });
+      if (result.persisted) loadDatasets();
+    } catch (error) {
+      showError(error);
+    } finally {
+      setBusy(false);
+      loadHealth();  // cheap; keeps the status pill in step (e.g. after the engine loaded or failed)
+    }
+  }
+
+  // ------------------------------------------------------------ results
+  function stat(label, value, sub, tone) {
+    return el("div", { class: `stat${tone ? " " + tone : ""}` },
+      el("div", { class: "label", text: label }),
+      el("div", { class: "value", text: value }),
+      sub ? el("div", { class: "sub", text: sub }) : null);
+  }
+
+  function showResult(result, options = {}) {
+    state.current = { ...result, origin: options.origin || "generated" };
+    $("#empty-state").hidden = true;
+    $("#results").hidden = false;
+    $("#download-btn").disabled = !(result.persisted || (result.records && result.records.length));
+    const badge = $("#result-badge");
+    fill(badge,
+      el("span", { class: `badge ${options.origin === "stored" ? "muted" : "ok"}` }, options.origin === "stored" ? "Saved dataset" : "Generated"),
+      " ",
+      el("span", { class: "mono hint", text: result.dataset_id + (result.persisted ? "" : " (not saved)") }),
+    );
+    renderStats(result, options);
+    renderWarnings(result.warnings || []);
+    renderRecords(result);
+    renderValidation(result);
+    renderQuality(result.quality, result);
+    renderReport(result);
+    updateTabCounts(result);
+  }
+
+  function renderStats(result, options) {
+    const generation = result.generation || {};
+    const validation = result.validation;
+    const requested = generation.num_rows_requested;
+    const shortfall = generation.shortfall || 0;
+    const tiles = [
+      stat("Rows", fmtInt(result.n_rows), isNum(requested) ? `${shortfall ? fmtInt(shortfall) + " short of " : "of "}${fmtInt(requested)} requested` : null, shortfall ? "warn" : null),
+      stat("Acceptance rate", fmtPct(generation.acceptance_rate), isNum(generation.sampled_rows) ? `${fmtInt(generation.accepted_rows)} kept of ${fmtInt(generation.sampled_rows)} sampled` : null),
+      stat("Generation time", fmtSeconds(generation.elapsed_seconds), options.roundTripMs ? `${fmtSeconds(options.roundTripMs / 1000)} round trip` : "engine time"),
+      stat("Seed", generation.seed === undefined || generation.seed === null ? "–" : String(generation.seed), "reuse it to reproduce"),
+      stat("Model", (result.model && result.model.id) || "–", result.model && result.model.synthesizer ? shortSynth(result.model.synthesizer) : null),
+      validation
+        ? stat("Hard rules", validation.all_hard_rules_passed ? "All passed" : `${validation.hard_rules.failed} failed`,
+            `${validation.hard_rules.checked} hard · ${validation.soft_rules.failed} soft warnings`, validation.all_hard_rules_passed ? "ok" : "bad")
+        : stat("Hard rules", "Not run", "validation disabled"),
+    ];
+    if (result.quality) tiles.push(stat("Quality", fmtScore(result.quality.score), `vs ${result.quality.reference.subset === "matching" ? "matching subset" : "full reference"}`, result.quality.score >= 0.8 ? "ok" : "warn"));
+    $("#stats").replaceChildren(...tiles);
+  }
+
+  function renderWarnings(warnings) {
+    const list = $("#warnings");
+    list.hidden = warnings.length === 0;
+    list.replaceChildren(...warnings.map((warning) => el("li", { text: warning })));
+  }
+
+  function renderRecords(result) {
+    const records = result.records || [];
+    const columns = (result.columns || []).map((column) => column.name);
+    const meta = Object.fromEntries((result.columns || []).map((column) => [column.name, column]));
+    const shown = records.slice(0, PREVIEW_ROWS);
+    $("#records-note").textContent = records.length
+      ? `Showing ${fmtInt(shown.length)} of ${fmtInt(result.n_rows)} rows · ${columns.length} columns.`
+      : (result.n_rows ? "Records are not included in this view; download the dataset to inspect them." : "No rows were generated.");
+    const head = el("thead", {}, el("tr", {}, columns.map((name) => {
+      const info = meta[name] || {};
+      const title = [info.description, info.unit ? `Unit: ${info.unit}` : null, info.role ? `Role: ${info.role}` : null].filter(Boolean).join("\n");
+      return el("th", { scope: "col", class: info.role === "derived" ? "derived" : null, title }, name);
+    })));
+    const body = el("tbody", {}, shown.map((record) => el("tr", {}, columns.map((name) => {
+      const value = record[name];
+      if (value === null || value === undefined) return el("td", { class: "null", text: "null" });
+      return el("td", { class: typeof value === "number" ? "num" : null, text: String(value) });
+    }))));
+    $("#records-table").replaceChildren(head, body);
+  }
+
+  function renderValidation(result) {
+    const panel = $("#tab-validation");
+    const validation = result.validation;
+    const generation = result.generation || {};
+    if (!validation) {
+      fill(panel, el("p", { class: "hint", text: "Validation was not requested for this dataset." }));
+      return;
+    }
+    const rows = validation.rules.map((rule) => el("tr", {},
+      el("td", {}, el("span", { class: `badge ${rule.passed ? "ok" : rule.severity === "hard" ? "bad" : "warn"}` }, rule.passed ? "pass" : "fail")),
+      el("td", { class: "mono", text: rule.rule_id }),
+      el("td", {}, el("span", { class: `badge ${rule.severity === "hard" ? "" : "muted"}` }, rule.severity)),
+      el("td", { class: "num", text: fmtInt(rule.violations) }),
+      el("td", { class: "num", text: fmtPct(rule.violation_rate, 2) }),
+      el("td", { class: "wrap" }, el("strong", { text: humanise(rule.name) }), el("div", { class: "hint", text: rule.description })),
+    ));
+    const summary = validation.all_hard_rules_passed
+      ? `All ${validation.hard_rules.checked} hard rules passed on ${fmtInt(validation.n_rows)} rows; ${validation.soft_rules.failed} of ${validation.soft_rules.checked} soft (plausibility) rules flagged rows.`
+      : `${fmtInt(validation.n_rows - validation.n_hard_valid)} of ${fmtInt(validation.n_rows)} rows violate hard rules.`;
+    const rejected = Object.entries(generation.rejected_by_rule || {}).filter(([, count]) => count > 0).sort((a, b) => b[1] - a[1]);
+    const maxRejected = rejected.length ? rejected[0][1] : 1;
+    fill(panel,
+      el("p", { class: "summary-line", text: summary }),
+      el("div", { class: "table-wrap" }, el("table", {},
+        el("thead", {}, el("tr", {}, ["Status", "Rule", "Severity", "Violations", "Rate", "Check"].map((h) => el("th", { scope: "col", text: h })))),
+        el("tbody", {}, rows))),
+      rejected.length ? el("h3", { text: "Rows rejected during generation (rejection sampling)" }) : null,
+      rejected.length ? el("div", { class: "bars" }, rejected.slice(0, 10).map(([rule, count]) => el("div", { class: "bar-row" },
+        el("span", { class: "mono", text: rule }),
+        el("div", { class: "bar warn" }, el("span", { style: `width:${Math.max(2, (100 * count) / maxRejected)}%` })),
+        el("span", { class: "num", text: fmtInt(count) })))) : null,
+      isNum(generation.rejected_by_filter) ? el("p", { class: "legend", text: `${fmtInt(generation.rejected_by_filter)} valid rows were rejected by scenario/request filters.` }) : null,
+    );
+  }
+
+  function qualityComponents(metrics) {
+    const source = metrics && typeof metrics.components === "object" && metrics.components ? metrics.components : metrics || {};
+    const items = [];
+    for (const [key, value] of Object.entries(source)) {
+      if (key === "score") continue;
+      const score = isNum(value) ? value : value && isNum(value.score) ? value.score : null;
+      if (score !== null && score >= 0 && score <= 1) items.push([key, score]);
+    }
+    return items;
+  }
+
+  function scoreBars(items) {
+    return el("div", { class: "bars" }, items.map(([name, score]) => el("div", { class: "bar-row" },
+      el("span", { text: humanise(name) }),
+      el("div", { class: `bar${score < 0.75 ? " warn" : ""}` }, el("span", { style: `width:${Math.max(1, score * 100)}%` })),
+      el("span", { class: "num", text: fmtScore(score) }))));
+  }
+
+  function renderQuality(quality, result) {
+    const panel = $("#tab-quality");
+    if (!quality) {
+      const skipped = (result.warnings || []).find((warning) => /quality/i.test(warning));
+      fill(panel,
+        el("p", { class: "hint", text: skipped || "Quality was not evaluated. Tick “Evaluate quality” and generate again, or use Evaluate on a saved dataset." }),
+        result.persisted ? el("button", { type: "button", class: "btn-ghost", onclick: () => evaluateDataset(result.dataset_id) }, "Evaluate this dataset now") : null,
+      );
+      return;
+    }
+    const metrics = quality.metrics || {};
+    const reference = quality.reference || {};
+    const worst = Array.isArray(metrics.worst_columns) ? metrics.worst_columns.filter((item) => isNum(item.score)) : [];
+    fill(panel,
+      el("div", { class: "quality" },
+        el("div", { class: "gauge", style: `--value:${isNum(quality.score) ? quality.score : 0}`, role: "img", "aria-label": `Quality score ${fmtScore(quality.score)}` },
+          el("div", {}, el("div", {}, el("strong", { text: fmtScore(quality.score) }), el("span", { text: "quality" })))),
+        el("div", {},
+          scoreBars(qualityComponents(metrics)),
+          el("p", { class: "legend", text: `Compared ${fmtInt(reference.synthetic_rows_compared)} synthetic rows with ${fmtInt(reference.rows_compared)} reference rows (${reference.subset === "matching" ? "matching subset of the reference" : "full reference table"}, ${reference.split} split).` }))),
+      worst.length ? el("h3", { text: "Least similar columns" }) : null,
+      worst.length ? scoreBars(worst.map((item) => [item.column, item.score])) : null,
+      el("details", {}, el("summary", { text: "All quality metrics (JSON)" }), el("pre", { text: JSON.stringify(metrics, null, 2) })),
+    );
+  }
+
+  function renderReport(result) {
+    const generation = result.generation || {};
+    const allocation = Array.isArray(generation.condition_allocation) ? generation.condition_allocation : [];
+    fill($("#tab-report"),
+      result.scenario ? el("p", { class: "summary-line" }, el("strong", { text: result.scenario.title }), ` — ${result.scenario.description}`) : null,
+      allocation.length ? el("h3", { text: "Rows allocated per condition combination" }) : null,
+      allocation.length ? el("div", { class: "table-wrap", style: "max-height:240px" }, el("table", {},
+        el("thead", {}, el("tr", {}, ["Conditions", "Requested", "Generated"].map((h) => el("th", { scope: "col", text: h })))),
+        el("tbody", {}, allocation.slice(0, 200).map((item) => el("tr", {},
+          el("td", { class: "mono", text: Object.entries(item.conditions || {}).map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("|") : v}`).join(", ") || "(none)" }),
+          el("td", { class: "num", text: fmtInt(item.requested) }),
+          el("td", { class: "num", text: fmtInt(item.generated) })))))) : null,
+      el("h3", { text: "Generation report" }),
+      el("pre", { text: JSON.stringify(generation, null, 2) }),
+      el("h3", { text: "Request (normalised)" }),
+      el("pre", { text: JSON.stringify(result.request || {}, null, 2) }),
+    );
+  }
+
+  function updateTabCounts(result) {
+    const validation = result.validation;
+    const label = (id, text, count) => $(id).replaceChildren(text, count === null ? "" : el("span", { class: "count", text: `(${count})` }));
+    label("#tab-btn-records", "Records", fmtInt(result.n_rows));
+    label("#tab-btn-validation", "Validation", validation ? `${validation.hard_rules.failed + validation.soft_rules.failed} flagged` : null);
+    label("#tab-btn-quality", "Quality", result.quality ? fmtScore(result.quality.score) : null);
+    label("#tab-btn-report", "Report", null);
+  }
+
+  function selectTab(name) {
+    for (const button of document.querySelectorAll(".tabs [role=tab]")) {
+      const active = button.dataset.tab === name;
+      button.setAttribute("aria-selected", String(active));
+      button.tabIndex = active ? 0 : -1;
+      $(`#tab-${button.dataset.tab}`).hidden = !active;
+    }
+  }
+
+  // ------------------------------------------------------------ downloads
+  function toCsv(columns, records) {
+    const escape = (value) => {
+      if (value === null || value === undefined) return "";
+      const text = String(value);
+      return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+    };
+    return [columns.map(escape).join(","), ...records.map((record) => columns.map((column) => escape(record[column])).join(","))].join("\n");
+  }
+
+  function triggerDownload(href, filename) {
+    const link = el("a", { href, download: filename });
+    document.body.append(link);
+    link.click();
+    link.remove();
+  }
+
+  function downloadCurrent() {
+    const current = state.current;
+    if (!current) return;
+    if (current.persisted) {
+      triggerDownload(`${API}/datasets/${current.dataset_id}/download?format=csv`, `${current.dataset_id}.csv`);
+      return;
+    }
+    const columns = (current.columns || []).map((column) => column.name);
+    const url = URL.createObjectURL(new Blob([toCsv(columns, current.records || [])], { type: "text/csv" }));
+    triggerDownload(url, `${current.dataset_id}.csv`);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  // ------------------------------------------------------------ saved datasets
+  async function loadDatasets() {
+    try {
+      const payload = await api(`${API}/datasets?limit=100`);
+      renderDatasets(payload);
+    } catch (error) {
+      $("#datasets-empty").hidden = false;
+      $("#datasets-empty").textContent = `Could not load saved datasets: ${error.message}`;
+    }
+  }
+
+  function renderDatasets(payload) {
+    const items = payload.datasets;
+    $("#datasets-count").textContent = payload.total ? `(${payload.total})` : "";
+    $("#datasets-wrap").hidden = items.length === 0;
+    $("#datasets-empty").hidden = items.length > 0;
+    if (!items.length) {
+      $("#datasets-empty").textContent = "No saved datasets yet — generate one with “Save the dataset on the server” ticked.";
+    }
+    const head = el("thead", {}, el("tr", {}, ["Dataset", "Created", "Table", "Scenario", "Model", "Rows", "Hard rules", "Quality", "Size", "Actions"].map((h) => el("th", { scope: "col", text: h }))));
+    const body = el("tbody", {}, items.map((item) => el("tr", {},
+      el("td", { class: "mono", text: item.dataset_id }),
+      el("td", { text: fmtDate(item.created_at) }),
+      el("td", { text: item.table || "–" }),
+      el("td", { text: item.scenario || "(custom)" }),
+      el("td", { text: item.model_id || "–" }),
+      el("td", { class: "num", text: fmtInt(item.n_rows) }),
+      el("td", {}, item.all_hard_rules_passed === null || item.all_hard_rules_passed === undefined
+        ? el("span", { class: "badge muted" }, "n/a")
+        : el("span", { class: `badge ${item.all_hard_rules_passed ? "ok" : "bad"}` }, item.all_hard_rules_passed ? "passed" : "failed")),
+      el("td", { class: "num", text: fmtScore(item.quality_score) }),
+      el("td", { class: "num", text: fmtBytes(item.size_bytes) }),
+      el("td", {},
+        el("button", { type: "button", class: "btn-ghost small", onclick: () => openDataset(item.dataset_id) }, "Open"), " ",
+        el("a", { class: "btn-ghost small", href: `${API}/datasets/${item.dataset_id}/download?format=csv`, download: `${item.dataset_id}.csv` }, "CSV"), " ",
+        el("a", { class: "btn-ghost small", href: `${API}/datasets/${item.dataset_id}/download?format=json`, download: `${item.dataset_id}.json` }, "JSON"), " ",
+        el("button", { type: "button", class: "btn-ghost small", onclick: () => evaluateDataset(item.dataset_id) }, "Evaluate"), " ",
+        el("button", { type: "button", class: "btn-ghost small danger", onclick: () => deleteDataset(item.dataset_id) }, "Delete")),
+    )));
+    $("#datasets-table").replaceChildren(head, body);
+  }
+
+  async function openDataset(datasetId) {
+    hideError();
+    try {
+      const [metadata, data] = await Promise.all([
+        api(`${API}/datasets/${datasetId}`),
+        api(`${API}/datasets/${datasetId}/download?format=json`),
+      ]);
+      showResult({ ...metadata, records: data.records }, { origin: "stored" });
+      selectTab("records");
+      $("#results-title").scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    } catch (error) {
+      showError(error, `Could not open ${datasetId}`);
+      return false;
+    }
+  }
+
+  async function evaluateDataset(datasetId) {
+    hideError();
+    try {
+      if (!state.current || state.current.dataset_id !== datasetId) {
+        if (!(await openDataset(datasetId))) return;
+      }
+      const evaluation = await api(`${API}/evaluate`, { json: { dataset_id: datasetId } });
+      state.current.quality = evaluation.quality;
+      renderQuality(evaluation.quality, state.current);
+      renderStats(state.current, {});
+      updateTabCounts(state.current);
+      if (evaluation.warnings.length) renderWarnings([...(state.current.warnings || []), ...evaluation.warnings]);
+      selectTab("quality");
+    } catch (error) {
+      showError(error, `Could not evaluate ${datasetId}`);
+    }
+  }
+
+  async function deleteDataset(datasetId) {
+    if (!window.confirm(`Delete ${datasetId}? This removes its CSV and metadata from the server.`)) return;
+    try {
+      await api(`${API}/datasets/${datasetId}`, { method: "DELETE" });
+      if (state.current && state.current.dataset_id === datasetId) {
+        state.current.persisted = false;
+        $("#result-badge").replaceChildren(el("span", { class: "badge bad" }, "Deleted"), " ", el("span", { class: "mono hint", text: datasetId }));
+      }
+      loadDatasets();
+    } catch (error) {
+      showError(error, `Could not delete ${datasetId}`);
+    }
+  }
+
+  // ------------------------------------------------------------ wiring
+  const generateUrl = () => `${window.location.origin}${API}/generate`;
+
+  /** bash (Git Bash, Linux, macOS): the JSON body goes in single quotes (it never contains one). */
+  function curlCommand() {
+    return `curl -X POST "${generateUrl()}" -H "Content-Type: application/json" -d '${JSON.stringify(buildRequest())}'`;
+  }
+
+  /** Windows PowerShell 5.1 (and 7): there `curl` is an alias of Invoke-WebRequest and inline JSON loses
+   *  its double quotes, so the body goes in a single-quoted here-string (no escaping; '@ ends it). */
+  function powershellCommand() {
+    return [
+      "$body = @'",
+      JSON.stringify(buildRequest()),
+      "'@",
+      `Invoke-RestMethod -Method Post -Uri '${generateUrl()}' -ContentType 'application/json' -Body $body`,
+    ].join("\n");
+  }
+
+  let copyTimer = null;
+  function copyCommand(command, label) {
+    const status = $("#copy-status");
+    const fallback = $("#copy-fallback");
+    const done = (text) => {
+      status.textContent = text;
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => { status.textContent = ""; }, 3000);
+    };
+    const showCommand = () => {  // no clipboard access: show the command so it can be copied by hand
+      fallback.textContent = command;
+      fallback.hidden = false;
+      done(`Select the ${label} command below and copy it.`);
+    };
+    fallback.hidden = true;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(command).then(() => done(`Copied the ${label} command.`), showCommand);
+    } else {
+      showCommand();
+    }
+  }
+
+  function bindEvents() {
+    $("#gen-form").addEventListener("submit", generate);
+    $("#gen-form").addEventListener("input", updatePreview);
+    $("#gen-form").addEventListener("change", (event) => {
+      if (event.target.name === "ward" || event.target.type === "date") onModeChange();
+      updatePreview();
+    });
+    $("#table").addEventListener("change", onTableChange);
+    $("#scenario").addEventListener("change", renderScenarioInfo);
+    for (const radio of document.querySelectorAll("input[name=mode]")) radio.addEventListener("change", onModeChange);
+    $("#seed-random").addEventListener("click", () => { $("#seed").value = String(Math.floor(Math.random() * 1e6)); updatePreview(); });
+    $("#download-btn").addEventListener("click", downloadCurrent);
+    $("#copy-curl").addEventListener("click", () => copyCommand(curlCommand(), "bash curl"));
+    $("#copy-powershell").addEventListener("click", () => copyCommand(powershellCommand(), "PowerShell"));
+    $("#datasets-refresh").addEventListener("click", loadDatasets);
+    for (const button of document.querySelectorAll(".tabs [role=tab]")) button.addEventListener("click", () => selectTab(button.dataset.tab));
+    document.querySelector(".tabs").addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
+      const index = tabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true");
+      const next = tabs[(index + (event.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+      selectTab(next.dataset.tab);
+      next.focus();
+    });
+    document.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter" && !$("#generate-btn").disabled) generate(event);
+    });
+  }
+
+  async function init() {
+    bindEvents();
+    loadHealth();
+    loadDatasets();
+    try {
+      await loadCatalogue();
+    } catch (error) {
+      showError(error, "Could not load the scenario catalogue");
+    }
+    loadTables();
+    loadModels();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
