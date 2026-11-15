@@ -1,0 +1,17 @@
+{
+  "name": "bedsynth-presentation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Builds the BedSynth AI final presentation (BedSynth_AI.pptx) from the project's saved results.",
+  "main": "build_deck.js",
+  "scripts": {
+    "build": "node build_deck.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "jszip": "3.10.2",
+    "pptxgenjs": "4.0.1"
+  }
+}
