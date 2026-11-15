@@ -223,3 +223,39 @@ def test_api_demo_redacts_machine_identifiers_in_junit_tracebacks(tmp_path, monk
     assert "pytest-of-USER" in text and "<host>" in text and "\r\n" in text     # line endings are kept
     assert demo.scrub_junit_identifiers(junit) == 0                            # idempotent
     assert demo.scrub_junit_identifiers(tmp_path / "missing.xml") == 0
+
+
+# ---------------------------------------------------------------------------
+# scripts/build_vercel_bundle.py
+# ---------------------------------------------------------------------------
+@pytest.fixture(scope="module")
+def vercel_bundle():
+    return _load_script("build_vercel_bundle.py", "bedsynth_build_vercel_bundle_script")
+
+
+def test_vercel_registry_drops_torch_models_and_keeps_the_default(vercel_bundle, tmp_path):
+    registry = {
+        table: {"default": "gc_tuned", "models": {m: {"experiment_id": m} for m in ("gc_tuned", "ctgan", "tvae")}}
+        for table in ("ward_daily", "patient_stays")
+    }
+    path = _write(tmp_path / "registry.json", json.dumps(registry))
+    pruned = vercel_bundle._filtered_registry(path)
+    assert {table: list(entry["models"]) for table, entry in pruned.items()} == {
+        "ward_daily": ["gc_tuned"], "patient_stays": ["gc_tuned"]}
+    assert all(entry["default"] == "gc_tuned" for entry in pruned.values())
+
+
+def test_vercel_registry_refuses_a_torch_default(vercel_bundle, tmp_path):
+    path = _write(tmp_path / "registry.json", json.dumps({"ward_daily": {"default": "ctgan", "models": {"ctgan": {}}}}))
+    with pytest.raises(SystemExit, match="PyTorch"):
+        vercel_bundle._filtered_registry(path)
+
+
+def test_vercel_bundle_installs_no_torch_and_routes_everything_to_the_app(vercel_bundle):
+    requirements = [line.split("==")[0].strip().lower() for line in vercel_bundle.REQUIREMENTS.splitlines()
+                    if line.strip() and not line.startswith("#")]
+    assert not {"torch", "ctgan", "deepecho", "sdv"} & set(requirements)
+    function = vercel_bundle.VERCEL_CONFIG["functions"]["api/index.py"]
+    assert "models" in function["includeFiles"] and "sdv" in function["includeFiles"]
+    assert vercel_bundle.VERCEL_CONFIG["rewrites"] == [{"source": "/(.*)", "destination": "/api/index?__path=/$1"}]
+    assert vercel_bundle.PUBLIC_API_LIMITS["max_rows"] <= 2000

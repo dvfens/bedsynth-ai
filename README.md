@@ -340,6 +340,32 @@ path and the machine's host name (pickles and other binary files, and the member
 containers, included); any hit aborts the build and lists the file (`--allow-leaks` writes the zip
 anyway). A dry run of the final project found none of them.
 
+## Deploying to Vercel
+
+A live copy of the API and demo UI runs on Vercel at **https://bedsynth-ai.vercel.app**
+(UI at [`/ui`](https://bedsynth-ai.vercel.app/ui), interactive docs at
+[`/docs`](https://bedsynth-ai.vercel.app/docs)). Vercel runs the FastAPI app as one Python
+serverless function that also serves the UI, so the frontend and backend deploy together.
+
+```bash
+python scripts/build_vercel_bundle.py              # writes dist/vercel (needs models/ and data/processed/)
+cd dist/vercel && npx vercel deploy --prod         # first time: npx vercel link --project bedsynth-ai
+```
+
+The repository cannot be deployed from GitHub as it is: `models/` and `data/` are not committed, and
+PyTorch (needed only by CTGAN/TVAE) is far larger than Vercel's function size limit. The build script
+therefore copies the package, settings, the GaussianCopula models, the processed reference data and
+the evaluation results into `dist/vercel`, vendors SDV without its PyTorch dependencies, and writes
+the entry point (`api/index.py`) and `vercel.json`. Differences from a local run:
+
+* only the GaussianCopula models are served (`gc_tuned` is the default of both tables anyway);
+  requesting `ctgan` or `tvae` returns 404;
+* public limits are tighter: at most 2,000 rows (or a 400-day calendar) per request and a 45 s
+  default time budget;
+* generated datasets are kept in the function's `/tmp`, so saved datasets disappear when Vercel
+  recycles the instance;
+* the first request after an idle period takes about 10-20 s while SDV and the model load.
+
 ## Limitations
 
 The reference data is simulated (a real deployment retrains on a facility extract with the same
