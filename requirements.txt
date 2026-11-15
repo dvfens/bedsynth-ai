@@ -1,0 +1,19 @@
+# BedSynth AI - pinned, tested versions (Python 3.13, Windows/Linux CPU)
+sdv==2.2.0
+sdmetrics==0.33.0
+rdt==2.1.0
+copulas==0.15.0
+ctgan==0.13.0
+torch==2.15.0
+pandas==2.3.3
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
+fastapi==0.162.7
+uvicorn==0.54.0
+pydantic==2.14.3
+pyyaml==6.0.3
+matplotlib==3.11.2
+jinja2==3.1.6
+httpx==0.28.1
+pytest==9.2.0

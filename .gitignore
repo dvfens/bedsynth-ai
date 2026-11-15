@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+
+# Generated artefacts (re-create with scripts/run_pipeline.py)
+data/raw/
+data/processed/
+data/synthetic/
+models/
+
+# Keep reports, but not bulky intermediate dumps
+reports/api_demo/*.csv
+
+# Submission zips (re-create with scripts/package_submission.py)
+dist/
+
+# Presentation build dependencies (re-create with: cd docs/presentation && npm ci)
+docs/presentation/node_modules/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local tool settings
+.claude/

@@ -1,0 +1,242 @@
+# =====================================================================
+# BedSynth AI - central configuration
+# Every script, module and the API read settings from this file.
+# Paths are relative to the project root; each can be overridden with an
+# environment variable (see bedsynth/config.py), which tests rely on.
+# =====================================================================
+
+project:
+  name: "BedSynth AI"
+  version: "1.0.0"
+  seed: 42
+
+paths:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  synthetic_dir: "data/synthetic"
+  models_dir: "models"
+  reports_dir: "reports"
+  figures_dir: "reports/figures"
+  results_dir: "reports/results"
+
+# ---------------------------------------------------------------------
+# Week 1 - reference ("real") source data simulation.
+# No real hospital data is shared (that is the problem statement), so a
+# patient-level discrete-event simulation of a 194-bed hospital produces
+# the reference extract that stands in for a facility's operational data.
+# ---------------------------------------------------------------------
+simulation:
+  start_date: "2022-01-01"
+  end_date: "2024-12-31"
+  warmup_days: 60          # simulated before start_date and discarded
+  cooldown_days: 90        # simulated after end_date so every admitted stay completes
+  annual_demand_growth: 0.02
+  # Emergency-demand multiplier by calendar month (all wards).
+  emergency_seasonality: {1: 1.15, 2: 1.10, 3: 1.03, 4: 0.98, 5: 0.96, 6: 0.94, 7: 0.95, 8: 0.92, 9: 0.97, 10: 1.00, 11: 1.04, 12: 1.12}
+  # Extra winter multiplier for paediatrics (respiratory season).
+  paediatric_winter_boost: {12: 1.30, 1: 1.25, 2: 1.10}
+  # Emergency-demand multiplier by day of week.
+  emergency_dow: {Mon: 1.10, Tue: 1.03, Wed: 1.00, Thu: 0.99, Fri: 1.00, Sat: 0.93, Sun: 0.95}
+  # Elective bookings multiplier by day of week and by month.
+  elective_dow: {Mon: 1.0, Tue: 1.0, Wed: 1.0, Thu: 1.0, Fri: 0.9, Sat: 0.08, Sun: 0.0}
+  elective_month: {1: 0.90, 2: 1.0, 3: 1.0, 4: 0.95, 5: 1.0, 6: 1.0, 7: 0.95, 8: 0.75, 9: 1.0, 10: 1.0, 11: 1.0, 12: 0.80}
+  # Hour-of-day profile weights for emergency arrivals (index 0 = 00:00-00:59).
+  emergency_hour_weights: [2, 1.6, 1.3, 1.1, 1, 1, 1.2, 1.6, 2.4, 3.2, 3.8, 4.2, 4.4, 4.5, 4.5, 4.4, 4.3, 4.3, 4.2, 4.0, 3.6, 3.1, 2.7, 2.3]
+  # Discharge-hour profile weights for weekday discharges (weekends flatter, fewer).
+  discharge_hour_weights: [0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.4, 0.9, 1.6, 2.6, 3.4, 3.8, 4.0, 4.0, 3.8, 3.4, 2.8, 2.0, 1.4, 1.0, 0.7, 0.4, 0.3]
+  # Share of patients ready on a Saturday / Sunday who also leave that weekend (the rest wait for a
+  # Monday-Wednesday review or for Monday's services). Calibrated: Sunday is the quietest day and
+  # Monday carries no artificial backlog spike (was one value, 0.55, for both days).
+  weekend_discharge_capacity: {Sat: 0.85, Sun: 0.68}
+  # Probability that a readiness due on Saturday / Sunday is brought forward to Friday afternoon
+  # (pre-weekend discharge planning; only for patients in hospital for at least a day).
+  friday_discharge_push: {Sat: 0.20, Sun: 0.10}
+  # Calibrated (Week 1): peak extra demand 0.05-0.15 (was 0.08-0.22, which pushed the medical
+  # bed base past 100 % for weeks and produced 25-30 h p90 ED waits).
+  winter_flu_surge: {probability_per_winter: 0.85, extra_multiplier_range: [0.05, 0.15], duration_days_range: [21, 49]}
+  ward_params:
+    # emergency_per_day: base Poisson rate of direct emergency admissions (calibrate to hit target_occupancy)
+    # los_mean_days: target mean total length of stay by admission source (incl. discharge delays)
+    # elective_per_weekday: mean elective bookings on a full weekday
+    # transfer_out_prob: probability a stay ends with an internal transfer; transfer_targets: routing
+    # emergency_per_day calibrated in Week 1 against the full 2022-2024 run (all 23 targets met for
+    # seeds 42, 1, 7, 2024, 99 and 5). Re-checked after the Week-3 realism fixes (weekend model,
+    # outlier timing, ward delay factors; 27 targets): all met for seeds 42, 1, 7, 11, 31, 123,
+    # 777 and 2024; seeds 99 and 5 miss 1-2 thin-margin targets. Originals:
+    # AMU 18.0, GMED 0.8, ELDC 0.4, CARD 2.1, GSUR 2.2, ORTH 1.8, ICU 1.3, PAED 5.4. GMED/ELDC are
+    # filled mainly by AMU transfers and medical outliers, so their direct ED rates are low.
+    AMU:  {target_occupancy: 0.92, emergency_per_day: 17.8, elective_per_weekday: 0.0, los_mean_days: {emergency: 1.4},
+           transfer_out_prob: 0.45, transfer_targets: {GMED: 0.40, ELDC: 0.30, CARD: 0.15, GSUR: 0.10, ICU: 0.05}}
+    GMED: {target_occupancy: 0.93, emergency_per_day: 0.42, elective_per_weekday: 0.6, los_mean_days: {emergency: 6.0, transfer: 5.5, elective: 3.0},
+           transfer_out_prob: 0.06, transfer_targets: {ELDC: 0.6, ICU: 0.4}}
+    ELDC: {target_occupancy: 0.95, emergency_per_day: 0.16, elective_per_weekday: 0.0, los_mean_days: {emergency: 10.0, transfer: 9.0},
+           transfer_out_prob: 0.02, transfer_targets: {GMED: 1.0}}
+    CARD: {target_occupancy: 0.88, emergency_per_day: 2.2, elective_per_weekday: 1.8, los_mean_days: {emergency: 4.5, transfer: 4.0, elective: 1.8},
+           transfer_out_prob: 0.05, transfer_targets: {ICU: 0.6, GMED: 0.4}}
+    GSUR: {target_occupancy: 0.86, emergency_per_day: 2.4, elective_per_weekday: 3.5, los_mean_days: {emergency: 5.0, transfer: 4.5, elective: 3.2},
+           transfer_out_prob: 0.04, transfer_targets: {ICU: 1.0}}
+    ORTH: {target_occupancy: 0.85, emergency_per_day: 1.75, elective_per_weekday: 3.0, los_mean_days: {emergency: 7.0, transfer: 6.0, elective: 3.5},
+           transfer_out_prob: 0.05, transfer_targets: {ICU: 0.3, ELDC: 0.7}}
+    ICU:  {target_occupancy: 0.80, emergency_per_day: 1.4, elective_per_weekday: 0.6, los_mean_days: {emergency: 4.0, transfer: 3.5, elective: 2.0},
+           transfer_out_prob: 0.75, transfer_targets: {GSUR: 0.3, GMED: 0.3, CARD: 0.2, ORTH: 0.1, ELDC: 0.1}}
+    PAED: {target_occupancy: 0.70, emergency_per_day: 5.3, elective_per_weekday: 1.2, los_mean_days: {emergency: 2.2, elective: 1.2},
+           transfer_out_prob: 0.0, transfer_targets: {}}
+  # Dirty-data injection applied to the raw extract only (ground truth kept separately).
+  data_quality:
+    enabled: true
+    ward_daily:
+      category_variant_rate: 0.03     # ward_id / staffing_level / occupancy_level spelling variants
+      alt_date_format_rate: 0.05      # DD/MM/YYYY instead of ISO
+      missing_rate: 0.02              # per affected column
+      missing_columns: [nurses_night_shift, avg_bed_turnaround_min, staffing_level, avg_los_days]
+      duplicate_rate: 0.01
+      invalid_value_rate: 0.003       # negative counts, 999 sentinels, impossible values
+    patient_stays:
+      category_variant_rate: 0.03
+      alt_datetime_format_rate: 0.05  # DD/MM/YYYY HH:MM
+      missing_rate: 0.015
+      missing_columns: [bed_turnaround_minutes, delay_reason, discharge_destination, bed_wait_hours]
+      duplicate_rate: 0.005
+      invalid_value_rate: 0.002       # negative waits, turnaround outliers, discharge before admission
+
+# ---------------------------------------------------------------------
+# Week 1 - preprocessing
+# ---------------------------------------------------------------------
+preprocessing:
+  holdout_fraction: 0.2             # random split stratified by ward_id; holdout used for TSTR / privacy
+  stratify_by: ward_id
+
+# ---------------------------------------------------------------------
+# Weeks 2-3 - SDV synthesis experiments
+# ---------------------------------------------------------------------
+synthesis:
+  default_experiment: {ward_daily: gc_tuned, patient_stays: gc_tuned}   # used until evaluation selects a winner
+  max_training_rows: {ward_daily: null, patient_stays: 20000}            # GAN/VAE subsample cap (null = all rows)
+  # Experiment keys:
+  #   segment_by:  null (one global model) | column | [columns] (one model per value combination)
+  #                | {table: column(s)} (resolved per table; tables not listed are global)
+  #   constraints: true (every group) | false | one group name | list of groups:
+  #                inequality, fixed_combinations (SDV built-ins), regime_labels, structural_zeros,
+  #                capacity, conditional_marginals (BedSynth programmable constraints) -
+  #                bedsynth/synthesis/constraints.py
+  # Ablation (Week 3): gc_baseline -> gc_segmented -> gc_tuned isolates the effect of segmentation,
+  # encodings and marginals (gc_segmented) and of the programmable constraints + ward x source
+  # segmentation of patient_stays (gc_tuned).
+  experiments:
+    gc_baseline:
+      description: "GaussianCopula, single global model, default encodings, no SDV constraints (Week 2 baseline)"
+      model: gaussian_copula
+      segment_by: null
+      constraints: false
+      ordinal_metadata: false
+      ordered_encodings: false
+      params: {default_distribution: beta}
+    gc_segmented:
+      description: "Ablation step: GaussianCopula segmented per ward, SDV built-in constraints only (Inequality, FixedCombinations), ordinal metadata + demand-ordered encodings, tuned marginals (the pre-Week-3 gc_tuned recipe, without programmable constraints)"
+      model: gaussian_copula
+      segment_by: ward_id
+      constraints: [inequality, fixed_combinations]
+      ordinal_metadata: true
+      ordered_encodings: true
+      params: {default_distribution: truncnorm, tune_distributions: true, distribution_candidates: [truncnorm, beta, gamma, norm]}
+    gc_tuned:
+      description: "GaussianCopula segmented per ward (ward_daily) and per ward x admission source (patient_stays), every constraint group incl. programmable band labels, learned structural zeros, the escalation cover and exact per-group marginals (delay hours per reason, elective lists per weekday, ED boarders and bed waits per recomputed occupancy band, closed beds per recomputed staffing band, day-shift nurses per month, escalation beds beyond the census need, length of stay per admission weekday, admission/discharge hours and waits per ward x source), ordinal metadata + demand-ordered encodings, tuned per-column marginals (Week 3 improvement)"
+      model: gaussian_copula
+      segment_by: {ward_daily: ward_id, patient_stays: [ward_id, admission_source]}
+      constraints: true
+      ordinal_metadata: true
+      ordered_encodings: true
+      # tune_distributions / distribution_candidates are read by the BedSynth wrapper (never passed
+      # to SDV): per segment the candidate with the lowest mean KS becomes the default marginal and
+      # each numerical column keeps the candidate with its own lowest KS. --quick keeps every
+      # candidate (it only shortens GAN/VAE epochs).
+      params: {default_distribution: truncnorm, tune_distributions: true, distribution_candidates: [truncnorm, beta, gamma, norm]}
+    ctgan:
+      description: "CTGAN (conditional GAN), global model with every constraint group (SDV built-ins + programmable)"
+      model: ctgan
+      segment_by: null
+      constraints: true
+      ordinal_metadata: true
+      ordered_encodings: false
+      params: {epochs: 200, batch_size: 500, enable_gpu: false, verbose: false}
+    tvae:
+      description: "TVAE (variational autoencoder), global model with every constraint group (SDV built-ins + programmable)"
+      model: tvae
+      segment_by: null
+      constraints: true
+      ordinal_metadata: true
+      ordered_encodings: false
+      params: {epochs: 200, batch_size: 500, enable_gpu: false, verbose: false}
+  quick_mode_params:                 # applied with --quick for fast end-to-end runs / CI
+    ctgan: {epochs: 10}
+    tvae: {epochs: 10}
+
+# ---------------------------------------------------------------------
+# Generation (scenario engine) defaults
+# ---------------------------------------------------------------------
+generation:
+  max_rows: 20000
+  max_attempts: 25
+  oversample_factor: 1.6
+  max_batch_rows: 50000
+  max_round_rows: 200000            # rows requested from the model in one rejection round (cell batches are scaled down to fit)
+  low_acceptance_warning: 0.05
+  # Default budget of one request (GenerationRequest.time_budget_seconds overrides it; shortfall is reported).
+  # Rounds are also capped at the remaining budget x the throughput measured in earlier rounds, so one round
+  # cannot overrun the budget by much.
+  time_budget_seconds: 300
+  # Implicit allocation strata: quotas follow the reference frequencies of these columns so that
+  # rejection sampling cannot skew the output mix towards rows that pass the rules easily
+  # (DESIGN.md 8.3). [] disables stratification for a table.
+  allocation_strata:
+    ward_daily: [ward_id, occupancy_level]
+    patient_stays: [ward_id, admission_source, delay_reason]
+
+# ---------------------------------------------------------------------
+# Week 3 - evaluation
+# ---------------------------------------------------------------------
+evaluation:
+  synthetic_rows: null              # null = same number of rows as the real training split, capped at max_synthetic_rows
+  # Cap on the default sample per model: ward_daily keeps its 7,016 training rows, patient_stays (45,002
+  # training rows) is evaluated on 20,000. ML utility compares TSTR with a TRTR trained on the same number
+  # of real rows and the SDV QualityReport subsamples 10,000 rows anyway, so the cap costs no precision
+  # that matters but halves generation and privacy time. --rows overrides it.
+  max_synthetic_rows: 20000
+  scenario_rows: 400
+  sdv_quality_max_rows: 10000       # subsample for SDV QualityReport speed
+  privacy_max_rows: 5000
+  sdmetrics_privacy_rows: 1000      # sdmetrics DCR cross-check is O(n^2): rows per side (0 disables it)
+  # Runtime caps of scripts/03_evaluate.py (every generation request carries a time budget; a request that
+  # runs out keeps its rows and the shortfall is recorded in the results - never silently):
+  sample_time_budget_seconds: 90    # each main-sample request (chunk of <= generation.max_rows rows)
+  scenario_time_budget_seconds: 20  # each scenario request
+  scenario_max_attempts: 8          # rejection rounds per scenario request (generation default: 25)
+  coverage_time_budget_seconds: 150 # all scenario requests of one model x table; scenarios not started in time are "not evaluated"
+  # --quick replaces the caps above (weak models' rejection rounds dominate quick runs whatever the row counts)
+  quick_overrides: {sample_time_budget_seconds: 45, scenario_time_budget_seconds: 10, coverage_time_budget_seconds: 60, noise_calibration_reps: 30}
+  # Operational checks are calibrated to real-data noise at the evaluated size: random re-splits of the real data
+  # (a pseudo training split vs n real rows) give each check's real-vs-real distribution; a check fails only
+  # beyond max(largest real value, mean + noise_sd_multiplier x sd), so a real sample of that size passes.
+  noise_calibration_reps: 50
+  noise_sd_multiplier: 3.0
+  strata_tvd_flag: 0.05             # flag output whose allocation-strata mix is further than this from the training split
+  references: true                  # score the real-holdout ceiling and the no-learning floor next to the models
+  composite_weights: {fidelity: 0.30, validity: 0.20, operational: 0.25, utility: 0.15, privacy: 0.10}
+
+# ---------------------------------------------------------------------
+# Week 4 - API
+# ---------------------------------------------------------------------
+api:
+  title: "BedSynth AI - Synthetic Hospital Operations Data Generator"
+  max_rows: 10000
+  max_calendar_days: 1100
+  persist_datasets: true
+  evaluate_max_rows: 5000
+  max_condition_combinations: 1000  # condition value combinations one request may expand into (400 above)
+  time_budget_seconds: 60           # default time budget of one generation (the engine reports any shortfall)
+  max_time_budget_seconds: 120      # largest time_budget_seconds a client may request
+  max_attempts: 100                 # largest max_attempts (rejection rounds) a client may request
+  max_pending_generations: 4        # generations running or queued at once; more answer 503 server_busy
+  generation_wait_seconds: 60       # a queued generation gives up (503 server_busy) after waiting this long
+  cors_origins: []                  # extra allowed browser origins (no credentials); ["*"] allows every website
+  cors_origin_regex: "https?://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d+)?"   # local pages on any port
